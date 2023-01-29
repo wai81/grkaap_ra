@@ -1943,6 +1943,13 @@
   dependencies:
     react-router-dom "6.3.0"
 
+"@pankod/refine-react-table@^4.9.1":
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/@pankod/refine-react-table/-/refine-react-table-4.9.1.tgz#e8c5def13fc04af1ef24b2d3d46380f43731c147"
+  integrity sha512-WvWhRkBzdcURrztEV4tIS00nQEynCnInyAAnTWBFFlJJKEw5DNkoewNWxYbg5HEnKG4LDvtkkg1qizBMkosqXg==
+  dependencies:
+    "@tanstack/react-table" "^8.2.6"
+
 "@pankod/refine-simple-rest@^3.18.0":
   version "3.37.4"
   resolved "https://registry.yarnpkg.com/@pankod/refine-simple-rest/-/refine-simple-rest-3.37.4.tgz#e033860ea6578bdc588bdb9ddbb853d5df5b0948"
@@ -2228,6 +2235,18 @@
   dependencies:
     "@tanstack/query-core" "4.22.4"
     use-sync-external-store "^1.2.0"
+
+"@tanstack/react-table@^8.2.6":
+  version "8.7.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.7.8.tgz#3e655a39f4c19bb9a5346e171f3112b4eeb3b576"
+  integrity sha512-XNfNuY9qJEk5urJWGYPWNj4POtBTuYunQNfmUla/ZUobVSS+ZIWt6wnL6kI12QNpPrf4uSVAYelUVl245nnQjQ==
+  dependencies:
+    "@tanstack/table-core" "8.7.8"
+
+"@tanstack/table-core@8.7.8":
+  version "8.7.8"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.7.8.tgz#20c9bad75981e431ddc666e0dd532eb813e1e451"
+  integrity sha512-OvKx7v0qJTyPkMhqsWzVPZnARiqdGvDvEg8tZ/GSQs7t0Vb2sdtkGg7cdzUZ67sIg9o5/gSwvvT84ouSaP8euA==
 
 "@testing-library/dom@^7.28.1":
   version "7.31.2"
