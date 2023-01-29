@@ -17,16 +17,6 @@ export const UserList = () => {
     const columns = React.useMemo<GridColumns<any>>(
         () => [
             {
-                field: "id",
-                headerName: "Id",
-                minWidth: 50,
-            },
-            {
-                field: "username",
-                headerName: "Username",
-                minWidth: 200,
-            },
-            {
                 field: "last_name",
                 headerName: "Last Name",
                 minWidth: 200,
@@ -40,6 +30,16 @@ export const UserList = () => {
                 field: "patronymic",
                 headerName: "Patronymic",
                 minWidth: 200,
+            },
+            {
+                field: "organization",
+                headerName: "Organization",
+                valueGetter: ({ row }) => {
+                    const value = row?.organization?.name;
+
+                    return value;
+                },
+                minWidth: 300,
             },
             {
                 field: "is_superuser",
@@ -56,17 +56,7 @@ export const UserList = () => {
                 renderCell: function render({ value }) {
                     return <Checkbox checked={!!value} />;
                 },
-            },
-            {
-                field: "organization",
-                headerName: "Organization",
-                valueGetter: ({ row }) => {
-                    const value = row?.organization?.name;
-
-                    return value;
-                },
-                minWidth: 300,
-            },
+            },     
             {
                 field: "created_at",
                 headerName: "Created At",
@@ -74,6 +64,11 @@ export const UserList = () => {
                 renderCell: function render({ value }) {
                     return <DateField value={value} />;
                 },
+            },
+            {
+                field: "username",
+                headerName: "Username",
+                minWidth: 200,
             },
             {
                 field: "actions",
@@ -90,7 +85,7 @@ export const UserList = () => {
                 headerAlign: "center",
                 minWidth: 80,
             },
-        ],
+          ],
         [],
     );
 
