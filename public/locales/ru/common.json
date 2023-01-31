@@ -1,109 +1,109 @@
 {
   "pages": {
     "login": {
-      "title": "Sign in to your account",
-      "signin": "Sign in",
-      "signup": "Sign up",
-      "divider": "or",
+      "title": "Войдите в свой аккаунт",
+      "signin": "Войти",
+      "signup": "Зарегистрироваться",
+      "divider": "или",
       "fields": {
-        "email": "Email",
-        "password": "Password"
+        "email": "Эл. адрес",
+        "password": "Пароль"
       },
       "errors": {
-        "validEmail": "Invalid email address"
+        "validEmail": "Неверный адрес электронной почты"
       },
       "buttons": {
-        "submit": "Login",
-        "forgotPassword": "Forgot password?",
-        "noAccount": "Don’t have an account?",
-        "rememberMe": "Remember me"
+        "submit": "Авторизоваться",
+        "forgotPassword": "Забыли пароль?",
+        "noAccount": "Нет учетной записи?",
+        "rememberMe": "Запомните меня"
       }
     },
     "forgotPassword": {
-      "title": "Forgot your password?",
+      "title": "Забыли свой пароль?",
       "fields": {
-        "email": "Email"
+        "email": "Эл. адрес"
       },
       "errors": {
-        "validEmail": "Invalid email address"
+        "validEmail": "Неверный адрес электронной почты"
       },
       "buttons": {
-        "submit": "Send reset instructions"
+        "submit": "Отправить инструкции по сбросу"
       }
     },
     "register": {
-      "title": "Sign up for your account",
+      "title": "Зарегистрируйтесь в своей учетной записи",
       "fields": {
-        "email": "Email",
-        "password": "Password"
+        "email": "Эл. адрес",
+        "password": "Пароль"
       },
       "errors": {
-        "validEmail": "Invalid email address"
+        "validEmail": "Неверный адрес электронной почты"
       },
       "buttons": {
-        "submit": "Register",
-        "haveAccount": "Have an account?"
+        "submit": "Регистрация",
+        "haveAccount": "Есть аккаунт?"
       }
     },
     "updatePassword": {
-      "title": "Update password",
+      "title": "Обновить пароль",
       "fields": {
-        "password": "New Password",
-        "confirmPassword": "Confirm new password"
+        "password": "Новый пароль",
+        "confirmPassword": "Подтвердите новый пароль"
       },
       "errors": {
-        "confirmPasswordNotMatch": "Passwords do not match"
+        "confirmPasswordNotMatch": "Пароли не совпадают"
       },
       "buttons": {
-        "submit": "Update"
+        "submit": "Обновить"
       }
     },
     "error": {
-      "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
-      "404": "Sorry, the page you visited does not exist.",
-      "resource404": "Are you sure you have created the {{resource}} resource.",
-      "backHome": "Back Home"
+      "info": "Возможно, вы забыли добавить {{action}} компонент к {{resource}} ресурсу.",
+      "404": "Извините, страница, которую вы посетили, не существует.",
+      "resource404": "Вы уверены, что создали {{resource}} ресурс.",
+      "backHome": "Домой"
     }
   },
   "actions": {
-    "list": "List",
-    "create": "Create",
-    "edit": "Edit",
-    "show": "Show"
+    "list": "Список",
+    "create": "Создать",
+    "edit": "Изменит",
+    "show": "Показать"
   },
   "buttons": {
-    "create": "Create",
-    "save": "Save",
-    "logout": "Logout",
-    "delete": "Delete",
-    "edit": "Edit",
-    "cancel": "Cancel",
-    "confirm": "Are you sure?",
-    "filter": "Filter",
-    "clear": "Clear",
-    "refresh": "Refresh",
-    "show": "Show",
-    "undo": "Undo",
-    "import": "Import",
-    "clone": "Clone",
-    "notAccessTitle": "You don't have permission to access"
+    "create": "Создать",
+    "save": "Сохранить",
+    "logout": "Выйти",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "cancel": "Отмена",
+    "confirm": "Вы уверены?",
+    "filter": "Фильтр",
+    "clear": "Очистить",
+    "refresh": "Обновить",
+    "show": "Показать",
+    "undo": "Отменить",
+    "import": "Импорт",
+    "clone": "Копировать",
+    "notAccessTitle": "У вас нет разрешения на доступ"
   },
-  "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
+  "warnWhenUnsavedChanges": "Вы уверены, что хотите оставить? У вас есть несохраненные изменения.",
   "notifications": {
-    "success": "Successful",
-    "error": "Error (status code: {{statusCode}})",
-    "undoable": "You have {{seconds}} seconds to undo",
-    "createSuccess": "Successfully created {{resource}}",
-    "createError": "There was an error creating {{resource}} (status code: {{statusCode}})",
-    "deleteSuccess": "Successfully deleted {{resource}}",
-    "deleteError": "Error when deleting {{resource}} (status code: {{statusCode}})",
-    "editSuccess": "Successfully edited {{resource}}",
-    "editError": "Error when editing {{resource}} (status code: {{statusCode}})",
-    "importProgress": "Importing: {{processed}}/{{total}}"
+    "success": "Успешно",
+    "error": "Ошибка (код состояния: {{statusCode}})",
+    "undoable": "У вас {{seconds}} секунды, чтобы отменить",
+    "createSuccess": "{{resource}} создан успешно",
+    "createError": "Произошла ошибка при создании {{resource}} (код состояния: {{statusCode}})",
+    "deleteSuccess": "{{resource}} успешно удален",
+    "deleteError": "Ошибка при удалении {{resource}} (код состояния: {{statusCode}})",
+    "editSuccess": "{{resource}} успешно измененен",
+    "editError": "Ошибка при редактировании {{resource}} (код состояния: {{statusCode}})",
+    "importProgress": "Импорт: {{processed}}/{{total}}"
   },
-  "loading": "Loading",
+  "loading": "Загрузка",
   "tags": {
-    "clone": "Clone"
+    "clone": "Клон"
   },
   "dashboard": {
     "title": "Dashboard"
@@ -136,6 +136,45 @@
     }
   },
   "table": {
-    "actions": "Actions"
+    "actions": "Действия"
+  },
+  "users": {
+    "users": "Пользователи",
+    "fields": {
+      "id": "Id",
+      "username": "Имя Пользователя",
+      "last_name": "Фамилия",
+      "first_name": "Имя",
+      "patronymic": "Отчество",
+      "organization": {
+        "title": "Организация",
+        "filter": {
+          "placeholder": "Выберите организацию"
+        }
+      },
+      "password": "Пароль",
+      "created_аt": "Дата создания"
+    },
+    "titles": {
+      "create": "Новый Пользователь",
+      "edit": "Редактирование Пользователя",
+      "list": "Пользователи",
+      "show": "Просмотр Пользователя"
+    }
+  },
+  "organizations": {
+    "organizations": "Организации",
+    "fields": {
+      "id": "№ ТОР",
+      "name": "Наименование",
+      "fullname": "Полное Наименование",
+      "created_аt": "Дата создания"
+    },
+    "titles": {
+      "create": "Новая Организация",
+      "edit": "Редактирование Организации",
+      "list": "Организации",
+      "show": "Просмотр Организации"
+    }
   }
 }
