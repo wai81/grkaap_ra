@@ -1,9 +1,9 @@
 // "axios" package needs to be installed
-import { AxiosInstance } from "axios";
+import { AxiosInstance } from 'axios';
 // "stringify" function is re-exported from "query-string" package by "@pankod/refine-simple-rest"
-import { stringify } from "@pankod/refine-simple-rest";
-import { DataProvider } from "@pankod/refine-core";
-import { axiosInstance, generateSort, generateFilter } from "./utils";
+import { stringify } from '@pankod/refine-simple-rest';
+import { DataProvider } from '@pankod/refine-core';
+import { axiosInstance, generateSort, generateFilter } from './utils';
 
 //import { API_URL } from "../../constants";
 export const dataProvider = (
@@ -11,7 +11,7 @@ export const dataProvider = (
   httpClient: AxiosInstance = axiosInstance
 ): Omit<
   Required<DataProvider>,
-  "createMany" | "updateMany" | "deleteMany"
+  'createMany' | 'updateMany' | 'deleteMany'
 > => ({
   getList: async ({
     resource,
@@ -33,16 +33,16 @@ export const dataProvider = (
       order?: string;
     } = hasPagination
       ? {
-        page: current,
-        size: pageSize,
+          page: current,
+          size: pageSize,
         }
       : {};
 
     const generatedSort = generateSort(sort);
     if (generatedSort) {
       const { _sort, _order } = generatedSort;
-      query.sort = _sort.join(",");
-      query.order = _order.join(",");
+      query.sort = _sort.join(',');
+      query.order = _order.join(',');
     }
 
     const { data, headers } = await httpClient.get(
@@ -54,8 +54,8 @@ export const dataProvider = (
     //const total = +headers["x-total-count"];
 
     return {
-      data : data.items,
-      total : data.total,
+      data: data.items,
+      total: data.total,
     };
   },
 
@@ -65,7 +65,7 @@ export const dataProvider = (
     );
 
     return {
-      data,
+      data: data.items,
     };
   },
 
@@ -123,8 +123,8 @@ export const dataProvider = (
       if (generatedSort) {
         const { _sort, _order } = generatedSort;
         const sortQuery = {
-          sort: _sort.join(","),
-          order: _order.join(","),
+          sort: _sort.join(','),
+          order: _order.join(','),
         };
         requestUrl = `${requestUrl}&${stringify(sortQuery)}`;
       }
@@ -148,12 +148,12 @@ export const dataProvider = (
 
     let axiosResponse;
     switch (method) {
-      case "put":
-      case "post":
-      case "patch":
+      case 'put':
+      case 'post':
+      case 'patch':
         axiosResponse = await httpClient[method](url, payload);
         break;
-      case "delete":
+      case 'delete':
         axiosResponse = await httpClient.delete(url, {
           data: payload,
         });
