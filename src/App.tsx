@@ -9,7 +9,6 @@ import {
   ReadyPage,
   ErrorComponent,
 } from '@pankod/refine-mui';
-
 //import dataProvider from "@pankod/refine-simple-rest";
 import { dataProvider } from './providers/data-provider/';
 import routerProvider from '@pankod/refine-react-router-v6';
@@ -19,17 +18,33 @@ import { Title, Sider, Layout, Header } from 'components/layout';
 import { ColorModeContextProvider } from 'contexts';
 import { OffLayoutArea } from 'components/offLayoutArea';
 import { MuiInferencer } from '@pankod/refine-inferencer/mui';
-
-import { API_URL } from './constants';
-
+import { API_URL, TOKEN_KEY } from './constants';
 import { UserList, UserCreate, UserEdit, UserShow } from 'pages/users';
-
 import {
   OrganizationList,
   OrganizationCreate,
   OrganizationEdit,
   OrganizationShow,
 } from 'pages/organizations';
+import axios, { AxiosRequestConfig } from 'axios';
+import { authProvider } from 'providers/auth-provider';
+import { AuthPage } from 'pages/auth/authPage';
+
+const axiosInstance = axios.create();
+
+axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (token) {
+    if (request.headers) {
+      request.headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      request.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
+  }
+  return request;
+});
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -58,6 +73,8 @@ function App() {
             routerProvider={routerProvider}
             i18nProvider={i18nProvider}
             OffLayoutArea={OffLayoutArea}
+            authProvider={authProvider(axiosInstance)}
+            LoginPage={AuthPage}
             resources={[
               {
                 name: 'users',
