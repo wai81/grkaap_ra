@@ -10,9 +10,10 @@ import {
   Checkbox,
   DateField,
 } from '@pankod/refine-mui';
-import { useMany } from '@pankod/refine-core';
+import { useTranslate, useMany } from '@pankod/refine-core';
 
 export const UserList = () => {
+  const t = useTranslate();
   const { dataGridProps } = useDataGrid();
 
   const { data: organizationData, isLoading: organizationIsLoading } = useMany({
@@ -27,22 +28,22 @@ export const UserList = () => {
     () => [
       {
         field: 'last_name',
-        headerName: 'Last Name',
+        headerName: t('users.fields.last_name'),
         minWidth: 200,
       },
       {
         field: 'first_name',
-        headerName: 'First Name',
+        headerName: t('users.fields.first_name'),
         minWidth: 200,
       },
       {
         field: 'patronymic',
-        headerName: 'Patronymic',
+        headerName: t('users.fields.patronymic'),
         minWidth: 200,
       },
       {
         field: 'organization',
-        headerName: 'Organization',
+        headerName: t('users.fields.organization.title'),
         valueGetter: ({ row }) => {
           const value = row?.organization?.name;
 
@@ -75,12 +76,12 @@ export const UserList = () => {
       },
       {
         field: 'username',
-        headerName: 'Username',
+        headerName: t('users.fields.username'),
         minWidth: 200,
       },
       {
         field: 'created_at',
-        headerName: 'Created At',
+        headerName: t('users.fields.created_аt'),
         minWidth: 80,
         renderCell: function render({ value }) {
           return <DateField value={value} />;
@@ -88,7 +89,7 @@ export const UserList = () => {
       },
       {
         field: 'actions',
-        headerName: 'Actions',
+        headerName: t('table.actions'), //'Actions',
         renderCell: function render({ row }) {
           return (
             <>
