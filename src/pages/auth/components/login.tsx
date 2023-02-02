@@ -149,7 +149,7 @@ export const LoginPage: React.FC<LoginProps> = ({
             }}
           >
             {/* запонить меня */}
-            {rememberMe ?? (
+            {/* {rememberMe ?? (
               <FormControlLabel
                 sx={{
                   span: {
@@ -170,7 +170,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                   'Remember me'
                 )}
               />
-            )}
+            )} */}
             {/* Забыли проль? */}
             {/* {forgotPasswordLink ?? (
               <MuiLink
