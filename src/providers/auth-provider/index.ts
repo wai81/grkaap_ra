@@ -29,11 +29,15 @@ export const authProvider = (axiosInstance: AxiosInstance): AuthProvider => {
     },
     checkError: (error) => {
       if (error?.response?.status === 401) {
-        return Promise.reject('/register');
+        return Promise.reject('/auth/user/signup');
       }
       return Promise.resolve();
     },
-    checkAuth: () => Promise.resolve(),
+    checkAuth: () => {
+      return localStorage.getItem(TOKEN_KEY)
+        ? Promise.resolve()
+        : Promise.reject();
+    },
     getPermissions: () => Promise.resolve(),
     getUserIdentity: async () => {
       const token = localStorage.getItem(TOKEN_KEY);
@@ -43,7 +47,7 @@ export const authProvider = (axiosInstance: AxiosInstance): AuthProvider => {
 
       const userInfo = await axiosInstance.get(`${API_URL}/auth/user`);
 
-      return Promise.resolve(userInfo.data.user);
+      return Promise.resolve(userInfo.data);
     },
   };
 };

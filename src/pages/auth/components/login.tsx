@@ -44,7 +44,7 @@ export const LoginPage: React.FC<LoginProps> = ({
   formProps,
 }) => {
   const { onSubmit, ...useFormProps } = formProps || {};
-  const methods = useForm<BaseRecord, HttpError, LoginFormTypes>({
+  const methods = useForm<BaseRecord, HttpError, LoginProps>({
     ...useFormProps,
   });
   const {
@@ -53,7 +53,7 @@ export const LoginPage: React.FC<LoginProps> = ({
     formState: { errors },
   } = methods;
 
-  const { mutate: login, isLoading } = useLogin<LoginFormTypes>();
+  const { mutate: login, isLoading } = useLogin<LoginProps>();
   const translate = useTranslate();
   const { Link } = useRouterContext();
 
@@ -112,17 +112,17 @@ export const LoginPage: React.FC<LoginProps> = ({
         >
           {renderProviders()}
           <TextField
-            {...register('email', {
+            {...register('username', {
               required: true,
             })}
-            id="email"
+            id="username"
             margin="normal"
             fullWidth
-            label={translate('pages.login.fields.email', 'Email')}
-            error={!!errors.email}
-            name="email"
-            type="email"
-            autoComplete="email"
+            label={translate('pages.login.fields.username', 'Username')}
+            error={!!errors.username}
+            name="username"
+            type="text"
+            autoComplete="username"
           />
           <TextField
             {...register('password', {
@@ -148,6 +148,7 @@ export const LoginPage: React.FC<LoginProps> = ({
               alignItems: 'center',
             }}
           >
+            {/* запонить меня */}
             {rememberMe ?? (
               <FormControlLabel
                 sx={{
@@ -170,7 +171,8 @@ export const LoginPage: React.FC<LoginProps> = ({
                 )}
               />
             )}
-            {forgotPasswordLink ?? (
+            {/* Забыли проль? */}
+            {/* {forgotPasswordLink ?? (
               <MuiLink
                 variant="body2"
                 component={Link}
@@ -182,7 +184,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                   'Forgot password?'
                 )}
               </MuiLink>
-            )}
+            )} */}
           </Box>
           <Button
             type="submit"
@@ -195,7 +197,8 @@ export const LoginPage: React.FC<LoginProps> = ({
           >
             {translate('pages.login.signin', 'Sign in')}
           </Button>
-          {registerLink ?? (
+          {/* Зарегистрироваться */}
+          {/* {registerLink ?? (
             <Box style={{ marginTop: 8 }}>
               <Typography variant="body2" component="span">
                 {translate(
@@ -214,7 +217,7 @@ export const LoginPage: React.FC<LoginProps> = ({
                 {translate('pages.login.signup', 'Sign up')}
               </MuiLink>
             </Box>
-          )}
+          )} */}
         </Box>
       </CardContent>
     </Card>

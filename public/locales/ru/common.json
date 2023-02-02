@@ -7,6 +7,7 @@
       "divider": "или",
       "fields": {
         "email": "Эл. адрес",
+        "username": "Имя Пользователя",
         "password": "Пароль"
       },
       "errors": {

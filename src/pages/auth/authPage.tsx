@@ -31,6 +31,7 @@ export const AuthPage: React.FC<AuthProps> = (props) => {
       case 'updatePassword':
         return <UpdatePasswordPage {...props} />;
       default:
+        console.log(props);
         return <LoginPage {...props} />;
     }
   };

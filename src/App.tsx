@@ -66,15 +66,22 @@ function App() {
             notificationProvider={notificationProvider}
             ReadyPage={ReadyPage}
             catchAll={<ErrorComponent />}
-            Title={Title}
-            Sider={Sider}
-            Layout={Layout}
-            Header={Header}
+            Title={Title} //Заголовок бкового меню и кнопка свернуть меню
+            Sider={Sider} //Боковое меню
+            Layout={Layout} //Шаблон
+            Header={Header} //
             routerProvider={routerProvider}
             i18nProvider={i18nProvider}
             OffLayoutArea={OffLayoutArea}
             authProvider={authProvider(axiosInstance)}
-            LoginPage={AuthPage}
+            LoginPage={() => (
+              <>
+                <AuthPage
+                  type="login"
+                  formProps={{ defaultValues: { username: '', password: '' } }}
+                />
+              </>
+            )}
             resources={[
               {
                 name: 'users',

@@ -27,7 +27,10 @@ export const UserEdit = () => {
     useAutocomplete<IOrganization>({
       resource: 'organizations',
       sort: [{ field: 'id', order: 'asc' }],
-      defaultValue: queryResult?.data?.data.organization.id,
+      defaultValue:
+        usersData?.organization == null
+          ? null
+          : queryResult?.data?.data.organization.id,
     });
 
   const handleOnSubmit = (data: any) => {

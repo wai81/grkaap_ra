@@ -28,7 +28,7 @@ export interface IUpdateUser {
   first_name: string;
   patronymic: string;
   password: string;
-  organization_id: number;
+  organization_id: number | null;
   is_superuser: boolean;
   is_active: boolean;
 }
