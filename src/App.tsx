@@ -75,12 +75,10 @@ function App() {
             OffLayoutArea={OffLayoutArea}
             authProvider={authProvider(axiosInstance)}
             LoginPage={() => (
-              <>
                 <AuthPage
                   type="login"
-                  formProps={{ defaultValues: { username: '', password: '' } }}
+                  //formProps={{ defaultValues: { username: '', password: '' } }}
                 />
-              </>
             )}
             resources={[
               {

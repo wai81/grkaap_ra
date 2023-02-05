@@ -1882,10 +1882,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@pankod/refine-inferencer@^2.0.2":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@pankod/refine-inferencer/-/refine-inferencer-2.2.4.tgz#367c84d264dac40918717a254f49b652f5258086"
-  integrity sha512-D8e7/NAefM54Kujw1IN7w6xN9sltXD69g06fWbfkblrkw7lfakRRbBBqnTJIpAWeGrjKo74s2gvlV3NLAmXBgw==
+"@pankod/refine-inferencer@2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@pankod/refine-inferencer/-/refine-inferencer-2.4.0.tgz#bfe903c71b855dd984226793acf116f202660a0a"
+  integrity sha512-De3S/H9lSAAscJ07WaEa1PYJ+OLsu6rqdJ5MwT4JATowV/F6g6uOqdgEF4jVVHizWhLkkHFb/2f8PdhVoOLLpw==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
     "@pankod/refine-core" "^3.97.0"
@@ -1907,10 +1907,10 @@
   dependencies:
     kbar "^0.1.0-beta.36"
 
-"@pankod/refine-mui@^3.30.0":
-  version "3.61.3"
-  resolved "https://registry.yarnpkg.com/@pankod/refine-mui/-/refine-mui-3.61.3.tgz#3b1584f5b0a682aad0c6098dfdef6efec6b69715"
-  integrity sha512-M+fSnuy4lW20b16B6NcKpHCjL/apDzhHNUXqzXVMDqTjGGqaOmiyyg6awXj17c5IOY3ewsSXN0UMBuTasiumaA==
+"@pankod/refine-mui@3.61.5":
+  version "3.61.5"
+  resolved "https://registry.yarnpkg.com/@pankod/refine-mui/-/refine-mui-3.61.5.tgz#228791bc6400278c1e27adbac13f2cd66856a57e"
+  integrity sha512-hCq3+t8bgMEkyst8Vi8/YdOEzVl6g3BtCnTlZYcU9ItVFSpeBDcKtopXcp5zzj5GFzWcz4qXn3XwjFIH/oA+sA==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
