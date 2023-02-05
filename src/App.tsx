@@ -29,6 +29,8 @@ import {
 import axios, { AxiosRequestConfig } from 'axios';
 import { authProvider } from 'providers/auth-provider';
 import { AuthPage } from 'pages/auth/authPage';
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
+import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
 
 const axiosInstance = axios.create();
 
@@ -87,6 +89,7 @@ function App() {
                 create: UserCreate,
                 edit: UserEdit,
                 show: UserShow,
+                icon: <AccountCircleTwoToneIcon/>,
               },
               {
                 name: 'organizations',
@@ -94,6 +97,7 @@ function App() {
                 create: OrganizationCreate,
                 edit: OrganizationEdit,
                 show: OrganizationShow,
+                icon: <BusinessTwoToneIcon/>
               },
             ]}
           />
