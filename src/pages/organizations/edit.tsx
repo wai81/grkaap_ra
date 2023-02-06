@@ -1,5 +1,6 @@
 import { Edit, Box, TextField } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
+import {useTranslate} from "@pankod/refine-core";
 
 export const OrganizationEdit = () => {
     const {
@@ -9,7 +10,7 @@ export const OrganizationEdit = () => {
         control,
         formState: { errors },
     } = useForm();
-
+    const t = useTranslate();
     const organizationsData = queryResult?.data?.data;
 
     return (
@@ -29,8 +30,8 @@ export const OrganizationEdit = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="number"
-                    label="Id"
-                    name="id"                    
+                    label= {t('organizations.fields.id')}
+                    name="id"
                 />
                 <TextField
                     {...register("name", {
@@ -42,7 +43,7 @@ export const OrganizationEdit = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="text"
-                    label="Name"
+                    label={t('organizations.fields.name')}
                     name="name"
                 />
                 <TextField
@@ -55,7 +56,7 @@ export const OrganizationEdit = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="text"
-                    label="Fullname"
+                    label={t('organizations.fields.fullname')}
                     name="fullname"
                 />
                 {/* 

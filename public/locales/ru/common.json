@@ -69,8 +69,8 @@
   "actions": {
     "list": "Список",
     "create": "Создать",
-    "edit": "Изменит",
-    "show": "Показать"
+    "edit": "Изменить",
+    "show": "Просмотр"
   },
   "buttons": {
     "create": "Создать",
@@ -102,7 +102,7 @@
     "editError": "Ошибка при редактировании {{resource}} (код состояния: {{statusCode}})",
     "importProgress": "Импорт: {{processed}}/{{total}}"
   },
-  "loading": "Загрузка",
+  "loading": "Загрузка...",
   "tags": {
     "clone": "Клон"
   },

@@ -1,5 +1,6 @@
 import { Create, Box, TextField } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
+import {useTranslate} from "@pankod/refine-core";
 
 export const OrganizationCreate = () => {
     const {
@@ -9,6 +10,7 @@ export const OrganizationCreate = () => {
         control,
         formState: { errors },
     } = useForm();
+    const t = useTranslate()
 
     return (
         <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>
@@ -27,7 +29,7 @@ export const OrganizationCreate = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="number"
-                    label="Id"
+                    label={t('organizations.fields.id')}
                     name="id"                    
                 />
                 <TextField
@@ -40,7 +42,7 @@ export const OrganizationCreate = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="text"
-                    label="Name"
+                    label={t('organizations.fields.name')}
                     name="name"
                 />
                 <TextField
@@ -53,7 +55,7 @@ export const OrganizationCreate = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="text"
-                    label="Fullname"
+                    label={t('organizations.fields.fullname')}
                     name="fullname"
                 />
             </Box>

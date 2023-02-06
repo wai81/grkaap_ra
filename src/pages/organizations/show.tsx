@@ -1,4 +1,4 @@
-import { useShow } from "@pankod/refine-core";
+import {useShow, useTranslate} from "@pankod/refine-core";
 import {
     Show,
     Typography,
@@ -11,6 +11,7 @@ import {
 export const OrganizationShow = () => {
     const { queryResult } = useShow();
     const { data, isLoading } = queryResult;
+    const t = useTranslate();
 
     const record = data?.data;
 
@@ -18,19 +19,19 @@ export const OrganizationShow = () => {
         <Show isLoading={isLoading}>
             <Stack gap={1}>
                 <Typography variant="body1" fontWeight="bold">
-                    Id
+                    {t('organizations.fields.id')}
                 </Typography>
                 <NumberField value={record?.id ?? ""} />
                 <Typography variant="body1" fontWeight="bold">
-                    Name
+                    {t('organizations.fields.name')}
                 </Typography>
                 <TextField value={record?.name} />
                 <Typography variant="body1" fontWeight="bold">
-                    Fullname
+                    {t('organizations.fields.fullname')}
                 </Typography>
                 <TextField value={record?.fullname} />
                 <Typography variant="body1" fontWeight="bold">
-                    Created At
+                    {t('organizations.fields.created_аt')}
                 </Typography>
                 <DateField value={record?.created_at} />
             </Stack>
