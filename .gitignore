@@ -24,3 +24,7 @@ yarn-error.log*
 .idea/workspace.xml
 .idea/.name
 .idea/jsLinters/eslint.xml
+.idea/grkaap_rf.iml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/modules.xml
+.idea/vcs.xml
