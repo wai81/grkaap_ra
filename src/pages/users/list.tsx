@@ -4,14 +4,12 @@ import {
     DataGrid,
     GridColumns,
     EditButton,
-    ShowButton,
-    DeleteButton,
     List,
     Checkbox,
-    DateField, GridActionsCellItem,
+    DateField,
 } from '@pankod/refine-mui';
 import {useTranslate, useMany, useNavigation} from '@pankod/refine-core';
-import {Edit} from "@mui/icons-material";
+
 
 export const UserList = () => {
     const {show, edit} = useNavigation();
@@ -90,7 +88,7 @@ export const UserList = () => {
             },
             {
                 field: 'created_at',
-                headerName: t('users.fields.created_аt'),
+                headerName: t('users.fields.created_at'),
                 flex: 1,
                 minWidth: 80,
                 renderCell: function render({value}) {

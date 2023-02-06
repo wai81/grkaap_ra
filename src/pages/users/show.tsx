@@ -1,4 +1,4 @@
-import {useOne, useShow} from "@pankod/refine-core";
+import {useOne, useShow, useTranslate} from "@pankod/refine-core";
 import {
     Show,
     Typography,
@@ -11,6 +11,8 @@ import {
 export const UserShow = () => {
     const { queryResult } = useShow();
     const { data, isLoading } = queryResult;
+
+    const t = useTranslate();
 
     const record = data?.data;
 
@@ -26,31 +28,31 @@ export const UserShow = () => {
         <Show isLoading={isLoading}>
             <Stack gap={1}>
                 <Typography variant="body1" fontWeight="bold">
-                    Username
+                    {t('users.fields.username')}
                 </Typography>
                 <TextField value={record?.username} />
                 <Typography variant="body1" fontWeight="bold">
-                    Last Name
+                    {t('users.fields.last_name')}
                 </Typography>
                 <TextField value={record?.last_name} />
                 <Typography variant="body1" fontWeight="bold">
-                    First Name
+                    {t('users.fields.first_name')}
                 </Typography>
                 <TextField value={record?.first_name} />
                 <Typography variant="body1" fontWeight="bold">
-                    Patronymic
+                    {t('users.fields.patronymic')}
                 </Typography>
                 <TextField value={record?.patronymic} />
                 <Typography variant="body1" fontWeight="bold">
-                    Is Superuser
+                    {t('users.fields.is_superuser')}
                 </Typography>
                 <BooleanField value={record?.is_superuser} />
                 <Typography variant="body1" fontWeight="bold">
-                    Is Active
+                    {t('users.fields.is_active')}
                 </Typography>
                 <BooleanField value={record?.is_active} />
                 <Typography variant="body1" fontWeight="bold">
-                    Organization
+                    {t('users.fields.organization.title')}
                 </Typography>
                 {organizationIsLoading ? (
                     <>Loading...</>
@@ -58,7 +60,7 @@ export const UserShow = () => {
                     <>{organizationData?.data?.name}</>
                 )}
                 <Typography variant="body1" fontWeight="bold">
-                    Created At
+                    {t('users.fields.created_at')}
                 </Typography>
                 <DateField value={record?.created_at} />
             </Stack>

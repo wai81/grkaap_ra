@@ -4,8 +4,6 @@ import {
     DataGrid,
     GridColumns,
     EditButton,
-    ShowButton,
-    DeleteButton,
     List,
     DateField,
 } from '@pankod/refine-mui';
@@ -39,7 +37,7 @@ export const OrganizationList = () => {
             },
             {
                 field: 'created_at',
-                headerName:  t('organizations.fields.created_аt'),
+                headerName:  t('organizations.fields.created_at'),
                 minWidth: 50,
                 flex:1,
                 renderCell: function render({value}) {

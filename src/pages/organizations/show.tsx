@@ -31,7 +31,7 @@ export const OrganizationShow = () => {
                 </Typography>
                 <TextField value={record?.fullname} />
                 <Typography variant="body1" fontWeight="bold">
-                    {t('organizations.fields.created_аt')}
+                    {t('organizations.fields.created_at')}
                 </Typography>
                 <DateField value={record?.created_at} />
             </Stack>
