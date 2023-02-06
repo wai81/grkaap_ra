@@ -31,6 +31,11 @@ import { authProvider } from 'providers/auth-provider';
 import { AuthPage } from 'pages/auth/authPage';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
+import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
+import ClassTwoToneIcon from '@mui/icons-material/ClassTwoTone';
+import PeopleTwoToneIcon from '@mui/icons-material/PeopleTwoTone';
+
+import { SubunitsList, SubunitsCreate, SubunitsEdit, SubunitsShow } from "pages/subunits";
 
 const axiosInstance = axios.create();
 
@@ -82,24 +87,37 @@ function App() {
                   //formProps={{ defaultValues: { username: '', password: '' } }}
                 />
             )}
-            resources={[
-              {
-                name: 'users',
-                list: UserList,
-                create: UserCreate,
-                edit: UserEdit,
-                show: UserShow,
-                icon: <AccountCircleTwoToneIcon/>,
-              },
-              {
-                name: 'organizations',
-                list: OrganizationList,
-                create: OrganizationCreate,
-                edit: OrganizationEdit,
-                show: OrganizationShow,
-                icon: <BusinessTwoToneIcon/>
-              },
-            ]}
+            resources={[{
+              name: 'referenceBooks',
+              icon: <ClassTwoToneIcon/>
+            }, {
+              name: 'settings',
+              icon: <SettingsTwoToneIcon/>
+            }, {
+              name: 'users',
+              parentName: 'settings',
+              list: UserList,
+              create: UserCreate,
+              edit: UserEdit,
+              show: UserShow,
+              icon: <AccountCircleTwoToneIcon/>,
+            }, {
+              name: 'organizations',
+              parentName: 'referenceBooks',
+              list: OrganizationList,
+              create: OrganizationCreate,
+              edit: OrganizationEdit,
+              show: OrganizationShow,
+              icon: <BusinessTwoToneIcon/>
+            }, {
+              name: "subunits",
+              parentName: 'referenceBooks',
+              list: SubunitsList,
+              create: SubunitsCreate,
+              edit: SubunitsEdit,
+              show: SubunitsShow,
+              icon: <PeopleTwoToneIcon/>
+            }]}
           />
         </RefineKbarProvider>
       </RefineSnackbarProvider>

@@ -20,13 +20,13 @@ export const OrganizationList = () => {
                 field: 'id',
                 headerName: t('organizations.fields.id'),
                 type: 'number',
-                minWidth: 10,
+                minWidth: 5,
                 flex:1,
             },
             {
                 field: 'name',
                 headerName: t('organizations.fields.name'),
-                minWidth: 200,
+                minWidth: 150,
                 flex:1,
             },
             {

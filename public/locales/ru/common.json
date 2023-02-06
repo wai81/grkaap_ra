@@ -139,6 +139,12 @@
   "table": {
     "actions": "Действия"
   },
+  "settings": {
+    "settings":"Настройки"
+  },
+  "referenceBooks": {
+    "referenceBooks":"Справочники"
+  },
   "users": {
     "users": "Пользователи",
     "fields": {
