@@ -15,7 +15,7 @@ import { RefineKbarProvider } from '@pankod/refine-kbar';
 import { Title, Sider, Layout, Header } from 'components/layout';
 import { ColorModeContextProvider } from 'contexts';
 import { OffLayoutArea } from 'components/offLayoutArea';
-import { MuiInferencer } from '@pankod/refine-inferencer/mui';
+//import { MuiInferencer } from '@pankod/refine-inferencer/mui';
 import { API_URL, TOKEN_KEY } from './constants';
 import { UserList, UserCreate, UserEdit, UserShow } from 'pages/users';
 import {

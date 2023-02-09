@@ -1,4 +1,5 @@
 import { IOrganization } from './IOrganization';
+import {ISubunitFilterVariables} from "./ISubunit";
 
 export interface IUser {
   id: string;
@@ -31,4 +32,11 @@ export interface IUpdateUser {
   organization_id: number | null;
   is_superuser: boolean;
   is_active: boolean;
+}
+
+
+export interface IUserFilterVariables{
+  q?: string
+  organization?: string;
+  is_active?: boolean;
 }

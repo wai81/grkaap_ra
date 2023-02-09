@@ -39,7 +39,7 @@ export const SubunitsList = () => {
     const {dataGridProps, search, filters, sorter} = useDataGrid<ISubunit,
         HttpError,
         ISubunitFilterVariables>({
-        initialPageSize: 10,
+        //initialPageSize: 10,
         onSearch: (params) => {
             const filters: CrudFilters = [];
             const {q, organization} = params;
@@ -94,7 +94,6 @@ export const SubunitsList = () => {
             //     minWidth: 200,
             //     flex:1,
             // },
-
             {
                 field: "color_subunit",
                 headerName: "Color Subunit",
@@ -206,6 +205,7 @@ export const SubunitsList = () => {
                             <Controller
                                 control={control}
                                 name="organization"
+                                //defaultValue={null}
                                 render={({field}) => (
                                     <Autocomplete
                                         {...organizationAutocompleteProps}
@@ -214,9 +214,7 @@ export const SubunitsList = () => {
                                             field.onChange(value?.id ?? value);
                                         }}
                                         getOptionLabel={(item) => {
-                                            return (//item.name
-                                                //? item.name
-                                                organizationAutocompleteProps?.options?.find(
+                                            return (organizationAutocompleteProps?.options?.find(
                                                 (p) =>
                                                     p.id.toString() ===
                                                     item.id.toString(),
