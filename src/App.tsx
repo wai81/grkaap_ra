@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Refine } from '@pankod/refine-core';
 import {
   notificationProvider,
@@ -9,7 +8,6 @@ import {
   ReadyPage,
   ErrorComponent,
 } from '@pankod/refine-mui';
-//import dataProvider from "@pankod/refine-simple-rest";
 import { dataProvider } from './providers/data-provider/';
 import routerProvider from '@pankod/refine-react-router-v6';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +26,7 @@ import {
 } from 'pages/organizations';
 import axios, { AxiosRequestConfig } from 'axios';
 import { authProvider } from 'providers/auth-provider';
-import { AuthPage } from 'pages/auth/authPage';
+import { Login } from 'pages/auth/login';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
@@ -82,11 +80,7 @@ function App() {
             OffLayoutArea={OffLayoutArea}
             authProvider={authProvider(axiosInstance)}
             LoginPage={() => (
-                <AuthPage
-                  type="login"
-                  formProps={{ defaultValues: { username: '', password: '' } }}
-                  rememberMe={false}
-                />
+                <Login/>
             )}
             resources={[{
               name: 'reference',
