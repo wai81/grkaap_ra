@@ -9,3 +9,9 @@ export interface ISubunit {
     organization: IOrganization
     created_at: string;
 }
+
+export interface ISubunitFilterVariables {
+    q?: string;
+    organization?: string;
+    is_active?: boolean;
+}

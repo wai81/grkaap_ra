@@ -139,11 +139,14 @@
   "table": {
     "actions": "Действия"
   },
+  "filter": {
+    "title": "Поиск"
+  },
   "settings": {
     "settings":"Настройки"
   },
-  "referenceBooks": {
-    "referenceBooks":"Справочники"
+  "reference": {
+    "reference":"Справочники"
   },
   "users": {
     "users": "Пользователи",
@@ -200,6 +203,17 @@
           "placeholder": "Выберите организацию"
         }
       }
+    },
+    "filter": {
+      "search": {
+        "label": "Поиск",
+        "placeholder": "Введите строку для поиска"
+      },
+      "organization": {
+        "label": "Организация",
+        "placeholder": "Выберите организацию"
+      },
+      "submit": "Поиск"
     },
     "titles": {
       "create": "Новая Подразделение",

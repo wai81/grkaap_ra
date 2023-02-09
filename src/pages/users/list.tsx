@@ -54,13 +54,13 @@ export const UserList = () => {
                 },
                 minWidth: 150,
                 sortable: false,
-                renderCell: function render({ value }) {
-                  return organizationIsLoading ? (
-                    <>Loading...</>
-                  ) : (
-                    organizationData?.data?.find((item) => item.id === value)?.name
-                  );
-                },
+                // renderCell: function render({ value }) {
+                //   return organizationIsLoading ? (
+                //     <>Loading...</>
+                //   ) : (
+                //     organizationData?.data?.find((item) => item.id === value)?.name
+                //   );
+                // },
             },
             {
                 field: 'is_superuser',
@@ -126,6 +126,7 @@ export const UserList = () => {
 
             },
         ],
+        []
     );
 
     return (

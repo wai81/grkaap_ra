@@ -26,6 +26,8 @@ export const dataProvider = (
 
     const queryFilters = generateFilter(filters);
 
+    //console.log(queryFilters)
+
     const query: {
       page?: number;
       size?: number;
