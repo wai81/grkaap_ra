@@ -84,11 +84,12 @@ function App() {
             LoginPage={() => (
                 <AuthPage
                   type="login"
-                  //formProps={{ defaultValues: { username: '', password: '' } }}
+                  formProps={{ defaultValues: { username: '', password: '' } }}
+                  rememberMe={false}
                 />
             )}
             resources={[{
-              name: 'referenceBooks',
+              name: 'reference',
               icon: <ClassTwoToneIcon/>
             }, {
               name: 'settings',
@@ -103,15 +104,15 @@ function App() {
               icon: <AccountCircleTwoToneIcon/>,
             }, {
               name: 'organizations',
-              parentName: 'referenceBooks',
+              parentName: 'reference',
               list: OrganizationList,
               create: OrganizationCreate,
               edit: OrganizationEdit,
               show: OrganizationShow,
               icon: <BusinessTwoToneIcon/>
             }, {
-              name: "subunits",
-              parentName: 'referenceBooks',
+              name: 'subunits',
+              parentName: 'reference',
               list: SubunitsList,
               create: SubunitsCreate,
               edit: SubunitsEdit,
