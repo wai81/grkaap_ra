@@ -1,16 +1,7 @@
-import {
-    Edit,
-    Box,
-    TextField,
-    Checkbox,
-    FormControlLabel,
-    Autocomplete,
-    useAutocomplete,
-} from '@pankod/refine-mui';
-import {useForm, Controller} from '@pankod/refine-react-hook-form';
-import {IOrganization} from 'interfaces/IOrganization';
+import {Autocomplete, Box, Checkbox, Edit, FormControlLabel, TextField, useAutocomplete,} from '@pankod/refine-mui';
+import {Controller, useForm} from '@pankod/refine-react-hook-form';
 import {IUpdateUser} from 'interfaces/IUser';
-import {useTranslate} from "@pankod/refine-core";
+import {CrudFilters, useTranslate} from "@pankod/refine-core";
 
 export const UserEdit = () => {
     const {
@@ -27,9 +18,19 @@ export const UserEdit = () => {
     const usersData = queryResult?.data?.data;
 
     const {autocompleteProps: organizationAutocompleteProps} =
-        useAutocomplete<IOrganization>({
+        useAutocomplete({
             resource: 'organizations',
             sort: [{field: 'id', order: 'asc'}],
+            onSearch: ((value) => {
+                const filters: CrudFilters = [];
+                filters.push({
+                    field: "q",
+                    operator: "eq",
+                    value: (value.length) > 0 ? value : undefined,
+                });
+                return filters
+            }),
+
             defaultValue:
                 usersData?.organization == null
                     ? null
@@ -171,13 +172,16 @@ export const UserEdit = () => {
                                 getOptionLabel={(item) => {
                                     return (
                                         organizationAutocompleteProps?.options?.find(
-                                            (p) => p?.id?.toString() === item?.id?.toString()
-                                        )?.name ?? ''
+                                            (p) => p.id === item.id,
+                                        )?.name ?? ""
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) =>
                                     value === undefined ||
-                                    option?.id?.toString() === value?.name?.toString()
+                                    option.id === value.id
+                                    // option?.id?.toString() === value?.id?.toString() ||
+                                    // option?.id?.toString() === value?.toString()
+
                                 }
                                 renderInput={(params) => (
                                     <TextField

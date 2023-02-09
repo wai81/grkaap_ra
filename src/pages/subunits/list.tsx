@@ -77,6 +77,7 @@ export const SubunitsList = () => {
                 headerName: "Name",
                 minWidth: 100,
                 flex: 1,
+                filterable: false,
             },
             {
                 field: "organization",
@@ -85,6 +86,7 @@ export const SubunitsList = () => {
                 minWidth: 200,
                 flex: 1,
                 sortable: false,
+                filterable: false,
             },
             // {
             //     field: "fullname",
@@ -98,12 +100,14 @@ export const SubunitsList = () => {
                 headerName: "Color Subunit",
                 minWidth: 50,
                 flex: 1,
+                filterable: false,
             },
             {
                 field: "is_active",
                 headerName: "Is Active",
                 minWidth: 50,
                 flex: 1,
+                filterable: false,
                 renderCell: function render({value}) {
                     return <Checkbox checked={!!value}/>;
                 },
@@ -113,6 +117,7 @@ export const SubunitsList = () => {
                 type: "actions",
                 headerName: t('table.actions'),
                 sortable: false,
+                filterable: false,
                 renderCell: function render({row}) {
                     return (
                         <>
@@ -164,6 +169,15 @@ export const SubunitsList = () => {
         resource: "organizations",
         sort: [{field: 'id', order: 'asc'}],
         defaultValue: getDefaultFilter("organization.id", filters, "eq"),
+        onSearch : ((value) =>{
+            const filters: CrudFilters = [];
+            filters.push({
+                field: "q",
+                operator: "eq",
+                value: (value.length) > 0 ? value : undefined,
+            });
+            return filters
+        })
     });
 
     return (
@@ -197,7 +211,6 @@ export const SubunitsList = () => {
                                         {...organizationAutocompleteProps}
                                         {...field}
                                         onChange={(_, value) => {
-                                            console.log(value)
                                             field.onChange(value?.id ?? value);
                                         }}
                                         getOptionLabel={(item) => {

@@ -1,23 +1,7 @@
-import {
-    Create,
-    Box,
-    TextField,
-    Autocomplete,
-    useAutocomplete,
-} from '@pankod/refine-mui';
-import {useForm, Controller} from '@pankod/refine-react-hook-form';
-import {IOrganization} from 'interfaces/IOrganization';
+import {Autocomplete, Box, Create, TextField, useAutocomplete,} from '@pankod/refine-mui';
+import {Controller, useForm} from '@pankod/refine-react-hook-form';
 import {ICreateUser} from 'interfaces/IUser';
-import {useTranslate} from "@pankod/refine-core";
-
-export interface ICreateForm {
-    username: string;
-    last_name: string;
-    first_name: string;
-    patronymic: string;
-    password: string;
-    organization: IOrganization;
-}
+import {CrudFilters, useTranslate} from "@pankod/refine-core";
 
 export const UserCreate = () => {
     const {
@@ -30,9 +14,18 @@ export const UserCreate = () => {
     const t = useTranslate();
 
     const {autocompleteProps: organizationAutocompleteProps} =
-        useAutocomplete<IOrganization>({
+        useAutocomplete({
             resource: 'organizations',
             sort: [{field: 'id', order: 'asc'}],
+            onSearch: ((value) => {
+                const filters: CrudFilters = [];
+                filters.push({
+                    field: "q",
+                    operator: "eq",
+                    value: (value.length) > 0 ? value : undefined,
+                });
+                return filters
+            })
         });
 
     const handleOnSubmit = (data: any) => {
@@ -146,7 +139,7 @@ export const UserCreate = () => {
                                     field.onChange(value);
                                 }}
                                 getOptionLabel={(item) => {
-                                    //console.log(item);
+
                                     return (
                                         organizationAutocompleteProps?.options?.find(
                                             (p) => p.id === item.id
@@ -154,9 +147,7 @@ export const UserCreate = () => {
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) => {
-                                    // console.log(value.id);
-                                    // console.log(option);
-                                    //return option.id === value.id;
+
                                     return option.id === value.id;
                                 }}
                                 renderInput={(params) => (
