@@ -5,7 +5,7 @@ import {
     GridColumns,
     EditButton,
     List,
-    DateField,
+    DateField, ruRU,
 } from '@pankod/refine-mui';
 import {useNavigation, useTranslate} from '@pankod/refine-core';
 
@@ -69,6 +69,7 @@ export const OrganizationList = () => {
     return (
         <List>
             <DataGrid
+                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                 {...dataGridProps}
                 columns={columns}
                 autoHeight

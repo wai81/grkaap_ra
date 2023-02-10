@@ -6,7 +6,7 @@ import {
     EditButton,
     List,
     Checkbox,
-    DateField, Grid, Card, CardHeader, CardContent, Box, useAutocomplete, TextField, Autocomplete, Button,
+    DateField, Grid, Card, CardHeader, CardContent, Box, useAutocomplete, TextField, Autocomplete, Button, ruRU,
 } from '@pankod/refine-mui';
 import {useTranslate, useNavigation, HttpError, CrudFilters, BaseRecord, getDefaultFilter} from '@pankod/refine-core';
 import {IUser, IUserFilterVariables} from "../../interfaces/IUser";
@@ -176,7 +176,7 @@ export const UserList = () => {
     });
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} >
             <Grid item xs={12} lg={3}>
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
                     <CardHeader title={t("filter.title")}/>
@@ -251,6 +251,7 @@ export const UserList = () => {
             <Grid item xs={12} lg={9}>
                 <List>
                     <DataGrid
+                        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                         {...dataGridProps}
                         columns={columns}
                         filterModel={undefined}

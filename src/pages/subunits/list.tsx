@@ -17,7 +17,7 @@ import {
     Box,
     TextField,
     Autocomplete,
-    Button,
+    Button, ruRU,
 } from "@pankod/refine-mui";
 
 import {ISubunit, ISubunitFilterVariables} from "../../interfaces/ISubunit";
@@ -255,6 +255,7 @@ export const SubunitsList = () => {
             <Grid item xs={12} lg={9}>
                 <List>
                     <DataGrid
+                        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                         {...dataGridProps}
                         columns={columns}
                         filterModel={undefined}
