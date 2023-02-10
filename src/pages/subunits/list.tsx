@@ -1,23 +1,21 @@
 import React from "react";
 import {
-    useDataGrid,
-    DataGrid,
-    GridColumns,
-    EditButton,
-    ShowButton,
-    DeleteButton,
-    List,
-    Checkbox,
-    DateField,
-    useAutocomplete,
-    Grid,
-    Card,
-    CardHeader,
-    CardContent,
-    Box,
-    TextField,
     Autocomplete,
-    Button, ruRU,
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    Checkbox,
+    DataGrid,
+    EditButton,
+    Grid,
+    GridColumns,
+    List,
+    ruRU,
+    TextField,
+    useAutocomplete,
+    useDataGrid,
 } from "@pankod/refine-mui";
 
 import {ISubunit, ISubunitFilterVariables} from "../../interfaces/ISubunit";
@@ -31,7 +29,6 @@ import {
     useTranslate
 } from "@pankod/refine-core";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
-import {IOrganization} from "../../interfaces/IOrganization";
 
 export const SubunitsList = () => {
     //const {show, edit} = useNavigation();
@@ -69,31 +66,34 @@ export const SubunitsList = () => {
         }]
     });
 
+
     const columns = React.useMemo<GridColumns<ISubunit>>(
         () => [
 
-            {
-                field: "name",
-                headerName: "Name",
-                minWidth: 100,
-                flex: 1,
-                filterable: false,
-            },
-            {
-                field: "organization",
-                headerName: "Organization",
-                valueGetter: ({row}) => row.organization?.name,
-                minWidth: 200,
-                flex: 1,
-                sortable: false,
-                filterable: false,
-            },
             // {
-            //     field: "fullname",
-            //     headerName: "Fullname",
-            //     minWidth: 200,
-            //     flex:1,
+            //     field: "name",
+            //     headerName: "Name",
+            //     minWidth: 100,
+            //     flex: 1,
+            //     filterable: false,
             // },
+            // {
+            //     field: "organization",
+            //     headerName: "Organization",
+            //     valueGetter: ({row}) => row.organization?.name,
+            //     minWidth: 200,
+            //     flex: 1,
+            //     sortable: false,
+            //     filterable: false,
+            // },
+            {
+                field: "fullname",
+                headerName: "Fullname",
+                valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
+                minWidth: 500,
+                flex:1,
+                filterable: false,
+            },
             {
                 field: "color_subunit",
                 headerName: "Color Subunit",
@@ -255,6 +255,7 @@ export const SubunitsList = () => {
             <Grid item xs={12} lg={9}>
                 <List>
                     <DataGrid
+
                         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                         {...dataGridProps}
                         columns={columns}

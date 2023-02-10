@@ -15,7 +15,7 @@ import { RefineKbarProvider } from '@pankod/refine-kbar';
 import { Title, Sider, Layout, Header } from 'components/layout';
 import { ColorModeContextProvider } from 'contexts';
 import { OffLayoutArea } from 'components/offLayoutArea';
-//import { MuiInferencer } from '@pankod/refine-inferencer/mui';
+import { MuiInferencer } from '@pankod/refine-inferencer/mui';
 import { API_URL, TOKEN_KEY } from './constants';
 import { UserList, UserCreate, UserEdit, UserShow } from 'pages/users';
 import {
@@ -33,7 +33,7 @@ import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 import ClassTwoToneIcon from '@mui/icons-material/ClassTwoTone';
 import PeopleTwoToneIcon from '@mui/icons-material/PeopleTwoTone';
 
-import { SubunitsList, SubunitsCreate, SubunitsEdit, SubunitsShow } from "pages/subunits";
+import { SubunitsList, SubunitCreate, SubunitEdit, SubunitShow } from "pages/subunits";
 
 const axiosInstance = axios.create();
 
@@ -108,9 +108,9 @@ function App() {
               name: 'subunits',
               parentName: 'reference',
               list: SubunitsList,
-              create: SubunitsCreate,
-              edit: SubunitsEdit,
-              show: SubunitsShow,
+              create: SubunitCreate,
+              edit: SubunitEdit,
+              show: SubunitShow,
               icon: <PeopleTwoToneIcon/>
             }]}
           />
