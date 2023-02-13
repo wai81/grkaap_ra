@@ -113,7 +113,7 @@ export const UserList = () => {
                 flex: 1,
                 minWidth: 80,
                 renderCell: function render({value}) {
-                    return <DateField value={value}/>;
+                    return <DateField value={value} format={"DD.MM.YYYY"}/>;
                 },
             },
             {

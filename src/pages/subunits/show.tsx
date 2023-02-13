@@ -44,7 +44,7 @@ export const SubunitShow = () => {
                 <Typography variant="body1" fontWeight="bold">
                     {t('subunits.fields.created_at')}
                 </Typography>
-                <DateField value={record?.created_at} />
+                <DateField value={record?.created_at} format={"DD.MM.YYYY"}/>
             </Stack>
         </Show>
     );

@@ -38,10 +38,10 @@ export const OrganizationList = () => {
             {
                 field: 'created_at',
                 headerName:  t('organizations.fields.created_at'),
-                minWidth: 50,
+                minWidth: 10,
                 flex:1,
                 renderCell: function render({value}) {
-                    return <DateField value={value}/>;
+                    return <DateField value={value} format={"DD.MM.YYYY"}/>;
                 },
             },
             {
@@ -63,7 +63,7 @@ export const OrganizationList = () => {
                 flex:1,
             },
         ],
-        []
+        [t]
     );
 
     return (
