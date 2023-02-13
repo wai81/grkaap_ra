@@ -110,8 +110,8 @@ function App() {
                                 name: "booking_transport",
                                 parentName: 'bookingTransport',
                                 list: Booking_transportList,
-                                create: Booking_transportCreate,
-                                edit: Booking_transportEdit,
+                                // create: Booking_transportCreate,
+                                // edit: Booking_transportEdit,
                                 show: Booking_transportShow,
                                 icon: <EmojiTransportationTwoToneIcon/>
                             }, {
