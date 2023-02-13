@@ -98,56 +98,58 @@ function App() {
                         LoginPage={() => (
                             <Login/>
                         )}
-                        resources={[{
-                            name: 'bookingTransport',
-                            icon: <AirportShuttleTwoToneIcon/>
-                        }, {
-                            name: "booking_transport",
-                            //parentName: 'bookingTransport',
-                            list: Booking_transportList,
-                            create: Booking_transportCreate,
-                            edit: Booking_transportEdit,
-                            show: Booking_transportShow,
-                            icon: <EmojiTransportationTwoToneIcon/>
-                        }, {
-                            name: 'transports',
-                            parentName: 'bookingTransport',
-                            list: TransportList,
-                            create: TransportCreate,
-                            edit: TransportEdit,
-                            show: TransportShow,
-                            icon: <DriveEtaTwoToneIcon/>
-                        }, {
-                            name: 'reference',
-                            icon: <ClassTwoToneIcon/>
-                        }, {
-                            name: 'organizations',
-                            parentName: 'reference',
-                            list: OrganizationList,
-                            create: OrganizationCreate,
-                            edit: OrganizationEdit,
-                            show: OrganizationShow,
-                            icon: <BusinessTwoToneIcon/>
-                        }, {
-                            name: 'subunits',
-                            parentName: 'reference',
-                            list: SubunitsList,
-                            create: SubunitCreate,
-                            edit: SubunitEdit,
-                            show: SubunitShow,
-                            icon: <PeopleTwoToneIcon/>
-                        }, {
-                            name: 'settings',
-                            icon: <SettingsTwoToneIcon/>
-                        }, {
-                            name: 'users',
-                            parentName: 'settings',
-                            list: UserList,
-                            create: UserCreate,
-                            edit: UserEdit,
-                            show: UserShow,
-                            icon: <AccountCircleTwoToneIcon/>,
-                        }]}
+
+                        resources={[
+                            {
+                                name: 'reference',
+                                icon: <ClassTwoToneIcon/>
+                            }, {
+                                name: 'bookingTransport',
+                                icon: <AirportShuttleTwoToneIcon/>
+                            }, {
+                                name: "booking_transport",
+                                parentName: 'bookingTransport',
+                                list: Booking_transportList,
+                                create: Booking_transportCreate,
+                                edit: Booking_transportEdit,
+                                show: Booking_transportShow,
+                                icon: <EmojiTransportationTwoToneIcon/>
+                            }, {
+                                name: 'transports',
+                                parentName: 'bookingTransport',
+                                list: TransportList,
+                                create: TransportCreate,
+                                edit: TransportEdit,
+                                show: TransportShow,
+                                icon: <DriveEtaTwoToneIcon/>
+                            }, {
+                                name: 'organizations',
+                                parentName: 'reference',
+                                list: OrganizationList,
+                                create: OrganizationCreate,
+                                edit: OrganizationEdit,
+                                show: OrganizationShow,
+                                icon: <BusinessTwoToneIcon/>
+                            }, {
+                                name: 'subunits',
+                                parentName: 'reference',
+                                list: SubunitsList,
+                                create: SubunitCreate,
+                                edit: SubunitEdit,
+                                show: SubunitShow,
+                                icon: <PeopleTwoToneIcon/>
+                            }, {
+                                name: 'settings',
+                                icon: <SettingsTwoToneIcon/>
+                            }, {
+                                name: 'users',
+                                parentName: 'settings',
+                                list: UserList,
+                                create: UserCreate,
+                                edit: UserEdit,
+                                show: UserShow,
+                                icon: <AccountCircleTwoToneIcon/>,
+                            }]}
                     />
                 </RefineKbarProvider>
             </RefineSnackbarProvider>
