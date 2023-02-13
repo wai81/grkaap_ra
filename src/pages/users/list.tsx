@@ -6,7 +6,18 @@ import {
     EditButton,
     List,
     Checkbox,
-    DateField, Grid, Card, CardHeader, CardContent, Box, useAutocomplete, TextField, Autocomplete, Button, ruRU,
+    DateField,
+    Grid,
+    Card,
+    CardHeader,
+    CardContent,
+    Box,
+    useAutocomplete,
+    TextField,
+    Autocomplete,
+    Button,
+    ruRU,
+    BooleanField,
 } from '@pankod/refine-mui';
 import {useTranslate, useNavigation, HttpError, CrudFilters, BaseRecord, getDefaultFilter} from '@pankod/refine-core';
 import {IUser, IUserFilterVariables} from "../../interfaces/IUser";
@@ -48,8 +59,25 @@ export const UserList = () => {
         }]
     });
 
-    const columns = React.useMemo<GridColumns<any>>(
+    const columns = React.useMemo<GridColumns<IUser>>(
         () => [
+            {
+                field: 'is_active',
+                headerName: t('users.fields.is_active'),
+                align: "center",
+                headerAlign: "center",
+                flex: 0.5,
+                renderCell: function render({ row }) {
+                    return (
+                        <BooleanField
+                            svgIconProps={{
+                                sx: { width: "16px", height: "16px" },
+                            }}
+                            value={row.is_active}
+                        />
+                    );
+                },
+            },
             {
                 field: 'last_name',
                 headerName: t('users.fields.last_name'),
@@ -92,15 +120,7 @@ export const UserList = () => {
                     return <Checkbox checked={!!value}/>;
                 },
             },
-            {
-                field: 'is_active',
-                headerName: 'Is Active',
-                flex: 1,
-                minWidth: 50,
-                renderCell: function render({value}) {
-                    return <Checkbox checked={!!value}/>;
-                },
-            },
+
             {
                 field: 'username',
                 headerName: t('users.fields.username'),

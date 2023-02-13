@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    Autocomplete,
+    Autocomplete, BooleanField,
     Box,
     Button,
     Card,
@@ -70,25 +70,27 @@ export const SubunitsList = () => {
     const columns = React.useMemo<GridColumns<ISubunit>>(
         () => [
 
-            // {
-            //     field: "name",
-            //     headerName: "Name",
-            //     minWidth: 100,
-            //     flex: 1,
-            //     filterable: false,
-            // },
-            // {
-            //     field: "organization",
-            //     headerName: "Organization",
-            //     valueGetter: ({row}) => row.organization?.name,
-            //     minWidth: 200,
-            //     flex: 1,
-            //     sortable: false,
-            //     filterable: false,
-            // },
+
+            {
+                field: "is_active",
+                headerName: t('subunits.fields.is_active'),
+                align: "center",
+                headerAlign: "center",
+                flex: 0.5,
+                renderCell: function render({ row }) {
+                    return (
+                        <BooleanField
+                            svgIconProps={{
+                                sx: { width: "16px", height: "16px" },
+                            }}
+                            value={row.is_active}
+                        />
+                    );
+                },
+            },
             {
                 field: "fullname",
-                headerName: "Fullname",
+                headerName: t('subunits.fields.fullname'),
                 valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
                 minWidth: 500,
                 flex:1,
@@ -96,21 +98,12 @@ export const SubunitsList = () => {
             },
             {
                 field: "color_subunit",
-                headerName: "Color Subunit",
+                headerName: t('subunits.fields.color_subunit'),
                 minWidth: 50,
                 flex: 1,
                 filterable: false,
             },
-            {
-                field: "is_active",
-                headerName: "Is Active",
-                minWidth: 50,
-                flex: 1,
-                filterable: false,
-                renderCell: function render({value}) {
-                    return <Checkbox checked={!!value}/>;
-                },
-            },
+
             {
                 field: "actions",
                 type: "actions",

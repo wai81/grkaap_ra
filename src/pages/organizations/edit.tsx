@@ -1,5 +1,5 @@
-import { Edit, Box, TextField } from "@pankod/refine-mui";
-import { useForm } from "@pankod/refine-react-hook-form";
+import {Edit, Box, TextField, FormControlLabel, Switch} from "@pankod/refine-mui";
+import {Controller, useForm} from "@pankod/refine-react-hook-form";
 import {useTranslate} from "@pankod/refine-core";
 
 export const OrganizationEdit = () => {
@@ -59,12 +59,26 @@ export const OrganizationEdit = () => {
                     label={t('organizations.fields.fullname')}
                     name="fullname"
                 />
-                {/* 
-                    DatePicker component is not included in "@pankod/refine-mui" package.
-                    To use a <DatePicker> component, you can follow the official documentation for Material UI.
-                    
-                    Docs: https://mui.com/x/react-date-pickers/date-picker/#basic-usage
-                */}
+                <Controller
+                    control={control}
+                    name="is_active"
+                    // eslint-disable-next-line
+                    defaultValue={null as any}
+                    render={({field}) => (
+                        <FormControlLabel
+                            label={t('organizations.fields.is_active')}
+                            control={
+                                <Switch
+                                    {...field}
+                                    checked={field.value}
+                                    onChange={(event) => {
+                                        field.onChange(event.target.checked);
+                                    }}
+                                />
+                            }
+                        />
+                    )}
+                />
 
             </Box>
         </Edit>

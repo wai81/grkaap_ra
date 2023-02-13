@@ -1,26 +1,38 @@
 import React from 'react';
-import {
-    useDataGrid,
-    DataGrid,
-    GridColumns,
-    EditButton,
-    List,
-    DateField, ruRU,
-} from '@pankod/refine-mui';
+import {BooleanField, DataGrid, DateField, EditButton, GridColumns, List, ruRU, useDataGrid,} from '@pankod/refine-mui';
 import {useNavigation, useTranslate} from '@pankod/refine-core';
+import {IOrganization} from "../../interfaces/IOrganization";
 
 export const OrganizationList = () => {
     const {show, edit} = useNavigation();
     const t = useTranslate();
     const {dataGridProps} = useDataGrid();
 
-    const columns = React.useMemo<GridColumns<any>>(
+    const columns = React.useMemo<GridColumns<IOrganization>>(
         () => [
+            {
+                field: 'is_active',
+                headerName:  t('organizations.fields.is_active'),
+                align: "center",
+                headerAlign: "center",
+                flex: 0.5,
+                renderCell: function render({ row }) {
+                    return (
+                        <BooleanField
+                            svgIconProps={{
+                                sx: { width: "16px", height: "16px" },
+                            }}
+                            value={row.is_active}
+                        />
+                    );
+                },
+            },
             {
                 field: 'id',
                 headerName: t('organizations.fields.id'),
                 type: 'number',
-                minWidth: 5,
+                align: "center",
+                headerAlign: "center",
                 flex:1,
             },
             {
@@ -39,11 +51,14 @@ export const OrganizationList = () => {
                 field: 'created_at',
                 headerName:  t('organizations.fields.created_at'),
                 minWidth: 10,
-                flex:1,
+                align: "center",
+                headerAlign: "center",
+                flex: 0.5,
                 renderCell: function render({value}) {
                     return <DateField value={value} format={"DD.MM.YYYY"}/>;
                 },
             },
+
             {
                 field: 'actions',
                 type: "actions",
@@ -59,8 +74,8 @@ export const OrganizationList = () => {
                 },
                 align: 'center',
                 headerAlign: 'center',
-                minWidth: 100,
-                flex:1,
+                minWidth: 10,
+                flex: 0.5,
             },
         ],
         [t]

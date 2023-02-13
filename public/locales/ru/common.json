@@ -156,7 +156,11 @@
       "last_name": "Фамилия",
       "first_name": "Имя",
       "patronymic": "Отчество",
-      "is_active": "Актуален",
+      "is_active": "Статус",
+      "status": {
+        "enable": "Активен",
+        "disable": "Не активен"
+      },
       "is_superuser": "Полные права",
       "organization": {
         "title": "Организация",
@@ -180,6 +184,7 @@
       "id": "№ ТОР",
       "name": "Наименование",
       "fullname": "Полное Наименование",
+      "is_active": "Статус",
       "created_at": "Cоздан"
     },
     "titles": {
@@ -195,8 +200,9 @@
       "id": "Id",
       "name": "Наименование",
       "fullname": "Полное Наименование",
+      "color_subunit": "Цвет",
       "created_at": "Cоздан",
-      "is_active": "Актуальна",
+      "is_active": "Статус",
       "organization": {
         "title": "Организация",
         "filter": {

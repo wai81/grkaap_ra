@@ -1,4 +1,16 @@
-import {Autocomplete, Box, Checkbox, Edit, FormControlLabel, TextField, useAutocomplete,} from '@pankod/refine-mui';
+import {
+    Autocomplete,
+    Box,
+    Checkbox,
+    Edit,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    TextField,
+    useAutocomplete,
+} from '@pankod/refine-mui';
 import {Controller, useForm} from '@pankod/refine-react-hook-form';
 import {IUpdateUser} from 'interfaces/IUser';
 import {CrudFilters, useTranslate} from "@pankod/refine-core";
@@ -11,6 +23,7 @@ export const UserEdit = () => {
         control,
         handleSubmit,
         formState: {errors},
+        setValue,
     } = useForm();
 
     const t = useTranslate();
@@ -136,26 +149,65 @@ export const UserEdit = () => {
                             />
                         )}
                     />
+                    <FormControl>
+                        <FormLabel
+                            sx={{
+                                    marginBottom: "5px",
+                                    fontWeight: "700",
+                                   // fontSize: "14px",
+                                   color: "text.primary",
+                            }}
+                            required
+                        >
+                            {t('users.fields.is_active')}
+                        </FormLabel>
                     <Controller
                         control={control}
                         name="is_active"
                         // eslint-disable-next-line
-                        defaultValue={null as any}
+                        defaultValue={true}
                         render={({field}) => (
-                            <FormControlLabel
-                                label={t('users.fields.is_active')}
-                                control={
-                                    <Checkbox
-                                        {...field}
-                                        checked={field.value}
-                                        onChange={(event) => {
-                                            field.onChange(event.target.checked);
-                                        }}
-                                    />
-                                }
-                            />
+                            <RadioGroup
+                                {...field}
+                                onChange={(event) => {
+                                    const value =
+                                        event.target.value ===
+                                        "true";
+
+                                    setValue("is_active", value, {
+                                        shouldValidate: true,
+                                    });
+
+                                    return value;
+                                }}
+                                row
+                            >
+                                <FormControlLabel
+                                    value={true}
+                                    control={<Radio />}
+                                    label={t("users.fields.status.enable")}
+                                />
+                                <FormControlLabel
+                                    value={false}
+                                    control={<Radio />}
+                                    label={t("users.fields.status.disable")}
+                                />
+                            </RadioGroup>
+                            // <FormControlLabel
+                            //     label={t('users.fields.is_active')}
+                            //     control={
+                            //         <Switch
+                            //             {...field}
+                            //             checked={field.value}
+                            //             onChange={(event) => {
+                            //                 field.onChange(event.target.checked);
+                            //             }}
+                            //         />
+                            //     }
+                            // />
                         )}
                     />
+                    </FormControl>
                     <Controller
                         control={control}
                         name="organization"
