@@ -8,7 +8,7 @@ import {
     CardHeader,
     Checkbox,
     DataGrid,
-    EditButton,
+    EditButton, ExportButton,
     Grid,
     GridColumns,
     List,
@@ -253,7 +253,17 @@ export const SubunitsList = () => {
                 </Card>
             </Grid>
             <Grid item xs={12} lg={9}>
-                <List>
+                <List
+                headerButtons={({defaultButtons})=>(
+                    <>
+                        {defaultButtons}
+                        <ExportButton
+                            onClick={triggerExport}
+                            loading={isLoading}
+                        />
+                    </>
+                )}
+                >
                     <DataGrid
 
                         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
