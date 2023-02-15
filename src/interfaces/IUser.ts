@@ -34,9 +34,8 @@ export interface IUpdateUser {
   is_active: boolean;
 }
 
-
 export interface IUserFilterVariables{
   q?: string
   organization?: string;
-  is_active?: boolean;
+  //is_active?: boolean;
 }

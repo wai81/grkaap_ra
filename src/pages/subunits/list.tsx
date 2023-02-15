@@ -6,13 +6,12 @@ import {
     Card,
     CardContent,
     CardHeader,
-    Checkbox,
     DataGrid,
-    EditButton, ExportButton,
+    EditButton, ExportButton, FormControl,
     Grid,
-    GridColumns,
-    List,
-    ruRU,
+    GridColumns, InputLabel,
+    List, MenuItem,
+    ruRU, Select,
     TextField,
     useAutocomplete,
     useDataGrid,
@@ -39,7 +38,7 @@ export const SubunitsList = () => {
         //initialPageSize: 10,
         onSearch: (params) => {
             const filters: CrudFilters = [];
-            const {q, organization} = params;
+            const {q, organization, is_active} = params;
 
             filters.push({
                 field: "q",
@@ -53,11 +52,11 @@ export const SubunitsList = () => {
                 value: (organization ?? [].length) > 0 ? organization : undefined,
             });
 
-            // filters.push({
-            //     field: "is_active",
-            //     operator: "in",
-            //     value: (is_active ?? []).length > 0 ? is_active : undefined,
-            // });
+            filters.push({
+                field: "is_active",
+                operator: "eq",
+                value: is_active !== "" ? is_active : undefined,
+            });
             return filters
         },
         initialSorter: [{
@@ -91,11 +90,19 @@ export const SubunitsList = () => {
             {
                 field: "fullname",
                 headerName: t('subunits.fields.fullname'),
-                valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
+                //valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
                 minWidth: 500,
                 flex:1,
                 filterable: false,
             },
+            // {
+            //     field: "fullname_",
+            //     headerName: t('subunits.fields.fullname'),
+            //     valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
+            //     minWidth: 500,
+            //     flex:1,
+            //     filterable: false,
+            // },
             {
                 field: "color_subunit",
                 headerName: t('subunits.fields.color_subunit'),
@@ -236,7 +243,40 @@ export const SubunitsList = () => {
                                     />
                                 )}
                             />
-                            {/*<Controller/>*/}
+                            <Controller
+                                control={control}
+                                name="is_active"
+                                render={({ field }) => (
+                                    <FormControl margin="normal" size="small">
+                                        <InputLabel id="isActive-select">
+                                            {t("subunits.filter.is_active.label")}
+                                        </InputLabel>
+                                        <Select
+                                            {...field}
+                                            labelId="isActive-select"
+                                            label={t(
+                                                "subunits.filter.is_active.label",
+                                            )}
+                                        >
+                                            <MenuItem value="">
+                                                <em>{t(
+                                                    "subunits.filter.is_active.none",
+                                                )}</em>
+                                            </MenuItem>
+                                            <MenuItem value="true">
+                                                {t(
+                                                    "subunits.filter.is_active.true",
+                                                )}
+                                            </MenuItem>
+                                            <MenuItem value="false">
+                                                {t(
+                                                    "subunits.filter.is_active.false",
+                                                )}
+                                            </MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                )}
+                            />
                             <br />
                             <Button type="submit" variant="contained">
                                 {t("subunits.filter.submit")}

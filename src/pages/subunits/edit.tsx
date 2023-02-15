@@ -28,7 +28,7 @@ export const SubunitEdit = () => {
 
     const {autocompleteProps: organizationAutocompleteProps} =
         useAutocomplete({
-            resource: 'organizations',
+            resource: 'organizations/',
             sort: [{field: 'id', order: 'asc'}],
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
@@ -69,15 +69,16 @@ export const SubunitEdit = () => {
                     sx={{display: 'flex', flexDirection: 'column'}}
                     autoComplete="off"
                 >
-                    {/*<TextField*/}
-                    {/*    {...register('fullname', )}*/}
-                    {/*    margin="normal"*/}
-                    {/*    fullWidth*/}
-                    {/*    InputLabelProps={{shrink: true}}*/}
-                    {/*    type="text"*/}
-                    {/*    label={t('subunits.fields.fullname')}*/}
-                    {/*    name="fullname"*/}
-                    {/*/>*/}
+                    <TextField
+                        {...register('fullname', )}
+                        margin="normal"
+                        fullWidth
+                        InputLabelProps={{shrink: true}}
+                        type="text"
+                        label={t('subunits.fields.fullname')}
+                        name="fullname"
+                        disabled={true}
+                    />
                     <TextField
                         {...register('name', )}
                         margin="normal"
@@ -103,9 +104,9 @@ export const SubunitEdit = () => {
                                 getOptionLabel={(item) => {
 
                                     return (
-                                        organizationAutocompleteProps?.options?.find(
+                                        `${organizationAutocompleteProps?.options?.find(
                                             (p) => p.id === item.id
-                                        )?.name ?? ''
+                                        )?.name  ?? ''} (${item.id})`
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) => {

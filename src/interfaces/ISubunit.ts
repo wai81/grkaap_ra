@@ -13,14 +13,14 @@ export interface ISubunit {
 export interface ISubunitFilterVariables {
     q?: string;
     organization?: string;
-    is_active?: boolean;
+    is_active?: boolean | string;
 }
 
 export interface ICreateSubunit {
-    name: string,
-    fullname?: string,
-    color_subunit?: string,
-    organization_id?: IOrganization
+    name: string;
+    fullname?: string;
+    color_subunit?: string;
+    organization_id?: IOrganization["id"];
 }
 
 
@@ -28,6 +28,6 @@ export interface IUpdateSubunit {
     name: string,
     fullname?: string,
     color_subunit?: string,
-    organization_id?: IOrganization
-    is_active: boolean;
+    organization_id?: IOrganization["id"],
+    is_active: boolean,
 }
