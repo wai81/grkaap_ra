@@ -49,7 +49,7 @@ export const SubunitEdit = () => {
     const handleOnSubmit = (data: any) => {
         const subunit: IUpdateSubunit= {
             name: data.name,
-            fullname: `${data.name} (${data.organization.name})`,
+            title: `${data.name} (${data.organization.name})`,
             color_subunit: data.color_subunit,
             organization_id: data.organization.id,
             is_active: data.is_active,
@@ -70,7 +70,7 @@ export const SubunitEdit = () => {
                     autoComplete="off"
                 >
                     <TextField
-                        {...register('fullname', )}
+                        {...register('title', )}
                         margin="normal"
                         fullWidth
                         InputLabelProps={{shrink: true}}

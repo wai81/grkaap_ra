@@ -32,7 +32,7 @@ export const SubunitCreate = () => {
     const handleOnSubmit = (data: any) => {
         const subunit: ICreateSubunit= {
             name: data.name,
-            fullname: `${data.name} (${data.organization.name})`,
+            title: `${data.name} (${data.organization.name})`,
             color_subunit: data.color_subunit,
             organization_id: data.organization.id,
         };

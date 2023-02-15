@@ -88,7 +88,7 @@ export const SubunitsList = () => {
                 },
             },
             {
-                field: "fullname",
+                field: "title",
                 headerName: t('subunits.fields.fullname'),
                 //valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
                 minWidth: 500,
@@ -145,14 +145,13 @@ export const SubunitsList = () => {
             return {
                 id: item.id,
                 name: item.name,
-                full_name: item.fullname,
+                title: item.title,
                 organization: item.organization.name,
                 active: item.is_active,
                 created: item.created_at
             }
         }
     });
-
 
     const {register, handleSubmit, control} = useForm<
         BaseRecord,

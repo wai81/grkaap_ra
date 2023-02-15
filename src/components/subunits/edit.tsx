@@ -59,7 +59,7 @@ export const EditSubunit: React.FC<UseModalFormReturnType<ISubunit, HttpError, I
     const handleOnSubmit = (data: ISubunit) => {
         const subunit: IUpdateSubunit = {
             name: data.name,
-            fullname: `${data.name} (${data.organization.name})`,
+            title: `${data.name} (${data.organization.name})`,
             color_subunit: data.color_subunit,
             organization_id: data.organization.id,
             is_active: data.is_active,
@@ -106,7 +106,7 @@ export const EditSubunit: React.FC<UseModalFormReturnType<ISubunit, HttpError, I
                     >
                         <form onSubmit={handleSubmit(handleOnSubmit)}>
                             <TextField
-                                {...register('fullname', )}
+                                {...register('title', )}
                                 margin="normal"
                                 fullWidth
                                 InputLabelProps={{shrink: true}}

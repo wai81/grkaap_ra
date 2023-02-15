@@ -3,7 +3,7 @@ import {IOrganization} from "./IOrganization";
 export interface ISubunit {
     id: string,
     name: string,
-    fullname: string,
+    title: string,
     is_active: boolean,
     color_subunit: string,
     organization: IOrganization
@@ -18,7 +18,7 @@ export interface ISubunitFilterVariables {
 
 export interface ICreateSubunit {
     name: string;
-    fullname?: string;
+    title?: string;
     color_subunit?: string;
     organization_id?: IOrganization["id"];
 }
@@ -26,7 +26,7 @@ export interface ICreateSubunit {
 
 export interface IUpdateSubunit {
     name: string,
-    fullname?: string,
+    title?: string,
     color_subunit?: string,
     organization_id?: IOrganization["id"],
     is_active: boolean,
