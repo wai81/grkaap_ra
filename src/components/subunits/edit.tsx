@@ -59,7 +59,7 @@ export const EditSubunit: React.FC<UseModalFormReturnType<ISubunit, HttpError, I
     const handleOnSubmit = (data: ISubunit) => {
         const subunit: IUpdateSubunit = {
             name: data.name,
-            title: `${data.name} (${data.organization.name})`,
+            title: `${data.name} (${data.organization.title})`,
             color_subunit: data.color_subunit,
             organization_id: data.organization.id,
             is_active: data.is_active,
@@ -142,7 +142,7 @@ export const EditSubunit: React.FC<UseModalFormReturnType<ISubunit, HttpError, I
                                             return (
                                                 organizationAutocompleteProps?.options?.find(
                                                     (p) => p.id === item.id
-                                                )?.name ?? ''
+                                                )?.title ?? ''
                                             );
                                         }}
                                         isOptionEqualToValue={(option, value) => {

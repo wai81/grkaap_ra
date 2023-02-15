@@ -141,9 +141,9 @@ export const UserCreate = () => {
                                 getOptionLabel={(item) => {
 
                                     return (
-                                        organizationAutocompleteProps?.options?.find(
+                                        `${organizationAutocompleteProps?.options?.find(
                                             (p) => p.id === item.id
-                                        )?.name ?? ''
+                                        )?.title  ?? ''} (${item.id})`
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) => {

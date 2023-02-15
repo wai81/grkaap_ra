@@ -57,7 +57,7 @@ export const UserShow = () => {
                 {organizationIsLoading ? (
                     <>Loading...</>
                 ) : (
-                    <>{organizationData?.data?.name}</>
+                    <>{organizationData?.data?.title}</>
                 )}
                 <Typography variant="body1" fontWeight="bold">
                     {t('users.fields.created_at')}

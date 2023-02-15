@@ -36,8 +36,8 @@ export const OrganizationList = () => {
                 flex:1,
             },
             {
-                field: 'name',
-                headerName: t('organizations.fields.name'),
+                field: 'title',
+                headerName: t('organizations.fields.title'),
                 minWidth: 150,
                 flex:1,
             },

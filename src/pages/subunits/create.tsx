@@ -32,7 +32,7 @@ export const SubunitCreate = () => {
     const handleOnSubmit = (data: any) => {
         const subunit: ICreateSubunit= {
             name: data.name,
-            title: `${data.name} (${data.organization.name})`,
+            title: `${data.name} (${data.organization.title})`,
             color_subunit: data.color_subunit,
             organization_id: data.organization.id,
         };
@@ -80,9 +80,9 @@ export const SubunitCreate = () => {
                                 getOptionLabel={(item) => {
 
                                     return (
-                                        organizationAutocompleteProps?.options?.find(
+                                        `${organizationAutocompleteProps?.options?.find(
                                             (p) => p.id === item.id
-                                        )?.name ?? ''
+                                        )?.title  ?? ''} (${item.id})`
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) => {

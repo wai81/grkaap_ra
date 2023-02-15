@@ -100,7 +100,7 @@ export const UserList = () => {
                 field: 'organization',
                 headerName: t('users.fields.organization.title'),
                 flex: 1,
-                valueGetter: ({row}) => row?.organization?.name,
+                valueGetter: ({row}) => row?.organization?.title,
                 minWidth: 150,
                 sortable: false,
                 // renderCell: function render({ value }) {

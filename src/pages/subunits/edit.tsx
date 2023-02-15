@@ -49,7 +49,7 @@ export const SubunitEdit = () => {
     const handleOnSubmit = (data: any) => {
         const subunit: IUpdateSubunit= {
             name: data.name,
-            title: `${data.name} (${data.organization.name})`,
+            title: `${data.name} (${data.organization.title})`,
             color_subunit: data.color_subunit,
             organization_id: data.organization.id,
             is_active: data.is_active,
@@ -75,8 +75,8 @@ export const SubunitEdit = () => {
                         fullWidth
                         InputLabelProps={{shrink: true}}
                         type="text"
-                        label={t('subunits.fields.fullname')}
-                        name="fullname"
+                        label={t('subunits.fields.title')}
+                        name="title"
                         disabled={true}
                     />
                     <TextField
@@ -106,7 +106,7 @@ export const SubunitEdit = () => {
                                     return (
                                         `${organizationAutocompleteProps?.options?.find(
                                             (p) => p.id === item.id
-                                        )?.name  ?? ''} (${item.id})`
+                                        )?.title  ?? ''} (${item.id})`
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) => {

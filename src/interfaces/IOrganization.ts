@@ -1,20 +1,20 @@
 export interface IOrganization {
     id: number,
-    name: string,
+    title: string,
     fullname: string,
     is_active: boolean
 }
 
 export interface IOrganizationCreate {
     id: number,
-    name: string,
+    title: string,
     fullname: string,
 }
 
 
 export interface IOrganizationUpdate {
     id: number,
-    name: string,
+    title: string,
     fullname: string,
     is_active: boolean
 }

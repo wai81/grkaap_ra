@@ -61,7 +61,7 @@ export const Booking_transportList= () => {
                 align: "left",
                 flex: 1,
                 renderCell: function render({row}) {
-                    return `${row.subunit?.name} (${row.subunit.organization?.name})`
+                    return row.subunit?.title
                 },
             },
 

@@ -89,7 +89,7 @@ export const SubunitsList = () => {
             },
             {
                 field: "title",
-                headerName: t('subunits.fields.fullname'),
+                headerName: t('subunits.fields.title'),
                 //valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
                 minWidth: 500,
                 flex:1,
@@ -146,7 +146,7 @@ export const SubunitsList = () => {
                 id: item.id,
                 name: item.name,
                 title: item.title,
-                organization: item.organization.name,
+                organization: item.organization.title,
                 active: item.is_active,
                 created: item.created_at
             }

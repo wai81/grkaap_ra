@@ -31,8 +31,9 @@ export const dataProvider = (
     const query: {
       page?: number;
       size?: number;
-      sort?: string;
-      order?: string;
+      order_by?: string;
+      // sort?: string;
+      // order?: string;
     } = hasPagination
       ? {
           page: current,
@@ -43,8 +44,9 @@ export const dataProvider = (
     const generatedSort = generateSort(sort);
     if (generatedSort) {
       const { _sort, _order } = generatedSort;
-      query.sort = _sort.join(',');
-      query.order = _order.join(',');
+      // query.sort = _sort.join(',');
+      // query.order = _order.join(',');
+      query.order_by = `${_order}${_sort}`;
     }
 
     const { data, headers } = await httpClient.get(

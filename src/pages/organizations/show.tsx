@@ -23,9 +23,9 @@ export const OrganizationShow = () => {
                 </Typography>
                 <NumberField value={record?.id ?? ""} />
                 <Typography variant="body1" fontWeight="bold">
-                    {t('organizations.fields.name')}
+                    {t('organizations.fields.title')}
                 </Typography>
-                <TextField value={record?.name} />
+                <TextField value={record?.title} />
                 <Typography variant="body1" fontWeight="bold">
                     {t('organizations.fields.fullname')}
                 </Typography>

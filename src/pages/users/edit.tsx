@@ -223,9 +223,9 @@ export const UserEdit = () => {
                                 }}
                                 getOptionLabel={(item) => {
                                     return (
-                                        organizationAutocompleteProps?.options?.find(
-                                            (p) => p.id === item.id,
-                                        )?.name ?? ""
+                                        `${organizationAutocompleteProps?.options?.find(
+                                            (p) => p.id === item.id
+                                        )?.title  ?? ''} (${item.id})`
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) =>

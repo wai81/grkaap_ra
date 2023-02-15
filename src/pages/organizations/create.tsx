@@ -33,7 +33,7 @@ export const OrganizationCreate = () => {
                     name="id"                    
                 />
                 <TextField
-                    {...register("name", {
+                    {...register("title", {
                         required: "This field is required",
                     })}
                     error={!!(errors as any)?.name}
@@ -42,8 +42,8 @@ export const OrganizationCreate = () => {
                     fullWidth
                     InputLabelProps={{ shrink: true }}
                     type="text"
-                    label={t('organizations.fields.name')}
-                    name="name"
+                    label={t('organizations.fields.title')}
+                    name="title"
                 />
                 <TextField
                     {...register("fullname", {
