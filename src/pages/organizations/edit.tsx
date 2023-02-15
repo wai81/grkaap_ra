@@ -5,13 +5,11 @@ import {useTranslate} from "@pankod/refine-core";
 export const OrganizationEdit = () => {
     const {
         saveButtonProps,
-        refineCore: { queryResult },
         register,
         control,
         formState: { errors },
     } = useForm();
     const t = useTranslate();
-    const organizationsData = queryResult?.data?.data;
 
     return (
         <Edit saveButtonProps={saveButtonProps}>

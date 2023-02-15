@@ -28,7 +28,7 @@ import {ISubunitFilterVariables} from "../../interfaces/ISubunit";
 export const UserList = () => {
     const {show, edit} = useNavigation();
     const t = useTranslate();
-    const {dataGridProps, search, filters, sorter} = useDataGrid<IUser, HttpError, IUserFilterVariables>({
+    const {dataGridProps, search, filters} = useDataGrid<IUser, HttpError, IUserFilterVariables>({
         //initialPageSize: 10,
         onSearch: (params) => {
             const filters: CrudFilters = [];

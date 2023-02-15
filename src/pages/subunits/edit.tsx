@@ -1,17 +1,16 @@
-import {CrudFilters, IResourceComponentsProps, useTranslate} from "@pankod/refine-core";
-import {MuiInferencer} from "@pankod/refine-inferencer/mui";
+import {CrudFilters, useTranslate} from "@pankod/refine-core";
+//import {MuiInferencer} from "@pankod/refine-inferencer/mui";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
 import {
     Autocomplete,
     Box,
-    Checkbox,
     Edit,
     FormControlLabel,
     Switch,
     TextField,
     useAutocomplete
 } from "@pankod/refine-mui";
-import {ICreateSubunit, IUpdateSubunit} from "../../interfaces/ISubunit";
+import {IUpdateSubunit} from "../../interfaces/ISubunit";
 
 export const SubunitEdit = () => {
     const {

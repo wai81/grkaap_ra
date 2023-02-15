@@ -7,7 +7,6 @@ export const OrganizationCreate = () => {
         saveButtonProps,
         refineCore: { formLoading },
         register,
-        control,
         formState: { errors },
     } = useForm();
     const t = useTranslate()

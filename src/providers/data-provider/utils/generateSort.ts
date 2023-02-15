@@ -9,10 +9,10 @@ export const generateSort = (sort?: CrudSorting) => {
     sort.map((item) => {
       _sort.push(item.field);
       //_order.push(item.order);
-      if (item.order== "asc") {
+      if (item.order === "asc") {
         _order.push("+");
       }
-      if (item.order == "desc") {
+      if (item.order === "desc") {
         _order.push("-");
       }
     });
