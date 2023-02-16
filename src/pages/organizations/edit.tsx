@@ -1,4 +1,4 @@
-import {Edit, Box, TextField, FormControlLabel, Switch} from "@pankod/refine-mui";
+import {Box, Edit, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@pankod/refine-mui";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
 import {useTranslate} from "@pankod/refine-core";
 
@@ -8,6 +8,7 @@ export const OrganizationEdit = () => {
         register,
         control,
         formState: { errors },
+        setValue,
     } = useForm();
     const t = useTranslate();
 
@@ -57,27 +58,73 @@ export const OrganizationEdit = () => {
                     label={t('organizations.fields.fullname')}
                     name="fullname"
                 />
-                <Controller
-                    control={control}
-                    name="is_active"
-                    // eslint-disable-next-line
-                    defaultValue={null as any}
-                    render={({field}) => (
-                        <FormControlLabel
-                            label={t('organizations.fields.is_active')}
-                            control={
-                                <Switch
-                                    {...field}
-                                    checked={field.value}
-                                    onChange={(event) => {
-                                        field.onChange(event.target.checked);
-                                    }}
-                                />
-                            }
-                        />
-                    )}
-                />
+                {/*<Controller*/}
+                {/*    control={control}*/}
+                {/*    name="is_active"*/}
+                {/*    // eslint-disable-next-line*/}
+                {/*    defaultValue={null as any}*/}
+                {/*    render={({field}) => (*/}
+                {/*        <FormControlLabel*/}
+                {/*            label={t('organizations.fields.is_active')}*/}
+                {/*            control={*/}
+                {/*                <Switch*/}
+                {/*                    {...field}*/}
+                {/*                    checked={field.value}*/}
+                {/*                    onChange={(event) => {*/}
+                {/*                        field.onChange(event.target.checked);*/}
+                {/*                    }}*/}
+                {/*                />*/}
+                {/*            }*/}
+                {/*        />*/}
+                {/*    )}*/}
+                {/*/>*/}
+                <FormControl>
+                    <FormLabel
+                        sx={{
+                            marginBottom: "5px",
+                            fontWeight: "700",
+                            // fontSize: "14px",
+                            color: "text.primary",
+                        }}
+                        required
+                    >
+                        {t('organizations.fields.is_active')}
+                    </FormLabel>
+                    <Controller
+                        control={control}
+                        name="is_active"
+                        // eslint-disable-next-line
+                        defaultValue={true}
+                        render={({field}) => (
+                            <RadioGroup
+                                {...field}
+                                onChange={(event) => {
+                                    const value =
+                                        event.target.value ===
+                                        "true";
 
+                                    setValue("is_active", value, {
+                                        shouldValidate: true,
+                                    });
+
+                                    return value;
+                                }}
+                                row
+                            >
+                                <FormControlLabel
+                                    value={true}
+                                    control={<Radio/>}
+                                    label={t("organizations.fields.status.enable")}
+                                />
+                                <FormControlLabel
+                                    value={false}
+                                    control={<Radio/>}
+                                    label={t("organizations.fields.status.disable")}
+                                />
+                            </RadioGroup>
+                        )}
+                    />
+                </FormControl>
             </Box>
         </Edit>
     );

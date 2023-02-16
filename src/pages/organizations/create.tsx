@@ -35,8 +35,8 @@ export const OrganizationCreate = () => {
                     {...register("title", {
                         required: "This field is required",
                     })}
-                    error={!!(errors as any)?.name}
-                    helperText={(errors as any)?.name?.message}
+                    error={!!(errors as any)?.title}
+                    helperText={(errors as any)?.title?.message}
                     margin="normal"
                     fullWidth
                     InputLabelProps={{ shrink: true }}

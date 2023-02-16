@@ -189,6 +189,10 @@
       "title": "Наименование",
       "fullname": "Полное Наименование",
       "is_active": "Статус",
+      "status": {
+        "enable": "Активен",
+        "disable": "Не активен"
+      },
       "created_at": "Cоздан"
     },
     "titles": {
@@ -207,6 +211,10 @@
       "color_subunit": "Цвет",
       "created_at": "Cоздан",
       "is_active": "Статус",
+      "status": {
+        "enable": "Активен",
+        "disable": "Не активен"
+      },
       "organization": {
         "title": "Организация",
         "filter": {
@@ -241,9 +249,13 @@
   "transports": {
     "transports": "Транспорт",
     "fields": {
-      "name": "Наименование",
-      "fullname": "Полное Наименование",
+      "title": "Наименование",
+      "details": "Описание",
       "is_active": "Статус",
+      "status": {
+        "enable": "Активен",
+        "disable": "Не активен"
+      },
       "created_at": "Cоздан"
     },
     "titles": {
@@ -262,6 +274,10 @@
       "allDay": "На весь день",
       "subunit": "Подразделение",
       "is_active": "Статус",
+      "status": {
+        "enable": "Активен",
+        "disable": "Не активен"
+      },
       "created_at": "Cоздан"
     },
     "titles": {

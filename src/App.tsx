@@ -15,7 +15,7 @@ import {RefineKbarProvider} from '@pankod/refine-kbar';
 import {Title, Sider, Layout, Header} from 'components/layout';
 import {ColorModeContextProvider} from 'contexts';
 import {OffLayoutArea} from 'components/offLayoutArea';
-import {MuiInferencer} from '@pankod/refine-inferencer/mui';
+//import {MuiInferencer} from '@pankod/refine-inferencer/mui';
 import {API_URL, TOKEN_KEY} from './constants';
 import {UserList, UserCreate, UserEdit, UserShow} from 'pages/users';
 import {
@@ -42,12 +42,17 @@ import EmojiTransportationTwoToneIcon from '@mui/icons-material/EmojiTransportat
 import AirportShuttleTwoToneIcon from '@mui/icons-material/AirportShuttleTwoTone';
 import DriveEtaTwoToneIcon from '@mui/icons-material/DriveEtaTwoTone';
 
-import {TransportList, TransportCreate, TransportEdit, TransportShow} from "pages/transports";
+import {
+    TransportList,
+    TransportCreate,
+    TransportEdit,
+    TransportShow
+} from "pages/transports";
 
 import {
     Booking_transportList,
-    Booking_transportCreate,
-    Booking_transportEdit,
+    //Booking_transportCreate,
+    //Booking_transportEdit,
     Booking_transportShow
 } from "pages/booking_transports";
 

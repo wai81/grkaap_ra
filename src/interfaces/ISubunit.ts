@@ -1,12 +1,12 @@
 import {IOrganization} from "./IOrganization";
 
 export interface ISubunit {
-    id: string,
-    name: string,
-    title: string,
-    is_active: boolean,
-    color_subunit: string,
-    organization: IOrganization
+    id: string;
+    name: string;
+    title: string;
+    is_active: boolean;
+    color_subunit: string;
+    organization: IOrganization;
     created_at: string;
 }
 
@@ -25,9 +25,9 @@ export interface ICreateSubunit {
 
 
 export interface IUpdateSubunit {
-    name: string,
-    title?: string,
-    color_subunit?: string,
-    organization_id?: IOrganization["id"],
-    is_active: boolean,
+    name: string;
+    title?: string;
+    color_subunit?: string;
+    organization_id?: IOrganization["id"];
+    is_active: boolean;
 }

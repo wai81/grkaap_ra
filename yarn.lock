@@ -1898,10 +1898,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@pankod/refine-inferencer@2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@pankod/refine-inferencer/-/refine-inferencer-2.4.0.tgz#bfe903c71b855dd984226793acf116f202660a0a"
-  integrity sha512-De3S/H9lSAAscJ07WaEa1PYJ+OLsu6rqdJ5MwT4JATowV/F6g6uOqdgEF4jVVHizWhLkkHFb/2f8PdhVoOLLpw==
+"@pankod/refine-inferencer@2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@pankod/refine-inferencer/-/refine-inferencer-2.6.0.tgz#f2704abdcb2992ce89d904dfd53d3969fa8a060f"
+  integrity sha512-MujX5gqerwagT0fAkB3Yh3/hSSVuRPB87GmvDW3K9zUMaciitgXx8CttHRo6oJY/HA0UDgG7vTq0K/NXwNwOdQ==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
     "@pankod/refine-core" "^3.97.0"

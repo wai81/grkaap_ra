@@ -5,8 +5,11 @@ import {
     Autocomplete,
     Box,
     Edit,
+    FormControl,
     FormControlLabel,
-    Switch,
+    FormLabel,
+    Radio,
+    RadioGroup,
     TextField,
     useAutocomplete
 } from "@pankod/refine-mui";
@@ -20,6 +23,7 @@ export const SubunitEdit = () => {
         control,
         handleSubmit,
         formState: {errors},
+        setValue
     } = useForm();
     const t = useTranslate();
 
@@ -126,26 +130,73 @@ export const SubunitEdit = () => {
                             />
                         )}
                     />
-                    <Controller
-                        control={control}
-                        name="is_active"
-                        // eslint-disable-next-line
-                        defaultValue={null as any}
-                        render={({field}) => (
-                            <FormControlLabel
-                                label={t('subunits.fields.is_active')}
-                                control={
-                                    <Switch
-                                        {...field}
-                                        checked={field.value}
-                                        onChange={(event) => {
-                                            field.onChange(event.target.checked);
-                                        }}
+                    {/*<Controller*/}
+                    {/*    control={control}*/}
+                    {/*    name="is_active"*/}
+                    {/*    // eslint-disable-next-line*/}
+                    {/*    defaultValue={null as any}*/}
+                    {/*    render={({field}) => (*/}
+                    {/*        <FormControlLabel*/}
+                    {/*            label={t('subunits.fields.is_active')}*/}
+                    {/*            control={*/}
+                    {/*                <Switch*/}
+                    {/*                    {...field}*/}
+                    {/*                    checked={field.value}*/}
+                    {/*                    onChange={(event) => {*/}
+                    {/*                        field.onChange(event.target.checked);*/}
+                    {/*                    }}*/}
+                    {/*                />*/}
+                    {/*            }*/}
+                    {/*        />*/}
+                    {/*    )}*/}
+                    {/*/>*/}
+                    <FormControl>
+                        <FormLabel
+                            sx={{
+                                marginBottom: "5px",
+                                fontWeight: "700",
+                                // fontSize: "14px",
+                                color: "text.primary",
+                            }}
+                            required
+                        >
+                            {t('subunits.fields.is_active')}
+                        </FormLabel>
+                        <Controller
+                            control={control}
+                            name="is_active"
+                            // eslint-disable-next-line
+                            defaultValue={true}
+                            render={({field}) => (
+                                <RadioGroup
+                                    {...field}
+                                    onChange={(event) => {
+                                        const value =
+                                            event.target.value ===
+                                            "true";
+
+                                        setValue("is_active", value, {
+                                            shouldValidate: true,
+                                        });
+
+                                        return value;
+                                    }}
+                                    row
+                                >
+                                    <FormControlLabel
+                                        value={true}
+                                        control={<Radio/>}
+                                        label={t("subunits.fields.status.enable")}
                                     />
-                                }
-                            />
-                        )}
-                    />
+                                    <FormControlLabel
+                                        value={false}
+                                        control={<Radio/>}
+                                        label={t("subunits.fields.status.disable")}
+                                    />
+                                </RadioGroup>
+                            )}
+                        />
+                    </FormControl>
                 </Box>
             </Edit>
         </form>
