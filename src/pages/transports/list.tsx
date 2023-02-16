@@ -1,14 +1,51 @@
-import {useNavigation, useTranslate} from "@pankod/refine-core";
+import {BaseRecord, CrudFilters, getDefaultFilter, HttpError, useNavigation, useTranslate} from "@pankod/refine-core";
 //import {MuiInferencer} from "@pankod/refine-inferencer/mui";
-import {BooleanField, DataGrid, EditButton, GridColumns, List, ruRU, useDataGrid} from "@pankod/refine-mui";
+import {
+    BooleanField, Box, Button,
+    Card, CardContent,
+    CardHeader,
+    DataGrid,
+    EditButton, FormControl,
+    Grid,
+    GridColumns, InputLabel,
+    List, MenuItem,
+    ruRU, Select, TextField,
+    useDataGrid
+} from "@pankod/refine-mui";
 import React from "react";
 
 import {ITransport} from "../../interfaces/ITransport";
+import {IBookingTransportFilterVariables} from "../../interfaces/IBookingTransport";
+import {Controller, useForm} from "@pankod/refine-react-hook-form";
+import {ISubunitFilterVariables} from "../../interfaces/ISubunit";
 
 export const TransportList = () => {
     const {show} = useNavigation();
     const t = useTranslate();
-    const {dataGridProps} = useDataGrid();
+    const {dataGridProps, search, filters} = useDataGrid<ITransport,
+        HttpError,
+        IBookingTransportFilterVariables>({
+        onSearch: (params) => {
+            const filters: CrudFilters = [];
+            const {q, is_active} = params;
+
+            filters.push({
+                field: "q",
+                operator: "eq",
+                value: q !== "" ? q : undefined,
+            });
+            filters.push({
+                field: "is_active",
+                operator: "eq",
+                value: is_active !== "" ? is_active : undefined,
+            });
+            return filters
+        },
+        initialSorter: [{
+            field: 'title',
+            order: 'asc'
+        }]
+    });
     const columns = React.useMemo<GridColumns<ITransport>>(
         () => [
             {
@@ -31,13 +68,13 @@ export const TransportList = () => {
             {
                 field: 'title',
                 headerName: t('transports.fields.title'),
-                minWidth: 150,
+                minWidth: 100,
                 flex: 1,
             },
             {
                 field: 'details',
                 headerName: t('transports.fields.details'),
-                minWidth: 500,
+                minWidth: 200,
                 flex: 1,
             },
             {
@@ -60,21 +97,99 @@ export const TransportList = () => {
             },
         ],
         [t])
+
+    const {register, handleSubmit, control} = useForm<BaseRecord,
+        HttpError,
+        IBookingTransportFilterVariables>({
+        defaultValues: {
+            q: getDefaultFilter('q', filters, 'eq'),
+        },
+    });
+
     return (
-        <List>
-            <DataGrid
-                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-                {...dataGridProps}
-                columns={columns}
-                autoHeight
-                sx={{
-                    "& .MuiDataGrid-cell:hover": {
-                        cursor: "pointer",
-                    },
-                }}
-                onRowClick={(row) => {
-                    show("transports", row.id);
-                }}
-            />
-        </List>)
+        <Grid container spacing={2}>
+            <Grid item xs={12} lg={3}>
+                <Card sx={{paddingX: {xs: 2, md: 0}}}>
+                    <CardHeader title={t("filter.title")}/>
+                    <CardContent sx={{pt: 0}}>
+                        <Box
+                            component="form"
+                            sx={{ display: "flex", flexDirection: "column" }}
+                            autoComplete="off"
+                            onSubmit={handleSubmit(search)}
+                        >
+                            <TextField
+                                {...register("q")}
+                                label={t("transports.filter.search.label")}
+                                placeholder={t(
+                                    "transports.filter.search.placeholder",
+                                )}
+                                margin="normal"
+                                fullWidth
+                                autoFocus
+                                size="small"
+                            />
+                            <Controller
+                                control={control}
+                                name="is_active"
+                                render={({ field }) => (
+                                    <FormControl margin="normal" size="small">
+                                        <InputLabel id="isActive-select">
+                                            {t("transports.filter.is_active.label")}
+                                        </InputLabel>
+                                        <Select
+                                            {...field}
+                                            labelId="isActive-select"
+                                            label={t(
+                                                "transports.filter.is_active.label",
+                                            )}
+                                        >
+                                            <MenuItem value="">
+                                                <em>{t(
+                                                    "transports.filter.is_active.none",
+                                                )}</em>
+                                            </MenuItem>
+                                            <MenuItem value="true">
+                                                {t(
+                                                    "transports.filter.is_active.true",
+                                                )}
+                                            </MenuItem>
+                                            <MenuItem value="false">
+                                                {t(
+                                                    "transports.filter.is_active.false",
+                                                )}
+                                            </MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                )}
+                            />
+                            <br />
+                            <Button type="submit" variant="contained">
+                                {t("transports.filter.submit")}
+                            </Button>
+                        </Box>
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs={12} lg={9}>
+            <List>
+                <DataGrid
+                    localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+                    {...dataGridProps}
+                    columns={columns}
+                    filterModel={undefined}
+                    autoHeight
+                    sx={{
+                        "& .MuiDataGrid-cell:hover": {
+                            cursor: "pointer",
+                        },
+                    }}
+                    onRowClick={(row) => {
+                        show("transports", row.id);
+                    }}
+                />
+            </List>
+            </Grid>
+        </Grid>
+    )
 };

@@ -31,6 +31,7 @@ import {Controller, useForm} from "@pankod/refine-react-hook-form";
 
 export const SubunitsList = () => {
     //const {show, edit} = useNavigation();
+    const {show} = useNavigation();
     const t = useTranslate();
     const {dataGridProps, search, filters, sorter} = useDataGrid<ISubunit,
         HttpError,
@@ -60,11 +61,10 @@ export const SubunitsList = () => {
             return filters
         },
         initialSorter: [{
-            field: 'name',
-            order: 'desc'
+            field: 'title',
+            order: 'asc'
         }]
     });
-
 
     const columns = React.useMemo<GridColumns<ISubunit>>(
         () => [
@@ -133,8 +133,6 @@ export const SubunitsList = () => {
         ],
         [t],
     );
-
-    const {show} = useNavigation();
 
     const {isLoading, triggerExport} = useExport<ISubunit>({
         sorter,
