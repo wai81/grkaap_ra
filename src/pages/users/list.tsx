@@ -54,7 +54,7 @@ export const UserList = () => {
             return filters
         },
         initialSorter: [{
-            field: 'name',
+            field: 'last_name',
             order: 'desc'
         }]
     });

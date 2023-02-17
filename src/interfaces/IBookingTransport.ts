@@ -8,9 +8,12 @@ export interface IBookingTransport {
     startDate: string;
     endDate: string;
     allDay: boolean;
-    details: string;
+    description: string;
+    count_man: number;
     subunit: ISubunit;
     transport: ITransport;
+    organization: IOrganization;
+    created_at: string;
     is_active: boolean;
 }
 
@@ -29,9 +32,11 @@ export interface ICreateBookingTransport {
     startDate: string;
     endDate: string;
     allDay?: boolean;
-    details?: string;
+    description?: string;
+    count_man: number;
     subunit_id?: ISubunit["id"];
     transport_id?: ITransport["id"];
+    organization_id?: IOrganization["id"];
 }
 
 export interface IUpdateBookingTransport {
@@ -39,7 +44,10 @@ export interface IUpdateBookingTransport {
     startDate: string;
     endDate: string;
     allDay?: boolean;
-    details?: string;
+    description?: string;
+    count_man: number;
     subunit_id?: ISubunit["id"];
     transport_id?: ITransport["id"];
+    organization_id?: IOrganization["id"];
+    is_active: boolean;
 }

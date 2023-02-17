@@ -1,23 +1,26 @@
-import {useNavigation, useTranslate} from "@pankod/refine-core";
+import {useNavigation, useSelect, useTranslate} from "@pankod/refine-core";
 //import { MuiInferencer } from "@pankod/refine-inferencer/mui";
-import {BooleanField, DataGrid, DateField, EditButton, GridColumns, List, ruRU, useDataGrid} from "@pankod/refine-mui";
+import {BooleanField, DataGrid, DateField, EditButton, GridColumns, GridToolbar, List, ruRU, useDataGrid} from "@pankod/refine-mui";
 import React from "react";
+import {IBookingTransport} from "../../interfaces/IBookingTransport";
+import {IOrganization} from "../../interfaces/IOrganization";
 
-export const Booking_transportList= () => {
+export const Booking_transportList = () => {
     const {show, edit} = useNavigation();
     const t = useTranslate();
-    const {dataGridProps}=useDataGrid();
+    const {dataGridProps}=useDataGrid<IBookingTransport>();
 
-    const columns = React.useMemo<GridColumns<any>>(
+    const {
+        options,
+        queryResult: { isLoading },
+    } = useSelect<IOrganization>({
+        resource: "organizations",
+        hasPagination: false,
+    });
+
+    const columns = React.useMemo<GridColumns<IBookingTransport>>(
         ()=>[
 
-            {
-                field: 'title',
-
-                headerName: t('booking_transport.fields.title'),
-                minWidth: 150,
-                flex:1,
-            },
             {
                 field: 'startDate',
                 headerAlign:"center",
@@ -28,6 +31,13 @@ export const Booking_transportList= () => {
                 renderCell: function render({value}) {
                     return <DateField value={value} format={"DD.MM.YYYY (HH:mm)"}/>;
                 },
+            },
+            {
+                field: 'title',
+
+                headerName: t('booking_transport.fields.title'),
+                minWidth: 150,
+                flex:1,
             },
             {
                 field: 'endDate',
@@ -51,7 +61,17 @@ export const Booking_transportList= () => {
                     svgIconProps={{
                         sx: { width: "16px", height: "16px" },
                     }}
-                        value={row.is_active}/>;
+                        value={row.allDay}/>;
+                },
+            },
+            {
+                field: 'organization',
+                headerName: t('booking_transport.fields.organization'),
+                headerAlign:"center",
+                align: "left",
+                flex: 1,
+                renderCell: function render({row}) {
+                    return row.organization?.title
                 },
             },
             {
@@ -64,8 +84,26 @@ export const Booking_transportList= () => {
                     return row.subunit?.title
                 },
             },
-
-
+            {
+                field: 'count_man',
+                headerName: t('booking_transport.fields.count_man'),
+                headerAlign:"center",
+                align: "center",
+                flex: 1,
+                // renderCell: function render({row}) {
+                //     return row.subunit?.title
+                // },
+            },
+            {
+                field: 'transport',
+                headerName: t('booking_transport.fields.transport'),
+                headerAlign:"center",
+                align: "left",
+                flex: 1,
+                renderCell: function render({row}) {
+                    return row.transport?.title
+                },
+            },
             {
                 field: 'actions',
                 type: "actions",
@@ -85,7 +123,7 @@ export const Booking_transportList= () => {
                 flex: 0.5,
             },
         ],
-        [t]
+        [options, isLoading],
     );
 
     return (
@@ -94,6 +132,9 @@ export const Booking_transportList= () => {
             localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
             {...dataGridProps}
             columns={columns}
+            components={{
+                Toolbar: GridToolbar,
+            }}
             autoHeight
             sx={{
                 "& .MuiDataGrid-cell:hover": {

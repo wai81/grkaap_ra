@@ -15,7 +15,7 @@ import {RefineKbarProvider} from '@pankod/refine-kbar';
 import {Title, Sider, Layout, Header} from 'components/layout';
 import {ColorModeContextProvider} from 'contexts';
 import {OffLayoutArea} from 'components/offLayoutArea';
-//import {MuiInferencer} from '@pankod/refine-inferencer/mui';
+import {MuiInferencer} from '@pankod/refine-inferencer/mui';
 import {API_URL, TOKEN_KEY} from './constants';
 import {UserList, UserCreate, UserEdit, UserShow} from 'pages/users';
 import {
@@ -51,10 +51,14 @@ import {
 
 import {
     Booking_transportList,
-    //Booking_transportCreate,
+    Booking_transportCreate,
     //Booking_transportEdit,
     Booking_transportShow
 } from "pages/booking_transports";
+
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
+import 'moment/locale/ru';
 
 const axiosInstance = axios.create();
 
@@ -85,6 +89,7 @@ function App() {
         <ColorModeContextProvider>
             <CssBaseline/>
             <GlobalStyles styles={{html: {WebkitFontSmoothing: 'auto'}}}/>
+            <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale='ru' >
             <RefineSnackbarProvider>
                 <RefineKbarProvider>
                     <Refine
@@ -115,7 +120,7 @@ function App() {
                                 name: "booking_transport",
                                 parentName: 'bookingTransport',
                                 list: Booking_transportList,
-                                // create: Booking_transportCreate,
+                                create: Booking_transportCreate,
                                 // edit: Booking_transportEdit,
                                 show: Booking_transportShow,
                                 icon: <EmojiTransportationTwoToneIcon/>
@@ -158,6 +163,7 @@ function App() {
                     />
                 </RefineKbarProvider>
             </RefineSnackbarProvider>
+            </LocalizationProvider>
         </ColorModeContextProvider>
     );
 }
