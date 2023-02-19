@@ -2,6 +2,7 @@ import React from 'react';
 import {BooleanField, DataGrid, DateField, EditButton, GridColumns, List, ruRU, useDataGrid,} from '@pankod/refine-mui';
 import {useNavigation, useTranslate} from '@pankod/refine-core';
 import {IOrganization} from "../../interfaces/IOrganization";
+import { ItemStatus } from 'components/itemStatus';
 
 export const OrganizationList = () => {
     const {show, edit} = useNavigation();
@@ -18,7 +19,7 @@ export const OrganizationList = () => {
                 flex: 0.5,
                 renderCell: function render({ row }) {
                     return (
-                        <BooleanField
+                        <ItemStatus
                             svgIconProps={{
                                 sx: { width: "16px", height: "16px" },
                             }}

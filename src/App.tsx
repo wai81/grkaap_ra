@@ -52,7 +52,7 @@ import {
 import {
     Booking_transportList,
     Booking_transportCreate,
-    //Booking_transportEdit,
+    Booking_transportEdit,
     Booking_transportShow
 } from "pages/booking_transports";
 
@@ -121,7 +121,7 @@ function App() {
                                 parentName: 'bookingTransport',
                                 list: Booking_transportList,
                                 create: Booking_transportCreate,
-                                // edit: Booking_transportEdit,
+                                edit: Booking_transportEdit,
                                 show: Booking_transportShow,
                                 icon: <EmojiTransportationTwoToneIcon/>
                             }, {

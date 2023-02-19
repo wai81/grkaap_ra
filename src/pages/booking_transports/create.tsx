@@ -2,9 +2,8 @@ import {CrudFilters, IResourceComponentsProps, useTranslate} from "@pankod/refin
 import {MuiInferencer} from "@pankod/refine-inferencer/mui";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
 import {Autocomplete, Box, Create, DateField, InputAdornment, TextField, useAutocomplete} from "@pankod/refine-mui";
-import {DateTimePicker, LocalizationProvider, ruRU} from '@mui/x-date-pickers';
+import {DateTimePicker} from '@mui/x-date-pickers';
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
-import {ICreateSubunit} from "../../interfaces/ISubunit";
 import moment from "moment";
 import GroupsIcon from '@mui/icons-material/Groups';
 
@@ -20,21 +19,6 @@ export const Booking_transportCreate = () => {
     } = useForm<ICreateBookingTransport>();
 
     const t = useTranslate();
-
-    const {autocompleteProps: organizationAutocompleteProps} =
-        useAutocomplete({
-            resource: 'organizations',
-            sort: [{field: 'id', order: 'asc'}],
-            onSearch: ((value) => {
-                const filters: CrudFilters = [];
-                filters.push({
-                    field: "q",
-                    operator: "eq",
-                    value: (value.length) > 0 ? value : undefined,
-                });
-                return filters
-            })
-        });
 
     const {autocompleteProps: subunitAutocompleteProps} =
         useAutocomplete({

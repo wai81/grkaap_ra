@@ -23,6 +23,7 @@ import {useTranslate, useNavigation, HttpError, CrudFilters, BaseRecord, getDefa
 import {IUser, IUserFilterVariables} from "../../interfaces/IUser";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
 import {ISubunitFilterVariables} from "../../interfaces/ISubunit";
+import { ItemStatus } from 'components/itemStatus';
 
 
 export const UserList = () => {
@@ -69,7 +70,7 @@ export const UserList = () => {
                 flex: 0.5,
                 renderCell: function render({ row }) {
                     return (
-                        <BooleanField
+                        <ItemStatus
                             svgIconProps={{
                                 sx: { width: "16px", height: "16px" },
                             }}

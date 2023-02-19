@@ -1,6 +1,7 @@
 import {useNavigation, useSelect, useTranslate} from "@pankod/refine-core";
 //import { MuiInferencer } from "@pankod/refine-inferencer/mui";
 import {BooleanField, DataGrid, DateField, EditButton, GridColumns, GridToolbar, List, ruRU, useDataGrid} from "@pankod/refine-mui";
+import { ItemStatus } from "components/itemStatus";
 import React from "react";
 import {IBookingTransport} from "../../interfaces/IBookingTransport";
 import {IOrganization} from "../../interfaces/IOrganization";
@@ -20,7 +21,23 @@ export const Booking_transportList = () => {
 
     const columns = React.useMemo<GridColumns<IBookingTransport>>(
         ()=>[
-
+            {
+                field: "is_active",
+                headerName: t('booking_transport.fields.is_active'),
+                align: "center",
+                headerAlign: "center",
+                flex: 0.5,
+                renderCell: function render({ row }) {
+                    return (
+                        <ItemStatus
+                            svgIconProps={{
+                                sx: { width: "16px", height: "16px" },
+                            }}
+                            value={row.is_active}
+                        />
+                    );
+                },
+            },
             {
                 field: 'startDate',
                 headerAlign:"center",
@@ -132,9 +149,9 @@ export const Booking_transportList = () => {
             localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
             {...dataGridProps}
             columns={columns}
-            components={{
-                Toolbar: GridToolbar,
-            }}
+            // components={{
+            //     Toolbar: GridToolbar,
+            // }}
             autoHeight
             sx={{
                 "& .MuiDataGrid-cell:hover": {

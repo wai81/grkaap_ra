@@ -18,6 +18,7 @@ import {ITransport} from "../../interfaces/ITransport";
 import {IBookingTransportFilterVariables} from "../../interfaces/IBookingTransport";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
 import {ISubunitFilterVariables} from "../../interfaces/ISubunit";
+import { ItemStatus } from "components/itemStatus";
 
 export const TransportList = () => {
     const {show} = useNavigation();
@@ -56,7 +57,7 @@ export const TransportList = () => {
                 flex: 0.5,
                 renderCell: function render({row}) {
                     return (
-                        <BooleanField
+                        <ItemStatus
                             svgIconProps={{
                                 sx: {width: "16px", height: "16px"},
                             }}
