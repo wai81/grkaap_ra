@@ -1,12 +1,12 @@
 import React from "react";
 import {
   Autocomplete,
-  BooleanField,
   Box,
   Button,
   Card,
   CardContent,
   CardHeader,
+  Chip,
   DataGrid,
   EditButton,
   ExportButton,
@@ -103,15 +103,12 @@ export const SubunitsList = () => {
         minWidth: 500,
         flex: 1,
         filterable: false,
+        renderCell: function render({row}){
+          return (
+            row.is_active === false? <s>{row.title}</s> : row.title
+          )
+        }
       },
-      // {
-      //     field: "fullname_",
-      //     headerName: t('subunits.fields.fullname'),
-      //     valueGetter: ({row}) => `${row.name} (${row.organization?.name})`,
-      //     minWidth: 500,
-      //     flex:1,
-      //     filterable: false,
-      // },
       {
         field: "color_subunit",
         headerName: t("subunits.fields.color_subunit"),

@@ -1,9 +1,9 @@
 // "axios" package needs to be installed
-import { AxiosInstance } from 'axios';
+import { AxiosInstance } from "axios";
 // "stringify" function is re-exported from "query-string" package by "@pankod/refine-simple-rest"
-import { stringify } from '@pankod/refine-simple-rest';
-import { DataProvider } from '@pankod/refine-core';
-import { axiosInstance, generateSort, generateFilter } from './utils';
+import { stringify } from "@pankod/refine-simple-rest";
+import { DataProvider } from "@pankod/refine-core";
+import { axiosInstance, generateSort, generateFilter } from "./utils";
 
 //import { API_URL } from "../../constants";
 export const dataProvider = (
@@ -11,7 +11,7 @@ export const dataProvider = (
   httpClient: AxiosInstance = axiosInstance
 ): Omit<
   Required<DataProvider>,
-  'createMany' | 'updateMany' | 'deleteMany'
+  "createMany" | "updateMany" | "deleteMany"
 > => ({
   getList: async ({
     resource,
@@ -49,7 +49,8 @@ export const dataProvider = (
       query.order_by = `${_order}${_sort}`;
     }
 
-    const { data, headers } = await httpClient.get(
+    //const { data, headers } = await httpClient.get(
+    const { data } = await httpClient.get(
       `${url}?${stringify(query)}&${stringify(queryFilters)}`
     );
 
@@ -127,8 +128,8 @@ export const dataProvider = (
       if (generatedSort) {
         const { _sort, _order } = generatedSort;
         const sortQuery = {
-          sort: _sort.join(','),
-          order: _order.join(','),
+          sort: _sort.join(","),
+          order: _order.join(","),
         };
         requestUrl = `${requestUrl}&${stringify(sortQuery)}`;
       }
@@ -152,12 +153,12 @@ export const dataProvider = (
 
     let axiosResponse;
     switch (method) {
-      case 'put':
-      case 'post':
-      case 'patch':
+      case "put":
+      case "post":
+      case "patch":
         axiosResponse = await httpClient[method](url, payload);
         break;
-      case 'delete':
+      case "delete":
         axiosResponse = await httpClient.delete(url, {
           data: payload,
         });

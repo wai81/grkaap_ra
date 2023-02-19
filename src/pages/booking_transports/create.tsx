@@ -1,7 +1,7 @@
-import {CrudFilters, IResourceComponentsProps, useTranslate} from "@pankod/refine-core";
-import {MuiInferencer} from "@pankod/refine-inferencer/mui";
+import {CrudFilters, useTranslate} from "@pankod/refine-core";
+//import {MuiInferencer} from "@pankod/refine-inferencer/mui";
 import {Controller, useForm} from "@pankod/refine-react-hook-form";
-import {Autocomplete, Box, Create, DateField, InputAdornment, TextField, useAutocomplete} from "@pankod/refine-mui";
+import {Autocomplete, Box, Create, InputAdornment, TextField, useAutocomplete} from "@pankod/refine-mui";
 import {DateTimePicker} from '@mui/x-date-pickers';
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
 import moment from "moment";
@@ -15,8 +15,7 @@ export const Booking_transportCreate = () => {
         control,
         handleSubmit,
         formState: {errors},
-        saveButtonProps,
-    } = useForm<ICreateBookingTransport>();
+        } = useForm<ICreateBookingTransport>();
 
     const t = useTranslate();
 
@@ -57,7 +56,7 @@ export const Booking_transportCreate = () => {
             endDate: data.endDate,
             allDay: false,
             count_man: data.count_man,
-            //description: "",
+            description: data.description,
             subunit_id: data.subunit.id,
             //transport_id: "",
             organization_id: data.subunit.organization.id

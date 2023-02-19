@@ -1,4 +1,4 @@
-import { BooleanFieldProps, Tooltip, useTheme } from "@pankod/refine-mui";
+import { BooleanFieldProps, Tooltip } from "@pankod/refine-mui";
 import { CheckOutlined, CloseOutlined } from "@mui/icons-material";
 import React from "react";
 
