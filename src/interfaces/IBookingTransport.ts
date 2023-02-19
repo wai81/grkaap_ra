@@ -19,6 +19,7 @@ export interface IBookingTransport {
 
 export interface IBookingTransportFilterVariables {
     q?: string;
+    organization?:string;
     subunit?: string;
     transport?: string;
     startDate?: string;

@@ -219,7 +219,7 @@ export const SubunitsList = () => {
                       return (
                         organizationAutocompleteProps?.options?.find(
                           (p) => p.id.toString() === item.id.toString()
-                        )?.name ?? ""
+                        )?.title ?? ""
                       );
                     }}
                     isOptionEqualToValue={(option, value) => {
