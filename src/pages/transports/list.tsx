@@ -28,10 +28,9 @@ import {
 } from "@pankod/refine-mui";
 import React from "react";
 
-import { ITransport } from "../../interfaces/ITransport";
+import {ITransporFilterVariables, ITransport} from "../../interfaces/ITransport";
 import { IBookingTransportFilterVariables } from "../../interfaces/IBookingTransport";
 import { Controller, useForm } from "@pankod/refine-react-hook-form";
-import { ISubunitFilterVariables } from "../../interfaces/ISubunit";
 import { ItemStatus } from "components/itemStatus";
 
 export const TransportList = () => {
@@ -40,7 +39,7 @@ export const TransportList = () => {
   const { dataGridProps, search, filters } = useDataGrid<
     ITransport,
     HttpError,
-    IBookingTransportFilterVariables
+    ITransporFilterVariables
   >({
     onSearch: (params) => {
       const filters: CrudFilters = [];

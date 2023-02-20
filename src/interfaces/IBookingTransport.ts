@@ -1,6 +1,7 @@
 import {ISubunit} from "./ISubunit";
 import {ITransport} from "./ITransport";
 import {IOrganization} from "./IOrganization";
+import {Moment} from "moment";
 
 export interface IBookingTransport {
     id: string;
@@ -19,7 +20,7 @@ export interface IBookingTransport {
 
 export interface IBookingTransportFilterVariables {
     q?: string;
-    organization?:string;
+    organization?: string;
     subunit?: string;
     transport?: string;
     startDate?: string;
@@ -30,7 +31,7 @@ export interface IBookingTransportFilterVariables {
 
 export interface ICreateBookingTransport {
     title: string;
-    startDate: string;
+    startDate: [Moment,Moment];
     endDate: string;
     allDay?: boolean;
     description?: string;

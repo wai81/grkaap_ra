@@ -34,6 +34,7 @@ import { Controller, useForm } from "@pankod/refine-react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 import React from "react";
 import { IBookingTransport, IBookingTransportFilterVariables } from "../../interfaces/IBookingTransport";
+import { DateRangePicker, DateRange } from '@mui/lab';
 import { IOrganization } from "../../interfaces/IOrganization";
 
 export const Booking_transportList = () => {
@@ -70,13 +71,13 @@ export const Booking_transportList = () => {
       filters.push({
         field: "subunit__id__in",
         operator: "eq",
-        value: (subunit ?? [].length) > 0 ? subunit : undefined,
+        value: subunit,//(subunit ?? [].length) > 0 ? subunit : undefined,
       });
 
       filters.push({
         field: "transport__id__in",
         operator: "eq",
-        value: (transport ?? [].length) > 0 ? transport : undefined,
+        value: transport//(transport ?? [].length) > 0 ? transport : undefined,
       });
 
       filters.push({
@@ -84,6 +85,11 @@ export const Booking_transportList = () => {
         operator: "eq",
         value: allDay !== "" ? allDay : undefined,
       });
+
+      // filters.push({
+      //   field:"startDate",
+      //   operator:
+      // });
 
       filters.push({
         field: "is_active",
@@ -277,8 +283,8 @@ export const Booking_transportList = () => {
 
   const { autocompleteProps: subunitAutocompleteProps } = useAutocomplete({
     resource: "subunits",
-    sort: [{ field: "id", order: "asc" }],
-    defaultValue: getDefaultFilter("subunits.id", filters, "eq"),
+    sort: [{ field: "organization_id", order: "asc" }],
+    defaultValue: getDefaultFilter("subunit.id", filters, "eq"),
     onSearch: (value) => {
       const filters: CrudFilters = [];
       filters.push({
@@ -286,14 +292,15 @@ export const Booking_transportList = () => {
         operator: "eq",
         value: value.length > 0 ? value : undefined,
       });
-      return filters;
+        console.log(filters);
+        return filters;
     },
   });
 
   const { autocompleteProps: transportAutocompleteProps } = useAutocomplete({
     resource: "transports",
-    sort: [{ field: "id", order: "asc" }],
-    defaultValue: getDefaultFilter("transports.id", filters, "eq"),
+    sort: [{ field: "title", order: "asc" }],
+    defaultValue: getDefaultFilter("transport.id", filters, "eq"),
     onSearch: (value) => {
       const filters: CrudFilters = [];
       filters.push({
@@ -307,7 +314,7 @@ export const Booking_transportList = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={2}>
       <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
           <CardHeader title={t("filter.title")} />
           <CardContent sx={{ pt: 0 }}>
@@ -368,7 +375,6 @@ export const Booking_transportList = () => {
               <Controller
                 control={control}
                 name="subunit"
-                //defaultValue={null}
                 render={({ field }) => (
                   <Autocomplete
                     {...subunitAutocompleteProps}
@@ -469,6 +475,16 @@ export const Booking_transportList = () => {
                   </FormControl>
                 )}
               />
+              {/*<Controller*/}
+              {/*    control={control}*/}
+              {/*    name="startDate"*/}
+              {/*    render={({ field }) => (*/}
+              {/*   <DateRangePicker*/}
+              {/*       startText={'C'}*/}
+              {/*       endText={'По'}*/}
+              {/*       value={}*/}
+              {/*    />)}*/}
+              {/*/>*/}
              <br />
               <Button type="submit" variant="contained">
                 {t("subunits.filter.submit")}
@@ -478,12 +494,13 @@ export const Booking_transportList = () => {
       </Card>
 
       </Grid>
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={10}>
     <List>
       <DataGrid
         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
         {...dataGridProps}
         columns={columns}
+        filterModel={undefined}
         // components={{
         //     Toolbar: GridToolbar,
         // }}

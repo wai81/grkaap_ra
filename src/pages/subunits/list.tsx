@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Chip,
   DataGrid,
   EditButton,
   ExportButton,

@@ -130,26 +130,7 @@ export const SubunitEdit = () => {
                             />
                         )}
                     />
-                    {/*<Controller*/}
-                    {/*    control={control}*/}
-                    {/*    name="is_active"*/}
-                    {/*    // eslint-disable-next-line*/}
-                    {/*    defaultValue={null as any}*/}
-                    {/*    render={({field}) => (*/}
-                    {/*        <FormControlLabel*/}
-                    {/*            label={t('subunits.fields.is_active')}*/}
-                    {/*            control={*/}
-                    {/*                <Switch*/}
-                    {/*                    {...field}*/}
-                    {/*                    checked={field.value}*/}
-                    {/*                    onChange={(event) => {*/}
-                    {/*                        field.onChange(event.target.checked);*/}
-                    {/*                    }}*/}
-                    {/*                />*/}
-                    {/*            }*/}
-                    {/*        />*/}
-                    {/*    )}*/}
-                    {/*/>*/}
+
                     <FormControl>
                         <FormLabel
                             sx={{
