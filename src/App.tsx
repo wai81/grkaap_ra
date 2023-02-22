@@ -59,6 +59,7 @@ import {
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import 'moment/locale/ru';
+import CalendarShow from 'pages/calendar/CalendarShow';
 
 const axiosInstance = axios.create();
 
@@ -131,6 +132,14 @@ function App() {
                                 create: TransportCreate,
                                 edit: TransportEdit,
                                 show: TransportShow,
+                                icon: <DriveEtaTwoToneIcon/>
+                            },{
+                                name: 'calendar',
+                                parentName: 'bookingTransport',
+                                list: CalendarShow,
+                                create: TransportCreate,
+                                edit: TransportEdit,
+                                show: CalendarShow,
                                 icon: <DriveEtaTwoToneIcon/>
                             }, {
                                 name: 'organizations',

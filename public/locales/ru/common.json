@@ -278,6 +278,9 @@
       "show": "Просмотр Транспорта"
     }
   },
+  "calendar": {
+    "calendar": "Календарь"
+  },
   "booking_transport": {
     "booking_transport": "Заказы транспорта",
     "fields": {
