@@ -23,7 +23,7 @@ export interface IBookingTransportFilterVariables {
     organization?: string;
     subunit?: string;
     transport?: string;
-    startDate?: string;
+    startDate?: [string,string];
     endDate?: string;
     allDay?: boolean | string;
     is_active?: boolean | string;
@@ -31,7 +31,7 @@ export interface IBookingTransportFilterVariables {
 
 export interface ICreateBookingTransport {
     title: string;
-    startDate: [Moment,Moment];
+    startDate: string;
     endDate: string;
     allDay?: boolean;
     description?: string;
