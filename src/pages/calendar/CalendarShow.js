@@ -101,8 +101,8 @@ const CalendarShow = () => {
     const [isShowForm, setShowForm] = useState(false)
     const [method, setMethod] = useState(null)
 
-    const startDayQuery = startDay.clone().format('X');
-    const endDayQuery = startDay.clone().add(totalDays, 'day').format('X')
+    const startDayQuery = startDay.clone().format('YYYY-MM-DD hh:mm:ss');
+    const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
 
  useEffect(()=>{
      fetch(`${url}/events?date_gte=${startDayQuery}&date_lte=${endDayQuery}`)

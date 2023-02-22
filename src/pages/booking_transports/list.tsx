@@ -43,6 +43,7 @@ import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 
 import moment from "moment/moment";
 import locale_ru from "../../components/multiDatePicer/locale_ru";
+import CustomRangeInput from "../../components/multiDatePicer/customRangeInput";
 
 
 export const Booking_transportList = () => {
@@ -282,7 +283,10 @@ export const Booking_transportList = () => {
             organization: getDefaultFilter("organization.id", filters, "eq"),
             transport: getDefaultFilter("transport.id", filters, "eq"),
             subunit: getDefaultFilter("subunit.id", filters, "eq"),
-            //startDate: [getDefaultFilter("startDate_gte", filters, "eq"), ],
+            // startDate: [
+            //     getDefaultFilter("startDate_gte", filters, "eq"),
+            //     getDefaultFilter("startDate_lte", filters, "eq", ),
+            // ],
         },
     });
 
@@ -333,7 +337,7 @@ export const Booking_transportList = () => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} lg={2}>
+            <Grid item xs={12} lg={3}>
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
                     <CardHeader title={t("filter.title")}/>
                     <CardContent sx={{pt: 0}}>
@@ -500,15 +504,23 @@ export const Booking_transportList = () => {
                                 control={control}
                                 name="startDate"
                                 render={({field: {onChange, name, value},}) => (
-
+                                    <>
                                         <DatePicker
-                                            value={value || [new Date(), new Date()]}
+                                            value={value}
                                             onChange={(startDate) => {
                                                 onChange(startDate?.valueOf() ? startDate : ["", ""]);
                                             }}
                                             locale={locale_ru}
                                             format={"DD.MM.YYYY"}
                                             range
+                                            render={
+                                                <CustomRangeInput
+                                                    openCalendar
+                                                    value={value}
+                                                    handleValueChange
+                                                    label={t("booking_transport.filter.rangeDate")}
+                                                />
+                                            }
                                             numberOfMonths={2}
                                             plugins={[
                                                 <Footer
@@ -525,11 +537,9 @@ export const Booking_transportList = () => {
                                                 />,
                                                 weekends([0, 6])
                                             ]}
-
                                         />
-
+                                    </>
                                 )}
-
                             />
                             <br/>
                             <Button type="submit" variant="contained">
@@ -540,7 +550,7 @@ export const Booking_transportList = () => {
                 </Card>
 
             </Grid>
-            <Grid item xs={12} lg={10}>
+            <Grid item xs={12} lg={9}>
                 <List>
                     <DataGrid
                         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
