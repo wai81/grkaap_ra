@@ -41,7 +41,7 @@ import PeopleTwoToneIcon from '@mui/icons-material/PeopleTwoTone';
 import EmojiTransportationTwoToneIcon from '@mui/icons-material/EmojiTransportationTwoTone';
 import AirportShuttleTwoToneIcon from '@mui/icons-material/AirportShuttleTwoTone';
 import DriveEtaTwoToneIcon from '@mui/icons-material/DriveEtaTwoTone';
-
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import {
     TransportList,
     TransportCreate,
@@ -59,6 +59,7 @@ import {
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import 'moment/locale/ru';
+import CalendarShow from 'pages/calendar/CalendarShow';
 
 const axiosInstance = axios.create();
 
@@ -132,6 +133,14 @@ function App() {
                                 edit: TransportEdit,
                                 show: TransportShow,
                                 icon: <DriveEtaTwoToneIcon/>
+                            },{
+                                name: 'calendar',
+                                parentName: 'bookingTransport',
+                                list: CalendarShow,
+                                create: TransportCreate,
+                                edit: TransportEdit,
+                                show: CalendarShow,
+                                icon: <CalendarTodayIcon/>
                             }, {
                                 name: 'organizations',
                                 parentName: 'reference',
