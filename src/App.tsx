@@ -41,7 +41,7 @@ import PeopleTwoToneIcon from '@mui/icons-material/PeopleTwoTone';
 import EmojiTransportationTwoToneIcon from '@mui/icons-material/EmojiTransportationTwoTone';
 import AirportShuttleTwoToneIcon from '@mui/icons-material/AirportShuttleTwoTone';
 import DriveEtaTwoToneIcon from '@mui/icons-material/DriveEtaTwoTone';
-
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import {
     TransportList,
     TransportCreate,
@@ -140,7 +140,7 @@ function App() {
                                 create: TransportCreate,
                                 edit: TransportEdit,
                                 show: CalendarShow,
-                                icon: <DriveEtaTwoToneIcon/>
+                                icon: <CalendarTodayIcon/>
                             }, {
                                 name: 'organizations',
                                 parentName: 'reference',

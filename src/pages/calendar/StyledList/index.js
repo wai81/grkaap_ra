@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CellWrapper = styled.div`
   width: 140px;
   height: ${props => props.isHeader ? 24 : 105}px;
-  background-color: ${props => props.isWeekend ? '#272829' : '#1E1F21' };
+  background-color: ${props => props.isWeekend ? '#272829' : '#2d1630' };
   color: ${props => props.isSelectedMonth ? `#DDDDDD` : '#555759'};
 
  
@@ -55,16 +55,15 @@ export const EventItemWrapper = styled('button')`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  min-width: 114px;
+ width: 100%;
   border: unset;
   background: ${props => props.isMore ? '#565759' : 'rgba(71,132,255,0.75)' };
   border-radius: 10px;
   color: #DDDDDD;
   cursor: pointer;
-  margin-top: 5px; 
   padding-left: 10px;
   height: 17px;
-  margin-right: 3px;  
+  margin: 3px 3px 0px;  
   text-align: left;
 `;
 export const EventItemButtonWrapper = styled(EventItemWrapper)`

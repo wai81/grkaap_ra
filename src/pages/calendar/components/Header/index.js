@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 const DivWrapper = styled('div')`
-  background-color: #2A2B2D;
+  background-color: #2d1630;
   height: 40px;
   color: white;
+  padding: 10px ;
+  font-size: 18px;
 `;
 
 
 const Header = () => {
     return(
         <DivWrapper>
-                Бронь транспорта
+               Календарь
         </DivWrapper>
     )
 }

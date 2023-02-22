@@ -14,6 +14,7 @@ const DivWrapper = styled.div`
   background-color: #1E1F21;
   color: #DCDDDD;
 padding: 0px 15px;
+  height: 70px;
 `;
 
 
@@ -40,12 +41,18 @@ padding-right: 16px;
   padding-left: 16px;
   font-weight: 600;
 `;
+const DateWrapper = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Monitor = ({nextHandler,todayHandler,prevHandler,today,openModalFormHandler, setDisplayMode, displayMode }) => {
 
     return(
         <DivWrapper>
-            <div>
+            <DateWrapper>
                 <TitleWrapper>
                     {today.format('MMMM').toUpperCase()}
                 </TitleWrapper>
@@ -54,18 +61,14 @@ const Monitor = ({nextHandler,todayHandler,prevHandler,today,openModalFormHandle
                         {today.format('DD')},
                     </TextWrapper>
                 ):null }
-
                <TextWrapper>
                        {today.format('YYYY')}
                </TextWrapper>
-            </div>
+            </DateWrapper>
             <ButtonsWrapper>
                 <ButtonWrapper unPressed={displayMode === DISPLAY_MODE_MONTH} onClick={()=> setDisplayMode(DISPLAY_MODE_MONTH)}>Месяц</ButtonWrapper>
                 <ButtonWrapper unPressed={displayMode === DISPLAY_MODE_WEEK} onClick={()=> setDisplayMode(DISPLAY_MODE_WEEK)}>Неделя</ButtonWrapper>
                 <ButtonWrapper unPressed={displayMode === DISPLAY_MODE_DAY} onClick={()=> setDisplayMode(DISPLAY_MODE_DAY)}>День</ButtonWrapper>
-
-
-
             </ButtonsWrapper>
             <ButtonsWrapper>
                 <ButtonWrapper onClick={(e) => openModalFormHandler('Создать', null, today)}
