@@ -4,16 +4,16 @@ import {
     DISPLAY_MODE_DAY,
     DISPLAY_MODE_MONTH,
     DISPLAY_MODE_TRANSPORT, DISPLAY_MODE_WEEK, DISPLAY_TRANSPORT_MODE_EVENT, DISPLAY_TRANSPORT_MODE_LIST
-} from "../../Helpers/Constants";
-import {TextWrapper, TitleWrapper} from "../../StyledList";
+} from "../Helpers/Constants";
+import {TextWrapper, TitleWrapper} from "../StyledList";
 
 
 const DivWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #1E1F21;
-  color: #DCDDDD;
-padding: 0px 15px;
+  background-color: #ffffff;;
+  color: #626262;
+  padding: 0px 15px;
   height: 70px;
 `;
 

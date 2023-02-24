@@ -7,6 +7,7 @@ export interface IBookingTransport {
     id: string;
     title: string;
     startDate: string;
+    duration:number
     endDate: string;
     allDay: boolean;
     description: string;
@@ -32,6 +33,7 @@ export interface IBookingTransportFilterVariables {
 export interface ICreateBookingTransport {
     title: string;
     startDate: string;
+    duration: number;
     endDate: string;
     allDay?: boolean;
     description?: string;
@@ -44,6 +46,7 @@ export interface ICreateBookingTransport {
 export interface IUpdateBookingTransport {
     title: string;
     startDate: string;
+    duration: number;
     endDate: string;
     allDay?: boolean;
     description?: string;

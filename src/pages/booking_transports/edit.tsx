@@ -1,12 +1,25 @@
 //import { MuiInferencer } from "@pankod/refine-inferencer/mui";
 
-import { CrudFilters, useTranslate } from "@pankod/refine-core";
-import { Autocomplete, Box, Edit, FormControl, FormControlLabel, FormLabel, InputAdornment, Radio, RadioGroup, TextField, useAutocomplete } from "@pankod/refine-mui";
+import {CrudFilters, useTranslate} from "@pankod/refine-core";
+import {
+    Autocomplete,
+    Box,
+    Edit,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    InputAdornment,
+    Radio,
+    RadioGroup,
+    TextField,
+    useAutocomplete
+} from "@pankod/refine-mui";
 import {DateTimePicker} from '@mui/x-date-pickers';
-import { Controller, useForm } from "@pankod/refine-react-hook-form";
-import { IUpdateBookingTransport } from "interfaces/IBookingTransport";
+import {Controller, useForm} from "@pankod/refine-react-hook-form";
+import {IUpdateBookingTransport} from "interfaces/IBookingTransport";
 import moment from "moment";
 import GroupsIcon from '@mui/icons-material/Groups';
+import AvTimerTwoToneIcon from "@mui/icons-material/AvTimerTwoTone";
 
 export const Booking_transportEdit = () => {
     const {
@@ -49,31 +62,37 @@ export const Booking_transportEdit = () => {
             })
         });
 
+    const getEndDate = (startDate:Date, duration:number)=>{
+        return moment(startDate).add(duration,'h').toISOString();
+    }
+
     const handleOnSubmit = (data: any) => {
-        console.log(data)
+
         const event: IUpdateBookingTransport = {
+
             title: data.title,
             startDate: data.startDate,
-            endDate: data.endDate,
+            duration: data.duration,
+            endDate: getEndDate(data.startDate, data.duration),
             allDay: false,
             count_man: data.count_man,
             description: data.description,
             subunit_id: data.subunit.id,
             transport_id: data.transport == null ? null : data.transport.id,
             organization_id: data.subunit.organization.id,
-            is_active: data.is_active,           
+            is_active: data.is_active,
         };
         onFinish(event);
     };
-    
-    return ( 
+
+    return (
         <form onSubmit={handleSubmit(handleOnSubmit)}>
             <Edit
-            saveButtonProps={{
+                saveButtonProps={{
                     type: 'submit',
                 }}
             >
-                 <Box
+                <Box
                     component="form"
                     sx={{display: 'flex', flexDirection: 'column'}}
                     autoComplete="off"
@@ -114,28 +133,28 @@ export const Booking_transportEdit = () => {
                             />
                         )}
                     />
-                    <Controller
-                        control={control}
-                        name="endDate"
-                        // eslint-disable-next-line
-                        defaultValue={null as any}
-                        render={({field}) => (
-                            <DateTimePicker
-                                {...field}
-                                //inputFormat="DD.MM.YYYY hh:mm"
-                                //ampm={false}
-                                renderInput={(params) =>
-                                    <TextField {...params}
-                                               label={t('booking_transport.fields.endDate')}
-                                               margin="normal"
-                                               variant="outlined"
-                                               required
-                                               size={'small'}
-                                    />}
-                            />
-                        )}
+                    <TextField
+                        {...register("duration", {
+                            required: "This field is required",
+                        })}
+                        error={!!(errors as any)?.duration}
+                        helperText={(errors as any)?.duration?.message}
+                        margin="normal"
+                        fullWidth
+                        InputLabelProps={{shrink: true}}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AvTimerTwoToneIcon/>
+                                </InputAdornment>
+                            ),
+                        }}
+                        type="number"
+                        label={t('booking_transport.fields.duration')}
+                        defaultValue={1}
+                        name="duration"
+                        size={'small'}
                     />
-
                     <Controller
                         control={control}
                         name="subunit"
@@ -223,11 +242,13 @@ export const Booking_transportEdit = () => {
                         margin="normal"
                         fullWidth
                         InputLabelProps={{shrink: true}}
-                        InputProps={{startAdornment:(
+                        InputProps={{
+                            startAdornment: (
                                 <InputAdornment position="start">
-                                    <GroupsIcon />
+                                    <GroupsIcon/>
                                 </InputAdornment>
-                            ),}}
+                            ),
+                        }}
                         type="number"
                         label={t('booking_transport.fields.count_man')}
                         defaultValue={1}
@@ -250,7 +271,7 @@ export const Booking_transportEdit = () => {
                         minRows={2}
                         maxRows={2}
                         size={'small'}
-                    /> 
+                    />
                     <FormControl>
                         <FormLabel
                             sx={{

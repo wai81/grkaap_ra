@@ -6,6 +6,8 @@ import {DateTimePicker} from '@mui/x-date-pickers';
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
 import moment from "moment";
 import GroupsIcon from '@mui/icons-material/Groups';
+import AvTimerTwoToneIcon from '@mui/icons-material/AvTimerTwoTone';
+import AirportShuttleTwoToneIcon from '@mui/icons-material/AirportShuttleTwoTone';
 
 
 export const Booking_transportCreate = () => {
@@ -49,11 +51,17 @@ export const Booking_transportCreate = () => {
             })
         });
 
+    const getEndDate = (startDate:Date, duration:number)=>{
+        return moment(startDate).add(duration,'h').toISOString();
+    }
+
     const handleOnSubmit = (data: any) => {
+        console.log(getEndDate(data.startDate, data.duration))
         const event: ICreateBookingTransport = {
-            title: data.title,
+            title: `${data.number_order} ${data.address_object}`,
             startDate: data.startDate,
-            endDate: data.endDate,
+            duration: data.duration,
+            endDate: getEndDate(data.startDate, data.duration),
             allDay: false,
             count_man: data.count_man,
             description: data.description,
@@ -79,17 +87,32 @@ export const Booking_transportCreate = () => {
                     autoComplete="off"
                 >
                     <TextField
-                        {...register("title", {
+                        {...register("number_order", {
                             required: "This field is required",
                         })}
-                        error={!!(errors as any)?.title}
-                        helperText={(errors as any)?.title?.message}
+                        error={!!(errors as any)?.number_order}
+                        helperText={(errors as any)?.number_order?.message}
                         margin="normal"
                         fullWidth
                         InputLabelProps={{shrink: true}}
                         type="text"
-                        label={t('booking_transport.fields.title')}
-                        name="title"
+                        label={t('booking_transport.fields.number_order')}
+                        name="number_order"
+                        variant="outlined"
+                        size={'small'}
+                    />
+                    <TextField
+                        {...register("address_object", {
+                            required: "This field is required",
+                        })}
+                        error={!!(errors as any)?.address_object}
+                        helperText={(errors as any)?.address_object?.message}
+                        margin="normal"
+                        fullWidth
+                        InputLabelProps={{shrink: true}}
+                        type="text"
+                        label={t('booking_transport.fields.address_object')}
+                        name="address_object"
                         variant="outlined"
                         size={'small'}
                     />
@@ -110,31 +133,50 @@ export const Booking_transportCreate = () => {
                                                variant="outlined"
                                                required
                                                size={'small'}
+
                                     />}
                             />
                         )}
                     />
-                    <Controller
-                        control={control}
-                        name="endDate"
-                        // eslint-disable-next-line
-                        defaultValue={null as any}
-                        render={({field}) => (
-                            <DateTimePicker
-                                {...field}
-                                //inputFormat="DD.MM.YYYY hh:mm"
-                                //ampm={false}
-                                renderInput={(params) =>
-                                    <TextField {...params}
-                                               label={t('booking_transport.fields.endDate')}
-                                               margin="normal"
-                                               variant="outlined"
-                                               required
-                                               size={'small'}
-                                    />}
-                            />
-                        )}
+                    <TextField
+                        {...register("duration", {
+                            required: "This field is required",
+                        })}
+                        error={!!(errors as any)?.duration}
+                        helperText={(errors as any)?.duration?.message}
+                        margin="normal"
+                        fullWidth
+                        InputLabelProps={{shrink: true}}
+                        InputProps={{startAdornment:(
+                                <InputAdornment position="start">
+                                    <AvTimerTwoToneIcon />
+                                </InputAdornment>
+                            ),}}
+                        type="number"
+                        label={t('booking_transport.fields.duration')}
+                        defaultValue={1}
+                        name="duration"
+                        size={'small'}
                     />
+                    {/*<Controller*/}
+                    {/*    control={control}*/}
+                    {/*    name="endDate"*/}
+                    {/*    // eslint-disable-next-line*/}
+                    {/*    defaultValue={null as any}*/}
+                    {/*    render={({field}) => (*/}
+                    {/*        <DateTimePicker*/}
+                    {/*            {...field}*/}
+                    {/*            renderInput={(params) =>*/}
+                    {/*                <TextField {...params}*/}
+                    {/*                           label={t('booking_transport.fields.endDate')}*/}
+                    {/*                           margin="normal"*/}
+                    {/*                           variant="outlined"*/}
+                    {/*                           required*/}
+                    {/*                           size={'small'}*/}
+                    {/*                />}*/}
+                    {/*        />*/}
+                    {/*    )}*/}
+                    {/*/>*/}
 
                     <Controller
                         control={control}
@@ -181,6 +223,7 @@ export const Booking_transportCreate = () => {
                         defaultValue={null as any}
                         render={({field}) => (
                             <Autocomplete
+
                                 {...transportAutocompleteProps}
                                 {...field}
                                 onChange={(_, value) => {
@@ -208,6 +251,7 @@ export const Booking_transportCreate = () => {
                                         error={!!(errors as any)?.transport?.id}
                                         helperText={(errors as any)?.transport?.id?.message}
                                         size={"small"}
+
                                     />
                                 )}
                             />

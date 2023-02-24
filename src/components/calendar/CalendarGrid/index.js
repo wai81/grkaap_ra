@@ -6,10 +6,11 @@ import MonthDayList from "../MonthDayList";
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background-color: ${props => props.isHeader ? '#2d1630' : '#404040'};
+  background-color: ${props => props.isHeader ? '#ffffff' : '#e3e3e3'};
   grid-gap: 1px;
-  ${props => props.isHeader && 'border-bottom: 1px solid #404040'};
-  border-bottom: 2px solid #3f4140;
+  ${props => props.isHeader && 'border-bottom: 1px solid #e3e3e3'};
+  //border-bottom: 1px solid #e3e3e3;
+  border: 1px solid #e3e3e3;
   ${props => props.isHeader && 'height: 40px'};
  `;
 

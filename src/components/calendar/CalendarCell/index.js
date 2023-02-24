@@ -7,9 +7,9 @@ import {
     EventListWrapper,
     RowInCell,
     ShowDayWrapper
-} from "../../StyledList";
-import {isCurrentDay, isSelectedMonth} from "../../Helpers/Functions";
-import {DISPLAY_MODE_DAY} from "../../Helpers/Constants";
+} from "../StyledList";
+import {isCurrentDay, isSelectedMonth} from "../Helpers/Functions";
+import {DISPLAY_MODE_DAY} from "../Helpers/Constants";
 
 const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMode}) => {
     return(

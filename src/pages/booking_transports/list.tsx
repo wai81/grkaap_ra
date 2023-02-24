@@ -44,13 +44,16 @@ import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 import moment from "moment/moment";
 import locale_ru from "../../components/multiDatePicer/locale_ru";
 import CustomRangeInput from "../../components/multiDatePicer/customRangeInput";
+import CalendarShow from "../../components/calendar/CalendarShow";
+import {API_URL} from "../../constants";
 
 
 export const Booking_transportList = () => {
-    //const [dateRange, setDateRange] = React.useState<Value>([new Date(), new Date()]);
+
     const {show} = useNavigation();
     const t = useTranslate();
-    const {dataGridProps, search, filters, sorter} = useDataGrid<IBookingTransport,
+    const {dataGridProps, search, filters, sorter} = useDataGrid<
+        IBookingTransport,
         HttpError,
         IBookingTransportFilterVariables>({
         onSearch: (params) => {
@@ -130,9 +133,10 @@ export const Booking_transportList = () => {
 
     // const {
     //   queryResult,
-    // } = useSelect<IOrganization>({
-    //   resource: "organizations",
-    //   hasPagination: false,
+    //  } = useSelect<IBookingTransport>({
+    //    resource: "booking_transport",
+    //
+    //    hasPagination: false,
     // });
 
     const columns = React.useMemo<GridColumns<IBookingTransport>>(
@@ -181,37 +185,30 @@ export const Booking_transportList = () => {
                 }
             },
             {
-                field: "endDate",
+                field: "duration",
                 headerAlign: "center",
-                headerName: t("booking_transport.fields.endDate"),
+                headerName: t("booking_transport.fields.duration"),
                 align: "center",
-                minWidth: 150,
+                minWidth: 100,
                 flex: 0.5,
-                renderCell: function render({row}) {
-                    return (
-                        row.is_active === false ?
-                            <s><DateField value={row.endDate} format={"DD.MM.YYYY (HH:mm)"}/></s> :
-                            <DateField value={row.endDate} format={"DD.MM.YYYY (HH:mm)"}/>
-                    );
-                },
             },
-            {
-                field: "allDay",
-                headerName: t("booking_transport.fields.allDay"),
-                headerAlign: "center",
-                align: "center",
-                flex: 0.5,
-                renderCell: function render({row}) {
-                    return (
-                        <BooleanField
-                            svgIconProps={{
-                                sx: {width: "16px", height: "16px"},
-                            }}
-                            value={row.allDay}
-                        />
-                    );
-                },
-            },
+            // {
+            //     field: "allDay",
+            //     headerName: t("booking_transport.fields.allDay"),
+            //     headerAlign: "center",
+            //     align: "center",
+            //     flex: 0.5,
+            //     renderCell: function render({row}) {
+            //         return (
+            //             <BooleanField
+            //                 svgIconProps={{
+            //                     sx: {width: "16px", height: "16px"},
+            //                 }}
+            //                 value={row.allDay}
+            //             />
+            //         );
+            //     },
+            // },
             {
                 field: "organization",
                 headerName: t("booking_transport.fields.organization"),
@@ -336,7 +333,17 @@ export const Booking_transportList = () => {
     });
 
     return (
-        <Grid container spacing={2}>
+        <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
+            <Grid item xs={12} lg={5.5}>
+                <Card sx={{paddingX: {xs: 2, md: 0}}}>
+                    <CalendarShow url={`${API_URL}/booking_transport`} />
+                </Card>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+                <Card sx={{paddingX: {xs: 2, md: 0}}}>
+2
+                </Card>
+            </Grid>
             <Grid item xs={12} lg={3}>
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
                     <CardHeader title={t("filter.title")}/>
@@ -557,7 +564,7 @@ export const Booking_transportList = () => {
                         {...dataGridProps}
                         columns={columns}
                         filterModel={undefined}
-                        // components={{
+                        // calendar={{
                         //     Toolbar: GridToolbar,
                         // }}
                         autoHeight

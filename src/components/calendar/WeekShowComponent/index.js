@@ -1,5 +1,5 @@
 import React from 'react'
-import {DAYS_IN_WEEK, DISPLAY_MODE_DAY, WEEK_DAYS} from "../../Helpers/Constants";
+import {DAYS_IN_WEEK, DISPLAY_MODE_DAY, WEEK_DAYS} from "../Helpers/Constants";
 import styled from "styled-components";
 import {
     CellWrapper,
@@ -9,9 +9,9 @@ import {
     EventListWrapper,
     RowInCell,
     ShowDayWrapper
-} from "../../StyledList";
+} from "../StyledList";
 import moment from "moment";
-import {isCurrentDay, isCurrentWeek, isDayContainCurrentEvent, isEventWeekListTime} from "../../Helpers/Functions";
+import {isCurrentDay, isCurrentWeek, isDayContainCurrentEvent, isEventWeekListTime} from "../Helpers/Functions";
 import CalendarCell from "../CalendarCell";
 import WeekEventsList from "./WeekEventsList";
 

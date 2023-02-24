@@ -57,6 +57,10 @@ export const Booking_transportShow = () => {
         </Typography>
         <DateField value={record?.startDate} format={"DD.MM.YYYY HH:mm"} />
         <Typography variant="body1" fontWeight="bold">
+          {t("booking_transport.fields.duration")}
+        </Typography>
+        {record?.duration}:00
+        <Typography variant="body1" fontWeight="bold">
           {t("booking_transport.fields.endDate")}
         </Typography>
         <DateField value={record?.endDate} format={"DD.MM.YYYY HH:mm"} />

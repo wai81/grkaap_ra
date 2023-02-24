@@ -284,13 +284,16 @@
   "booking_transport": {
     "booking_transport": "Заказы транспорта",
     "fields": {
+      "number_order": "Номер заказа",
+      "address_object": "Адрес объекта",
       "title": "Наименование",
       "startDate": "Выезд",
+      "duration": "Продолжительность (ч.)",
       "endDate": "Возвращение",
       "allDay": "Весь день",
       "organization": "Организация",
       "subunit": "Подразделение",
-      "count_man": "Количество пасажиров",
+      "count_man": "Количество чел.",
       "transport": "Транспорт",
       "is_active": "Статус",
       "status": {

@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
 export const CellWrapper = styled.div`
-  width: 140px;
+  width: 100px;
   height: ${props => props.isHeader ? 24 : 105}px;
-  background-color: ${props => props.isWeekend ? '#272829' : '#2d1630' };
-  color: ${props => props.isSelectedMonth ? `#DDDDDD` : '#555759'};
-
- 
+  background-color: ${props => props.isWeekend ? '#f3f3f3' : '#ffffff' };
+  color: ${props => props.isSelectedMonth ? `#626262` : '#b6b6b6'};
 `;
 
 export const RowInCell = styled.div`
@@ -16,6 +14,7 @@ export const RowInCell = styled.div`
     ${props => props.pr && `padding-right: ${props.pr * 10}px`};
     padding-left: ${props => props.isHeader ? 10 : 0}px;
 `;
+
 export const DayWrapper = styled.div`
   height: 33px;
   width: 33px;
@@ -25,15 +24,16 @@ export const DayWrapper = styled.div`
   margin: 2px;
   cursor: pointer;
 `;
+
 export const CurrentDay = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: red;
+  background: #67be23;
   border-radius: 50%;
-  
+  color: #ffffff;
 `;
 export const ShowDayWrapper = styled.div`
   display: flex;
@@ -55,9 +55,9 @@ export const EventItemWrapper = styled('button')`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
- width: 100%;
+  width: 100%;
   border: unset;
-  background: ${props => props.isMore ? '#565759' : 'rgba(71,132,255,0.75)' };
+  background: ${props => props.isMore ? '#909494' : 'rgba(71,132,255,0.75)' };
   border-radius: 10px;
   color: #DDDDDD;
   cursor: pointer;

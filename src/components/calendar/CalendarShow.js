@@ -21,19 +21,20 @@ import {
     TitleWrapper
 } from "../../components/calendar/StyledList";
 import 'moment/locale/ru'
+import {Card, CardContent, CardHeader} from "@pankod/refine-mui";
 
 
 
 const ShadowWrapper = styled.div`
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid #464648;
-  box-shadow: 0 0 0 1px #1A1A1A, 0 8px 20px 6px #888;  
+  border: 10px #464648;
+  box-shadow: 0 0 0 1px #1A1A1A, 0 8px 20px 6px #888;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  width: 1000px;
-  min-height: 850px;
+  width:710px;
+  min-height: 600px;
   background-color: #2a2b2d;
 `;
 
@@ -44,7 +45,7 @@ const FormPositionWrapper= styled('div')`
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.35);
+  //background-color: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,23 +62,26 @@ const FormWrapper = styled(ShadowWrapper)`
    justify-content: space-between;
    flex-direction: column;
  `;
+
 const DateWrapper=styled('div')`
   font-size: 18px;
   color: white;
 `;
 
 
-const url = 'http://localhost:5000';
+//const url = 'http://localhost:5000';
 const totalDays = 42;
 const defaultEvent ={
+    id:'',
     title:'',
     description:'',
-    date: moment().format('DD MMM YYYY HH:mm'),
+    startDate: moment().format('DD.MM.YYYY HH:mm:ss'),
+    endDate:moment().format('DD.MM.YYYY HH:mm:ss'),
     duration:1,
 }
 
 
-const CalendarShow = () => {
+export const CalendarShow = ({url}) => {
     moment.locale('ru')
 
 
@@ -105,13 +109,13 @@ const CalendarShow = () => {
     const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
 
  useEffect(()=>{
-     fetch(`${url}/events?date_gte=${startDayQuery}&date_lte=${endDayQuery}`)
+     fetch(`${url}/?startDate_gte=${startDayQuery}&startDate_lte=${endDayQuery}`)
          .then(res => res.json())
-         .then(res => setEvents(res));
+         .then(res => setEvents(res.items));
  },[today]);
 
     const openFormHandler = (methodOpen, eventFormUpdate, dayItem) => {
-        setEvent(eventFormUpdate || {...defaultEvent, date:dayItem.format('X ')})
+        setEvent(eventFormUpdate || {...defaultEvent, date:dayItem.format('X')})
         setMethod(methodOpen);
     }
     const openModalFormHandler = (methodOpen, eventFormUpdate, dayItem) => {
@@ -176,6 +180,7 @@ const CalendarShow = () => {
     // const day = startDay.clone().subtract(1, 'day')
     // const daysMap = [...Array(totalDays)].map(()=> day.add(1, 'day').clone());
 
+
     return(
        <>
            {
@@ -207,8 +212,11 @@ const CalendarShow = () => {
                    </>
                ) : null
            }
-           <ShadowWrapper>
-               <Header/>
+           <Card>
+               <CardHeader title={"Календарь"}/>
+           {/*<ShadowWrapper>*/}
+           {/*    <Header/>*/}
+               <CardContent sx={{pt: 0}}>
                <Monitor
                    prevHandler={prevHandler}
                    todayHandler={todayHandler}
@@ -220,6 +228,7 @@ const CalendarShow = () => {
                />
                {
                    displayMode === DISPLAY_MODE_MONTH ? (
+
                        <CalendarGrid  startDay={startDay}
                                       today={today}
                                       totalDays={totalDays}
@@ -254,8 +263,9 @@ const CalendarShow = () => {
                    ): null
 
                }
-
-           </ShadowWrapper>
+               </CardContent>
+           {/*</ShadowWrapper>*/}
+           </Card>
        </>
     )
 }

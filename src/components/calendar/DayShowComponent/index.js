@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {isDayContainCurrentEvent, isDayContainCurrentTimestamp} from "../../Helpers/Functions";
+import {isDayContainCurrentEvent, isDayContainCurrentTimestamp} from "../Helpers/Functions";
 import styled from "styled-components";
 import {
     ButtonsWrapper,
@@ -9,10 +9,10 @@ import {
     EventListItemWrapper,
     EventListWrapper,
     EventTitle
-} from "../../StyledList";
-import {ITEMS_PER_DAY, ONE_SECOND} from "../../Helpers/Constants";
+} from "../StyledList";
+import {ITEMS_PER_DAY, ONE_SECOND} from "../Helpers/Constants";
 import moment from "moment";
-import {eventMapper} from "../../Helpers/Mapper/eventMapper";
+import {eventMapper} from "../Helpers/Mapper/eventMapper";
 
 const DayShowWrapper = styled('div')`
   display: flex;
@@ -22,19 +22,19 @@ const DayShowWrapper = styled('div')`
 `;
 
 const EventsListWrapper = styled('div')`
-  background-color: #1E1F21;
-  color: #DDDDDD;
+  //background-color: #1E1F21;
+  color: #626262;
   flex-grow: 1;
 `;
 const EventFormWrapper = styled('div')`
-  background-color: #27282A;
-  color: #DDDDDD;
+  //background-color: #27282A;
+  color: #626262;
   width: 280px;
   position: relative;
   border-left: 1px solid #464648;
 `;
 const NoEventMsg = styled('div')`
-  color: #565759;
+  color: #626262;
   position: absolute;
   top: 50%;
   right: 50%;
@@ -119,6 +119,7 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
 
         const map = eventMapper(eventList);
         const tempArr = [];
+
         map.forEach((column, rank) =>{
             column.forEach((event)=>{
                 tempArr.push({...event, rank})
@@ -130,7 +131,7 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
     },[events]);
 
     const onDragEndHandler = (e,event) =>{
-        const date = moment.unix(+event.date).hour(droppedHour).format('X')
+        const date = moment.unix(+event.startDate).hour(droppedHour).format('X')
         updateEventByDragAndDrop({...event, date})
     }
     const onDropHandler = (e,i) => {
@@ -143,14 +144,14 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [showDurationPicker, setShowDurationPicker] = useState(false);
     const getTopPosition = (event) =>{
-        return heightDiv * +moment.unix(+event.date).format('H')
+        return heightDiv * +moment.unix(+event.startDate).format('H')
     }
     const cells = [...new Array(ITEMS_PER_DAY)].map((_,i)=>{
         }
     );
     const setTimeForEvent = (i) =>{
         setShowTimePicker(false);
-        const time = moment.unix(+selectedEvent.date).hour(i).format('X')
+        const time = moment.unix(+selectedEvent.startDate).hour(i).format('X')
         changeEventHandler(time, 'date')
     };
     const setDurationForEvent = (i) =>{
@@ -209,8 +210,7 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
                                                          onDragEnd={(e)=>onDragEndHandler(e, event)}
 
                                 >
-                                 Название:   {event.title}
-                                    <p>Описание:{event.description}</p>
+                                 {event.title}
                                 </EventItemButtonWrapper>
                             ))
                         }
@@ -234,59 +234,59 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
                                         <PositionRelative>
                                             <ButtonWrapperForms>
                                             {
-                                                moment.unix(+selectedEvent.date).format('dddd, D MMMM')
+                                                moment(selectedEvent.startDate).format('dddd, D MMMM')
                                             }
 
                                             </ButtonWrapperForms>
                                         </PositionRelative>
-                                       <PositionRelative>
-                                           <ButtonWrapperForms onClick={() => setShowTimePicker(prevState => !prevState)}>
-                                              Начало
-                                               <p> {
-                                                   moment.unix(+selectedEvent.date).format('HH:mm')
-                                               }</p>
-                                           </ButtonWrapperForms>
-                                           {
-                                               showTimePicker ? (
-                                                   <ListOfHours>
-                                                       {
-                                                           [... new Array(ITEMS_PER_DAY)].map((_, i) =>(
-                                                               <li>
-                                                                   <HoursButton onClick={()=>setTimeForEvent(i)}>
-                                                                       {`${i}`.padStart(2,'0')}:00
-                                                                   </HoursButton>
-                                                               </li>
-                                                           ))
-                                                       }
-                                                   </ListOfHours>
-                                               ): null
-                                           }
-                                       </PositionRelative>
+                                       {/*<PositionRelative>*/}
+                                       {/*    <ButtonWrapperForms onClick={() => setShowTimePicker(prevState => !prevState)}>*/}
+                                       {/*       Начало*/}
+                                       {/*        <p> {*/}
+                                       {/*            moment.unix(+selectedEvent.startDate).format('HH:mm')*/}
+                                       {/*        }</p>*/}
+                                       {/*    </ButtonWrapperForms>*/}
+                                       {/*    {*/}
+                                       {/*        showTimePicker ? (*/}
+                                       {/*            <ListOfHours>*/}
+                                       {/*                {*/}
+                                       {/*                    [... new Array(ITEMS_PER_DAY)].map((_, i) =>(*/}
+                                       {/*                        <li>*/}
+                                       {/*                            <HoursButton onClick={()=>setTimeForEvent(i)}>*/}
+                                       {/*                                {`${i}`.padStart(2,'0')}:00*/}
+                                       {/*                            </HoursButton>*/}
+                                       {/*                        </li>*/}
+                                       {/*                    ))*/}
+                                       {/*                }*/}
+                                       {/*            </ListOfHours>*/}
+                                       {/*        ): null*/}
+                                       {/*    }*/}
+                                       {/*</PositionRelative>*/}
 
 
-                                        <PositionRelative>
-                                            <ButtonWrapperForms onClick={() => setShowDurationPicker(prevState => !prevState)}>
-                                                Длительность
-                                                <p> {
-                                                    `${selectedEvent.duration}`.padStart(2, '0')
-                                                }:00</p>
-                                            </ButtonWrapperForms>
-                                            {
-                                                showDurationPicker ? (
-                                                    <ListOfHours>
-                                                        {
-                                                            [... new Array(ITEMS_PER_DAY)].map((_, i) =>(
-                                                                <li>
-                                                                    <HoursButton onClick={()=>setDurationForEvent(i + 1)}>
-                                                                        {`${i + 1 }`.padStart(2,'0')}:00
-                                                                    </HoursButton>
-                                                                </li>
-                                                            ))
-                                                        }
-                                                    </ListOfHours>
-                                                ): null
-                                            }
-                                        </PositionRelative>
+                                       {/* <PositionRelative>*/}
+                                       {/*     <ButtonWrapperForms onClick={() => setShowDurationPicker(prevState => !prevState)}>*/}
+                                       {/*         Длительность*/}
+                                       {/*         <p> {*/}
+                                       {/*             `${selectedEvent.duration}`.padStart(2, '0')*/}
+                                       {/*         }:00</p>*/}
+                                       {/*     </ButtonWrapperForms>*/}
+                                       {/*     {*/}
+                                       {/*         showDurationPicker ? (*/}
+                                       {/*             <ListOfHours>*/}
+                                       {/*                 {*/}
+                                       {/*                     [... new Array(ITEMS_PER_DAY)].map((_, i) =>(*/}
+                                       {/*                         <li>*/}
+                                       {/*                             <HoursButton onClick={()=>setDurationForEvent(i + 1)}>*/}
+                                       {/*                                 {`${i + 1 }`.padStart(2,'0')}:00*/}
+                                       {/*                             </HoursButton>*/}
+                                       {/*                         </li>*/}
+                                       {/*                     ))*/}
+                                       {/*                 }*/}
+                                       {/*             </ListOfHours>*/}
+                                       {/*         ): null*/}
+                                       {/*     }*/}
+                                       {/* </PositionRelative>*/}
 
 
                                     </SelectEventTimeWrapper>

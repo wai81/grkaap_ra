@@ -4,20 +4,26 @@ export const eventMapper = (eventsBunch) => {
     const HOURS = 24;
     const rowHours = new Map([...Array(HOURS)].map((_,i) => ([i,new Map()])));
     eventsBunch
-        .sort((a,b) => b.duration - a.duration)
+        .sort((a,b) => {
+            // console.log('a ', a)
+            // console.log('b ', b)
+            return b.duration - a.duration})
         .forEach(e => {
-            const date = +moment.unix(+e.date).format('H')
+            //const date = +moment.unix(+e.startDate).format('H')
+            const date = +moment(e.startDate).format('h');
+            //console.log(rowHours)
             const rowHourItem = rowHours.get(date);
             rowHourItem.set(e.id, e);
         });
 
-    // console.log("rowHours",rowHours);
+    //console.log("rowHours",rowHours);
 
     let i = 0;
     let rowNumber = 0;
     let columnNumber = 0;
     const columnsEventsGroups = new Map();
     columnsEventsGroups.set(columnNumber, new Map());
+
     let emptyRowsCount = 0;
     while (true) {
 
@@ -42,15 +48,19 @@ export const eventMapper = (eventsBunch) => {
         }
 
         const iterator = rowAsHourData.keys();
+        //console.log('iterator ',iterator)
         const key = iterator.next().value;
+        //console.log('key ',key)
         const firstEventInRowAsHourData = rowAsHourData.get(key);
-
+        //console.log('firstEventInRowAsHourData ',firstEventInRowAsHourData)
+        //console.log('rowNumber ',rowNumber)
         rowAsHourData.delete(key);
         (columnsEventsGroups.get(columnNumber)).set(key, firstEventInRowAsHourData);
         rowNumber = rowNumber + firstEventInRowAsHourData.duration;
     }
 
 
+    //console.log(columnsEventsGroups)
 
     return columnsEventsGroups;
 }

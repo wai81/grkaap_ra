@@ -1,5 +1,5 @@
 import React from 'react'
-import {ButtonsWrapper, ButtonWrapper, EventBody, EventTitle} from "../../StyledList";
+import {ButtonsWrapper, ButtonWrapper, EventBody, EventTitle} from "../StyledList";
 import styled from "styled-components";
 
 const ShadowWrapper = styled.div`
