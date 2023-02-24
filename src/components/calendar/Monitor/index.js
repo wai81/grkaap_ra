@@ -5,80 +5,56 @@ import {
     DISPLAY_MODE_MONTH,
     DISPLAY_MODE_TRANSPORT, DISPLAY_MODE_WEEK, DISPLAY_TRANSPORT_MODE_EVENT, DISPLAY_TRANSPORT_MODE_LIST
 } from "../Helpers/Constants";
-import {TextWrapper, TitleWrapper} from "../StyledList";
+import {Button, ButtonGroup, Stack, Typography} from "@pankod/refine-mui";
 
 
-const DivWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff;;
-  color: #626262;
-  padding: 0px 15px;
-  height: 70px;
-`;
+const Monitor = ({
+                     nextHandler,
+                     todayHandler,
+                     prevHandler,
+                     today,
+                     openModalFormHandler,
+                     setDisplayMode,
+                     displayMode
+                 }) => {
 
+    return (
 
-
-const ButtonsWrapper = styled('div')`
-  display: flex;
-  align-items: center;
-`;
-
-const ButtonWrapper= styled('button')`
-  border: ${props => props.unPressed ? '1px solid white' : 'unset'};
-  background-color: ${props => props.unPressed ? '#27282a' : '#565759'};
-  height: 31px;
-  margin-right: 2px;
-  border-radius: 4px;
-  color: #E6E6E6;
-  padding: 0px 10px;
-  outline: unset;
-  cursor: pointer;
-`;
-
-const TodayButton = styled(ButtonWrapper)`
-padding-right: 16px;
-  padding-left: 16px;
-  font-weight: 600;
-`;
-const DateWrapper = styled('div')`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Monitor = ({nextHandler,todayHandler,prevHandler,today,openModalFormHandler, setDisplayMode, displayMode }) => {
-
-    return(
-        <DivWrapper>
-            <DateWrapper>
-                <TitleWrapper>
-                    {today.format('MMMM').toUpperCase()}
-                </TitleWrapper>
-                {displayMode === DISPLAY_MODE_DAY ? (
-                    <TextWrapper>
-                        {today.format('DD')},
-                    </TextWrapper>
-                ):null }
-               <TextWrapper>
-                       {today.format('YYYY')}
-               </TextWrapper>
-            </DateWrapper>
-            <ButtonsWrapper>
-                <ButtonWrapper unPressed={displayMode === DISPLAY_MODE_MONTH} onClick={()=> setDisplayMode(DISPLAY_MODE_MONTH)}>Месяц</ButtonWrapper>
-                <ButtonWrapper unPressed={displayMode === DISPLAY_MODE_WEEK} onClick={()=> setDisplayMode(DISPLAY_MODE_WEEK)}>Неделя</ButtonWrapper>
-                <ButtonWrapper unPressed={displayMode === DISPLAY_MODE_DAY} onClick={()=> setDisplayMode(DISPLAY_MODE_DAY)}>День</ButtonWrapper>
-            </ButtonsWrapper>
-            <ButtonsWrapper>
-                <ButtonWrapper onClick={(e) => openModalFormHandler('Создать', null, today)}
-
-                > Добавить запись </ButtonWrapper>
-                <ButtonWrapper onClick={prevHandler}> &lt; </ButtonWrapper>
-                <TodayButton onClick={todayHandler}>Сегодня</TodayButton>
-                <ButtonWrapper onClick={nextHandler}> &gt; </ButtonWrapper>
-            </ButtonsWrapper>
-        </DivWrapper>
+        <Stack
+            direction={{xs: 'column', sm: 'row'}}
+            justifyContent="space-evenly"
+            alignItems="center"
+            spacing={0.5}
+            marginBottom={1}
+        >
+            <Typography alignItems={'center'} marginY={"auto"}>
+                {/*<TitleWrapper>*/}
+                {today.format('YYYY')}
+                &nbsp;
+                <b>{today.format('MMMM').toUpperCase()}</b>
+                &nbsp;
+                {displayMode === DISPLAY_MODE_DAY ? today.format('DD') : null}
+            </Typography>
+            <ButtonGroup>
+                <Button variant={displayMode === DISPLAY_MODE_MONTH ? 'contained' : 'outlined'}
+                        unPressed={displayMode === DISPLAY_MODE_MONTH}
+                        onClick={() => setDisplayMode(DISPLAY_MODE_MONTH)}>Месяц</Button>
+                {/*<Button variant={displayMode === DISPLAY_MODE_WEEK ? 'contained' : 'outlined'}*/}
+                {/*        unPressed={displayMode === DISPLAY_MODE_WEEK}*/}
+                {/*        onClick={() => setDisplayMode(DISPLAY_MODE_WEEK)}>Неделя</Button>*/}
+                <Button variant={displayMode === DISPLAY_MODE_DAY ? 'contained' : 'outlined'}
+                        unPressed={displayMode === DISPLAY_MODE_DAY}
+                        onClick={() => setDisplayMode(DISPLAY_MODE_DAY)}>День</Button>
+            </ButtonGroup>
+            <ButtonGroup>
+                <Button variant="outlined" onClick={prevHandler}> &lt; </Button>
+                <Button variant="outlined" onClick={todayHandler}>Сегодня</Button>
+                <Button variant="outlined" onClick={nextHandler}> &gt; </Button>
+            </ButtonGroup>
+            <Button title={'Добавить запись'} variant="contained"
+                    onClick={(e) => openModalFormHandler('Создать', null, today)}
+            > Создать </Button>
+        </Stack>
     )
 }
 export default Monitor
