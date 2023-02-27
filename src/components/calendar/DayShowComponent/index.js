@@ -118,13 +118,16 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
         const eventList = events.filter(event => isDayContainCurrentEvent(event, today));
 
         const map = eventMapper(eventList);
+
         const tempArr = [];
 
         map.forEach((column, rank) =>{
-            column.forEach((event)=>{
-                tempArr.push({...event, rank})
-            })
+                column.forEach((event)=>{
+                    tempArr.push({...event, rank})
+                })
         });
+        console.log(map);
+        console.log(tempArr)
         setEventMap(tempArr);
         setHeightDiv(ref.current.clientHeight / ITEMS_PER_DAY);
         setWidthDiv((ref.current.clientWidth -70) / map.size);
@@ -144,14 +147,14 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [showDurationPicker, setShowDurationPicker] = useState(false);
     const getTopPosition = (event) =>{
-        return heightDiv * +moment.unix(+event.startDate).format('H')
+        return heightDiv * +moment(event.startDate).format('H')
     }
     const cells = [...new Array(ITEMS_PER_DAY)].map((_,i)=>{
         }
     );
     const setTimeForEvent = (i) =>{
         setShowTimePicker(false);
-        const time = moment.unix(+selectedEvent.startDate).hour(i).format('X')
+        const time = moment(selectedEvent.startDate).hour(i).format('X')
         changeEventHandler(time, 'date')
     };
     const setDurationForEvent = (i) =>{
@@ -202,6 +205,7 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
                         {/*вывод событие*/}
                         {
                             eventMap.map((event , i) => (
+
                                 <EventItemButtonWrapper  onClick={() => openFormHandler('Изменить',event)}
                                                          left={37 + (widthDiv +5)*event.rank} w={widthDiv-2}
                                                          h={heightDiv*event.duration.toFixed(0)-3}

@@ -33,12 +33,13 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                     </ShowDayWrapper>
                     {/*события*/}
                     <EventListWrapper>
+
                         {
                             events
                                 .slice(0,2)
                                 .map(event => (
                                 <EventListItemWrapper key={event.id}>
-                                    <EventItemWrapper onClick={(e) => openModalFormHandler('Изменить', event )}>
+                                    <EventItemWrapper title={event.title} onClick={(e) => openModalFormHandler('Изменить', event )}>
                                         {event.title}
                                     </EventItemWrapper>
                                 </EventListItemWrapper>
@@ -49,7 +50,7 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                             events.length > 2 ? (
                                 <EventListItemWrapper key="show more">
                                     <EventItemWrapper isMore onClick={()=> setDisplayMode(DISPLAY_MODE_DAY)}>
-                                        больше...
+                                        еще {events.length-2} ...
                                     </EventItemWrapper>
                                 </EventListItemWrapper>
                             ) : null
