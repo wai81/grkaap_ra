@@ -160,9 +160,9 @@ export const UserList = () => {
         //     <GridActionsCellItem
         //         key={1}
         //         sx={{padding: "2px 6px"}}
-        //         label={t('buttons.edit')}
+        //         label={t('buttons.edit.tsx')}
         //         icon={<Edit color="success"/>}
-        //         onClick={() => edit("users", row.id)}
+        //         onClick={() => edit.tsx("users", row.id)}
         //         showInMenu
         //     />
         // ],

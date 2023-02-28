@@ -158,25 +158,6 @@ export const Booking_transportCreate = () => {
                         name="duration"
                         size={'small'}
                     />
-                    {/*<Controller*/}
-                    {/*    control={control}*/}
-                    {/*    name="endDate"*/}
-                    {/*    // eslint-disable-next-line*/}
-                    {/*    defaultValue={null as any}*/}
-                    {/*    render={({field}) => (*/}
-                    {/*        <DateTimePicker*/}
-                    {/*            {...field}*/}
-                    {/*            renderInput={(params) =>*/}
-                    {/*                <TextField {...params}*/}
-                    {/*                           label={t('booking_transport.fields.endDate')}*/}
-                    {/*                           margin="normal"*/}
-                    {/*                           variant="outlined"*/}
-                    {/*                           required*/}
-                    {/*                           size={'small'}*/}
-                    {/*                />}*/}
-                    {/*        />*/}
-                    {/*    )}*/}
-                    {/*/>*/}
 
                     <Controller
                         control={control}

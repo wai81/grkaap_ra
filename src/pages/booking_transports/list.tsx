@@ -31,10 +31,14 @@ import {
     useAutocomplete,
     useDataGrid,
 } from "@pankod/refine-mui";
-import {Controller, useForm} from "@pankod/refine-react-hook-form";
+import {Controller, useForm, useModalForm} from "@pankod/refine-react-hook-form";
 import {ItemStatus} from "components/itemStatus";
 import React from "react";
-import {IBookingTransport, IBookingTransportFilterVariables} from "../../interfaces/IBookingTransport";
+import {
+    IBookingTransport,
+    IBookingTransportFilterVariables,
+    ICreateBookingTransport, IUpdateBookingTransport
+} from "../../interfaces/IBookingTransport";
 import {IOrganization} from "../../interfaces/IOrganization";
 import DatePicker, {DateObject} from "react-multi-date-picker"
 import type {Value} from "react-multi-date-picker"
@@ -46,6 +50,7 @@ import locale_ru from "../../components/multiDatePicer/locale_ru";
 import CustomRangeInput from "../../components/multiDatePicer/customRangeInput";
 import CalendarShow from "../../components/calendar/CalendarShow";
 import {API_URL} from "../../constants";
+import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../components/booking_transports";
 
 
 export const Booking_transportList = () => {
@@ -131,13 +136,19 @@ export const Booking_transportList = () => {
 
     });
 
-    // const {
-    //   queryResult,
-    //  } = useSelect<IBookingTransport>({
-    //    resource: "booking_transport",
-    //
-    //    hasPagination: false,
-    // });
+    const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
+        refineCoreProps: { action: "create" },
+    });
+    const {
+        modal: { show: showCreateDrawer },
+    } = createDrawerFormProps;
+
+    const editDrawerFormProps = useModalForm<IUpdateBookingTransport, HttpError>({
+        refineCoreProps: { action: "edit" },
+    });
+    const {
+        modal: { show: showEditDrawer },
+    } = editDrawerFormProps;
 
     const columns = React.useMemo<GridColumns<IBookingTransport>>(
         () => [
@@ -257,7 +268,10 @@ export const Booking_transportList = () => {
                 renderCell: function render({row}) {
                     return (
                         <>
-                            <EditButton hideText recordItemId={row.id}/>
+                            <EditButton hideText
+                                        //recordItemId={row.id}
+                                        onClick={() => showEditDrawer(row.id)}
+                            />
                             {/*<ShowButton hideText recordItemId={row.id}/>*/}
                         </>
                     );
@@ -558,7 +572,7 @@ export const Booking_transportList = () => {
 
             </Grid>
             <Grid item xs={12} lg={9}>
-                <List>
+                <List createButtonProps={{ onClick: () => showCreateDrawer()}}>
                     <DataGrid
                         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                         {...dataGridProps}
@@ -578,6 +592,8 @@ export const Booking_transportList = () => {
                         }}
                     />
                 </List>
+                <CreateBookingTransportDrawer {...createDrawerFormProps} />
+                <EditBookingTransportDrawer {...editDrawerFormProps} />
             </Grid>
         </Grid>
     );

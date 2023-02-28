@@ -36,7 +36,7 @@ import { Controller, useForm } from "@pankod/refine-react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 
 export const SubunitsList = () => {
-  //const {show, edit} = useNavigation();
+  //const {show, edit.tsx} = useNavigation();
   const { show } = useNavigation();
   const t = useTranslate();
   const { dataGridProps, search, filters, sorter } = useDataGrid<
