@@ -21,7 +21,7 @@ import {
     TitleWrapper
 } from "../../components/calendar/StyledList";
 import 'moment/locale/ru'
-
+import {API_URL} from "../../constants";
 
 
 const ShadowWrapper = styled.div`
@@ -67,12 +67,14 @@ const DateWrapper=styled('div')`
 `;
 
 
-const url = 'http://localhost:5000';
+const url = API_URL;
 const totalDays = 42;
 const defaultEvent ={
+    id:'',
     title:'',
     description:'',
-    date: moment().format('DD MMM YYYY HH:mm'),
+    startDate: moment().format('DD.MM.YYYY HH:mm:ss'),
+    endDate:moment().format('DD.MM.YYYY HH:mm:ss'),
     duration:1,
 }
 
@@ -105,9 +107,9 @@ const CalendarShow = () => {
     const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
 
  useEffect(()=>{
-     fetch(`${url}/events?date_gte=${startDayQuery}&date_lte=${endDayQuery}`)
+     fetch(`${url}/booking_transport/?startDate_gte=${startDayQuery}&startDate_lte=${endDayQuery}`)
          .then(res => res.json())
-         .then(res => setEvents(res));
+         .then(res => setEvents(res.items));
  },[today]);
 
     const openFormHandler = (methodOpen, eventFormUpdate, dayItem) => {
