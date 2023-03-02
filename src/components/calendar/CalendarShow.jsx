@@ -9,8 +9,8 @@ import {
     DISPLAY_MODE_MONTH,
     DISPLAY_MODE_WEEK
 } from "../../components/calendar/Helpers/Constants";
-import DayShowComponent from "../../components/calendar/DayShowComponent";
-import WeekShowComponent from "../../components/calendar/WeekShowComponent";
+import DayShowComponent from "./DayShowComponent";
+import WeekShowComponent from "./WeekShowComponent";
 import {
     ButtonsWrapper,
     ButtonWrapper,
@@ -19,7 +19,7 @@ import {
     EventTitle,
     TextWrapper,
     TitleWrapper
-} from "../../components/calendar/StyledList";
+} from "./StyledList";
 import 'moment/locale/ru'
 import {Card, CardContent, CardHeader} from "@pankod/refine-mui";
 
@@ -109,7 +109,7 @@ export const CalendarShow = ({url}) => {
     const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
 
  useEffect(()=>{
-     fetch(`${url}/?startDate_gte=${startDayQuery}&startDate_lte=${endDayQuery}`)
+     fetch(`${url}/?order_by=-startDate&page=1&size=100&startDate_gte=${startDayQuery}&startDate_lte=${endDayQuery}`)
          .then(res => res.json())
          .then(res => setEvents(res.items));
  },[today]);

@@ -5,7 +5,11 @@ import {
     DISPLAY_MODE_MONTH,
     DISPLAY_MODE_TRANSPORT, DISPLAY_MODE_WEEK, DISPLAY_TRANSPORT_MODE_EVENT, DISPLAY_TRANSPORT_MODE_LIST
 } from "../Helpers/Constants";
-import {Button, ButtonGroup, Stack, Typography} from "@pankod/refine-mui";
+import {Button, ButtonGroup, CreateButton, Stack, Typography} from "@pankod/refine-mui";
+import {CreateBookingTransportDrawer} from "../../booking_transports";
+import {useModalForm} from "@pankod/refine-react-hook-form";
+import {ICreateBookingTransport} from "../../../interfaces/IBookingTransport";
+import {HttpError} from "@pankod/refine-core";
 
 
 const Monitor = ({
@@ -17,6 +21,13 @@ const Monitor = ({
                      setDisplayMode,
                      displayMode
                  }) => {
+
+    const createDrawerFormProps = useModalForm({
+        refineCoreProps: { action: "create" },
+    });
+    const {
+        modal: { show: showCreateDrawer },
+    } = createDrawerFormProps;
 
     return (
 
@@ -51,9 +62,14 @@ const Monitor = ({
                 <Button variant="outlined" onClick={todayHandler}>Сегодня</Button>
                 <Button variant="outlined" onClick={nextHandler}> &gt; </Button>
             </ButtonGroup>
-            <Button title={'Добавить запись'} variant="contained"
-                    onClick={(e) => openModalFormHandler('Создать', null, today)}
-            > Создать </Button>
+            <CreateButton
+                //resourceNameOrRouteName='booking_transport'
+                createButtonProps={{ onClick: () => showCreateDrawer()}}
+            />
+            {/*<Button title={'Добавить запись'} variant="contained"*/}
+            {/*        onClick={(e) => openModalFormHandler('Создать', null, today)}*/}
+            {/*> Создать </Button>*/}
+            <CreateBookingTransportDrawer {...createDrawerFormProps} />
         </Stack>
     )
 }

@@ -2,7 +2,7 @@ import { TextField } from "@pankod/refine-mui"
 import {forwardRef} from "react";
 
 // @ts-ignore
-function  CustomRangeInput ({openCalendar, value,handleValueChange, label },ref) {
+function  CustomRangeInput ({openCalendar, value,handleValueChange, label, margin },ref) {
 
     return (
         <TextField
@@ -11,10 +11,11 @@ function  CustomRangeInput ({openCalendar, value,handleValueChange, label },ref)
             onChange={handleValueChange}
             label={label}
             fullWidth
-            margin="normal"
+            margin={margin}
             variant="outlined"
             size="small"
             ref={ref}
+            sx={{width: 230, paddingX: 0.5}}
         />
     )
 }

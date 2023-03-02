@@ -67,11 +67,6 @@ export const CreateBookingTransportDrawer: React.FC<
         return moment(startDate).add(duration, 'h').toISOString();
     }
 
-
-    const clearFields = (fields:any)=> {
-        Array.from(fields.target).forEach((e:any) => (e.value = ""));
-    }
-
    const handleOnSubmit = (data: any) => {
 
         const event: ICreateBookingTransport = {
