@@ -129,8 +129,8 @@ function App() {
                                 name: 'transports',
                                 parentName: 'bookingTransport',
                                 list: TransportList,
-                                create: TransportCreate,
-                                edit: TransportEdit,
+                                //create: TransportCreate,
+                                //edit: TransportEdit,
                                 show: TransportShow,
                                 icon: <DriveEtaTwoToneIcon/>
                             },{

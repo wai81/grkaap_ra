@@ -152,8 +152,6 @@ export const Booking_transportList = () => {
 
     });
 
-
-
     const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
         refineCoreProps: { action: "create" },
     });

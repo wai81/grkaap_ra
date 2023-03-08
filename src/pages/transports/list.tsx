@@ -28,10 +28,21 @@ import {
 } from "@pankod/refine-mui";
 import React from "react";
 
-import {ITransporFilterVariables, ITransport} from "../../interfaces/ITransport";
+import {
+  ICreateTransport,
+  ITransporFilterVariables,
+  ITransport,
+  IUpdateTransport,
+} from "../../interfaces/ITransport";
 import { IBookingTransportFilterVariables } from "../../interfaces/IBookingTransport";
-import { Controller, useForm } from "@pankod/refine-react-hook-form";
+import {
+  Controller,
+  useForm,
+  useModalForm,
+} from "@pankod/refine-react-hook-form";
 import { ItemStatus } from "components/itemStatus";
+import { CreateTransportDrawer, EditTransportDrawer } from "components/transports";
+import { ShowTransportDrawer } from "components/transports/show";
 
 export const TransportList = () => {
   const { show } = useNavigation();
@@ -64,6 +75,29 @@ export const TransportList = () => {
       },
     ],
   });
+
+  const createDrawerFormProps = useModalForm<ICreateTransport, HttpError>({
+    refineCoreProps: { action: "create" },
+  });
+  const {
+    modal: { show: showCreateDrawer },
+  } = createDrawerFormProps;
+
+  const editDrawerFormProps = useModalForm<IUpdateTransport, HttpError>({
+    refineCoreProps: { action: "edit" },
+  });
+  const {
+    modal: { show: showEditDrawer },
+  } = editDrawerFormProps;
+
+
+  const showDrawerFormProps = useModalForm<ITransport, HttpError>({
+    refineCoreProps: { action: "edit", resource: "transports" },
+  });
+  const {
+    modal: { show: showShowDrawer },
+  } = showDrawerFormProps;
+
   const columns = React.useMemo<GridColumns<ITransport>>(
     () => [
       {
@@ -88,14 +122,12 @@ export const TransportList = () => {
         headerName: t("transports.fields.title"),
         minWidth: 100,
         flex: 1,
-        renderCell: function render({row}){
-          return (
-            row.is_active === false? <s>{row.title}</s> : row.title
-          )
-        }
+        renderCell: function render({ row }) {
+          return row.is_active === false ? <s>{row.title}</s> : row.title;
+        },
       },
       {
-        field: "details",
+        field: "description",
         headerName: t("transports.fields.details"),
         minWidth: 200,
         flex: 1,
@@ -108,7 +140,9 @@ export const TransportList = () => {
         renderCell: function render({ row }) {
           return (
             <>
-              <EditButton hideText recordItemId={row.id} />
+              <EditButton hideText 
+              //recordItemId={row.id}
+              onClick={() => showEditDrawer(row.id)} />
               {/*<ShowButton hideText recordItemId={row.id}/>*/}
             </>
           );
@@ -134,6 +168,9 @@ export const TransportList = () => {
 
   return (
     <Grid container spacing={2}>
+      <CreateTransportDrawer {...createDrawerFormProps} />
+      <EditTransportDrawer {...editDrawerFormProps} />
+      <ShowTransportDrawer {...showDrawerFormProps} />
       <Grid item xs={12} lg={3}>
         <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
           <CardHeader title={t("filter.title")} />
@@ -188,7 +225,7 @@ export const TransportList = () => {
         </Card>
       </Grid>
       <Grid item xs={12} lg={9}>
-        <List>
+        <List createButtonProps={{ onClick: () => showCreateDrawer()}}>
           <DataGrid
             localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
             {...dataGridProps}
@@ -201,7 +238,7 @@ export const TransportList = () => {
               },
             }}
             onRowClick={(row) => {
-              show("transports", row.id);
+              showShowDrawer(row.id);
             }}
           />
         </List>

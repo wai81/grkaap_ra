@@ -1,5 +1,5 @@
 import React from "react";
-import {Controller, set, UseModalFormReturnType} from "@pankod/refine-react-hook-form";
+import {Controller, UseModalFormReturnType} from "@pankod/refine-react-hook-form";
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
 import {CrudFilters, HttpError, useTranslate} from "@pankod/refine-core";
 import {
@@ -86,12 +86,12 @@ export const CreateBookingTransportDrawer: React.FC<
 
             formValues.number_order = '';
             formValues.address_object= '';
-            formValues.startDate = moment();
+            formValues.startDate = '';
             formValues.allDay = false;
             formValues.count_man = 1;
-            formValues.subunit_id = '';
-            formValues.transport_id='';
-            formValues.organization_id='';
+            formValues.subunit = '';
+            formValues.transport='';
+            formValues.organization='';
             console.log(formValues)
             close();
         });
