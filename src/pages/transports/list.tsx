@@ -2,12 +2,13 @@ import {
   BaseRecord,
   CrudFilters,
   getDefaultFilter,
-  HttpError,
+  HttpError, useApiUrl,
   useNavigation,
   useTranslate,
 } from "@pankod/refine-core";
 //import {MuiInferencer} from "@pankod/refine-inferencer/mui";
 import {
+  Avatar,
   Box,
   Button,
   Card,
@@ -23,7 +24,7 @@ import {
   MenuItem,
   ruRU,
   Select,
-  TextField,
+  TextField, Typography,
   useDataGrid,
 } from "@pankod/refine-mui";
 import React from "react";
@@ -76,6 +77,8 @@ export const TransportList = () => {
     ],
   });
 
+  const apiUrl = useApiUrl();
+
   const createDrawerFormProps = useModalForm<ICreateTransport, HttpError>({
     refineCoreProps: { action: "create" },
   });
@@ -105,7 +108,7 @@ export const TransportList = () => {
         headerName: t("transports.fields.is_active"),
         align: "center",
         headerAlign: "center",
-        flex: 0.5,
+        flex: 0.2,
         renderCell: function render({ row }) {
           return (
             <ItemStatus
@@ -118,12 +121,38 @@ export const TransportList = () => {
         },
       },
       {
+        field: "image_url",
+        align: "center",
+        headerAlign: "center",
+        headerName: "",
+        flex: 0.2,
+        renderCell: function render({ row }) {
+          return <Avatar
+              src={`${apiUrl}/${row.image_url}`}
+              sx={{
+                cursor: "pointer",
+                width: {
+                  xs: 40,
+                  md: 70,
+                },
+                height: {
+                  xs: 20,
+                  md: 50,
+                },
+                borderRadius:0
+              }}
+          />;
+        },
+      },
+      {
         field: "title",
         headerName: t("transports.fields.title"),
         minWidth: 100,
         flex: 1,
         renderCell: function render({ row }) {
-          return row.is_active === false ? <s>{row.title}</s> : row.title;
+          return  <Typography variant="body2">
+                    {row.is_active === false ? <s>{row.title}</s> : row.title}
+                  </Typography>;
         },
       },
       {

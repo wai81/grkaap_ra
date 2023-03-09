@@ -37,7 +37,7 @@ export const CreateTransportDrawer: React.FC<
 
   const apiUrl = useApiUrl();
 
-  const imageInput = watch("images");
+  const imageInput = watch("image_url");
 
   const onChangeHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -61,17 +61,10 @@ export const CreateTransportDrawer: React.FC<
       }
     );
 
-    //const { name, size, type, lastModified } = file;
-    console.log(res.data.url)  
     // eslint-disable-next-line
     const imagePaylod: any = [
       {
-        // name,
-        // size,
-        // type,
-        // lastModified,
-        // url: res.data.url,
-        filename: res.data.url,
+         filename: res.data.url,
       },
     ];
     
@@ -108,7 +101,7 @@ export const CreateTransportDrawer: React.FC<
         >
           <form onSubmit={handleSubmit(onFinish)}>
             <FormControl sx={{ width: "100%" }}>
-              <FormLabel>{t("transports.fields.images.label")}</FormLabel>
+              <FormLabel>{t("transports.fields.image")}</FormLabel>
               <Stack
                 display="flex"
                 alignItems="center"
@@ -138,15 +131,16 @@ export const CreateTransportDrawer: React.FC<
                     sx={{
                       cursor: "pointer",
                       width: {
-                        xs: 100,
-                        md: 180,
+                        xs: 130,
+                        md: 250,
                       },
                       height: {
                         xs: 100,
                         md: 180,
                       },
+                      borderRadius:0
                     }}
-                    src={imageInput && imageInput[0].filename}
+                    src={`${apiUrl}/${imageInput}`}
                     alt="Store Location"
                   />
                 </label>
@@ -157,10 +151,10 @@ export const CreateTransportDrawer: React.FC<
                     marginTop: "8px",
                   }}
                 >
-                  {t("products.fields.images.description")}
+                  {t("transports.fields.image_description")}
                 </Typography>
                 <Typography style={{ fontSize: "12px" }}>
-                  {t("products.fields.images.validation")}
+                  {t("transports.fields.image_validation")}
                 </Typography>
               </Stack>
               {errors.image_url && (

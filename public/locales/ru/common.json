@@ -249,9 +249,9 @@
   "transports": {
     "transports": "Транспорт",
     "fields": {
-      "images": {
-        "label":"Изображение"
-      },
+      "image": "Изображение транспорта",
+      "image_description": "Добавте изображение",
+      "image_validation": "должно быть 1080х1080 px",
       "title": "Наименование",
       "details": "Описание",
       "is_active": "Статус",
