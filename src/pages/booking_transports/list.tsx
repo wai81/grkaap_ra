@@ -2,14 +2,14 @@ import {
     BaseRecord,
     CrudFilters,
     getDefaultFilter,
-    HttpError,
+    HttpError, useApiUrl,
     useNavigation,
     useSelect,
     useTranslate
 } from "@pankod/refine-core";
 //import { MuiInferencer } from "@pankod/refine-inferencer/mui";
 import {
-    Autocomplete,
+    Autocomplete, Avatar,
     BooleanField,
     Box,
     Button,
@@ -166,6 +166,8 @@ export const Booking_transportList = () => {
         modal: { show: showEditDrawer },
     } = editDrawerFormProps;
 
+    const apiUrl = useApiUrl();
+
     const columns = React.useMemo<GridColumns<IBookingTransport>>(
         () => [
             {
@@ -273,7 +275,23 @@ export const Booking_transportList = () => {
                 align: "left",
                 flex: 1,
                 renderCell: function render({row}) {
-                    return row.transport?.title;
+                    return <Avatar
+                        src={`${apiUrl}/${row.transport?.image_url}`}
+                        sx={{
+                            cursor: "pointer",
+                            width: {
+                                xs: 40,
+                                md: 70,
+                            },
+                            height: {
+                                xs: 20,
+                                md: 50,
+                            },
+                            borderRadius:1
+                        }}
+                        alt={row.transport?.title}
+                    />
+                   ;
                 },
             },
             {

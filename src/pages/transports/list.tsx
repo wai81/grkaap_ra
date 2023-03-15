@@ -139,7 +139,7 @@ export const TransportList = () => {
                   xs: 20,
                   md: 50,
                 },
-                borderRadius:0
+                borderRadius:1
               }}
           />;
         },
