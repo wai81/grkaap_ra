@@ -126,8 +126,8 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
                     tempArr.push({...event, rank})
                 })
         });
-        console.log(map);
-        console.log(tempArr)
+        // console.log(map);
+        // console.log(tempArr)
         setEventMap(tempArr);
         setHeightDiv(ref.current.clientHeight / ITEMS_PER_DAY);
         setWidthDiv((ref.current.clientWidth -70) / map.size);

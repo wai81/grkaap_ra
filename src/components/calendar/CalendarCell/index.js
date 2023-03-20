@@ -11,8 +11,31 @@ import {
 import {isCurrentDay, isSelectedMonth} from "../Helpers/Functions";
 import {DISPLAY_MODE_DAY} from "../Helpers/Constants";
 import {Badge} from "@pankod/refine-mui";
+import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../booking_transports";
+import {useModalForm} from "@pankod/refine-react-hook-form";
 
-const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMode}) => {
+import {HttpError} from "@pankod/refine-core";
+import {IUpdateBookingTransport} from "../../../interfaces/IBookingTransport";
+
+const CalendarCell = ({dayItem, today,events,setDisplayMode}) => {
+
+    const createDrawerFormProps = useModalForm({
+        refineCoreProps: { action: "create" },
+        defaultValues: {
+            startDate: dayItem,
+        }
+    });
+    const {
+        modal: { show: showCreateDrawer },
+    } = createDrawerFormProps;
+
+    const editDrawerFormProps = useModalForm({
+        refineCoreProps: { action: "edit" },
+    });
+    const {
+        modal: { show: showEditDrawer },
+    } = editDrawerFormProps;
+
     return(
         <>
             <CellWrapper
@@ -25,8 +48,8 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                     {/*текущий день*/}
 
                     <ShowDayWrapper>
-                        <DayWrapper onDoubleClick={(e) => openModalFormHandler('Добавить', null, dayItem)}>
-
+                        {/*<DayWrapper onDoubleClick={(e) => openModalFormHandler('Добавить', null, dayItem)}>*/}
+                        <DayWrapper onDoubleClick={(e) => showCreateDrawer(dayItem)}>
                             {
                                 isCurrentDay(dayItem) ?(
                                     <CurrentDay>{dayItem.format('D')}</CurrentDay>
@@ -51,7 +74,8 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                                 .slice(0,2)
                                 .map(event => (
                                 <EventListItemWrapper key={event.id}>
-                                    <EventItemWrapper title={event.title} onClick={(e) => openModalFormHandler('Изменить', event )}>
+                                    <EventItemWrapper title={event.title} onClick={(e) => showEditDrawer(event.id)}>
+                                        {/*openModalFormHandler('Изменить', event )}>*/}
                                         {event.title}
                                     </EventItemWrapper>
                                 </EventListItemWrapper>
@@ -62,7 +86,8 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                         {
                             events.length > 2 ? (
                                 <EventListItemWrapper key="show more">
-                                    <EventItemWrapper isMore onClick={()=> setDisplayMode(DISPLAY_MODE_DAY)}>
+                                    <EventItemWrapper isMore onClick={()=> {setDisplayMode(DISPLAY_MODE_DAY)
+                                                                            today={dayItem}}}>
                                         +{events.length-2} ...
                                     </EventItemWrapper>
                                 </EventListItemWrapper>
@@ -71,6 +96,8 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                     </EventListWrapper>
                 </RowInCell>
             </CellWrapper>
+            <CreateBookingTransportDrawer {...createDrawerFormProps} />
+            <EditBookingTransportDrawer {...editDrawerFormProps} />
         </>
     )
 }

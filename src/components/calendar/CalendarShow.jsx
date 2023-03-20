@@ -249,7 +249,7 @@ export const CalendarShow = ({url}) => {
                    displayMode === DISPLAY_MODE_DAY ? (
                        <DayShowComponent events={events}
                                          today={today}
-                                         totalDays={totalDays }
+                                         totalDays={totalDays}
                                          selectedEvent={event}
                                          setEvent={setEvent}
                                          changeEventHandler={changeEventHandler}
