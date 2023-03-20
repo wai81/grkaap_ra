@@ -64,11 +64,9 @@ const Monitor = ({
             </ButtonGroup>
             <CreateButton
                 //resourceNameOrRouteName='booking_transport'
-                createButtonProps={{ onClick: () => showCreateDrawer()}}
+                onClick={() => showCreateDrawer()}
             />
-            {/*<Button title={'Добавить запись'} variant="contained"*/}
-            {/*        onClick={(e) => openModalFormHandler('Создать', null, today)}*/}
-            {/*> Создать </Button>*/}
+
             <CreateBookingTransportDrawer {...createDrawerFormProps} />
         </Stack>
     )

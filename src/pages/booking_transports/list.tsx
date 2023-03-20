@@ -2,7 +2,7 @@ import {
     BaseRecord,
     CrudFilters,
     getDefaultFilter,
-    HttpError, useApiUrl,
+    HttpError, useApiUrl, useList, useModal,
     useNavigation,
     useSelect,
     useTranslate
@@ -15,25 +15,26 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader,
+    CardHeader, Chip, CreateButton,
     DataGrid,
-    DateField,
+    DateField, Dialog,
     EditButton,
     FormControl,
     Grid,
-    GridColumns,
+    GridColumns, GridToolbar,
     InputLabel,
     List,
-    MenuItem,
+    MenuItem, Modal,
     ruRU,
     Select, Stack,
-    TextField,
+    TextField, Typography,
     useAutocomplete,
     useDataGrid,
 } from "@pankod/refine-mui";
 import {Controller, useForm, useModalForm} from "@pankod/refine-react-hook-form";
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import {ItemStatus} from "components/itemStatus";
-import React from "react";
+import React, {useState} from "react";
 import {
     IBookingTransport,
     IBookingTransportFilterVariables,
@@ -51,6 +52,9 @@ import CustomRangeInput from "../../components/multiDatePicer/customRangeInput";
 import CalendarShow from "../../components/calendar/CalendarShow";
 import {API_URL} from "../../constants";
 import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../components/booking_transports";
+import GroupsIcon from "@mui/icons-material/Groups";
+import LocalPrintshopOutlinedIcon from '@mui/icons-material/LocalPrintshopOutlined';
+import {PdfLayoutListBookingTransport} from "../../components/pdf";
 
 
 export const Booking_transportList = () => {
@@ -58,6 +62,9 @@ export const Booking_transportList = () => {
     const {show} = useNavigation();
     const t = useTranslate();
     const startDay = moment().clone().startOf('month').startOf('week');
+    const [records, setRecords] = useState<IBookingTransport[] | undefined>(undefined);
+
+
     const {dataGridProps, search, filters, sorter} = useDataGrid<
         IBookingTransport,
         HttpError,
@@ -67,12 +74,12 @@ export const Booking_transportList = () => {
             {
                 field: "startDate_gte",
                 operator: "eq",
-                value:startDay.format('YYYY-MM-DD hh:mm:ss'),
+                value: moment().startOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.format('YYYY-MM-DD hh:mm:ss'),
             },
             {
                 field: "startDate_lte",
                 operator: "eq",
-                value:startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
+                value: moment().endOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
             },
         ],
         onSearch: (params) => {
@@ -152,8 +159,24 @@ export const Booking_transportList = () => {
 
     });
 
+
+    const { data } = useList<IBookingTransport, HttpError>({
+        resource: "booking_transport",
+        config:{
+            filters: filters,
+            sort:[{
+                field: "startDate",
+                order: "desc",
+            }]
+        },
+    })
+    const bookingList = data?.data ?? [];
+
     const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
         refineCoreProps: { action: "create" },
+        modalProps: {
+            autoResetForm: true,
+        }
     });
     const {
         modal: { show: showCreateDrawer },
@@ -205,8 +228,8 @@ export const Booking_transportList = () => {
             {
                 field: "title",
                 headerName: t("booking_transport.fields.title"),
-                minWidth: 150,
-                flex: 1,
+                minWidth: 100,
+                flex: 2,
                 renderCell: function render({row}) {
                     return (
                         row.is_active === false ? <s>{row.title}</s> : row.title
@@ -218,26 +241,12 @@ export const Booking_transportList = () => {
                 headerAlign: "center",
                 headerName: t("booking_transport.fields.duration"),
                 align: "center",
-                minWidth: 100,
-                flex: 0.5,
+                minWidth: 60,
+                flex: 0.2,
+                renderCell: function render({row}) {
+                    return (`${row.duration} ч.`)
+                }
             },
-            // {
-            //     field: "allDay",
-            //     headerName: t("booking_transport.fields.allDay"),
-            //     headerAlign: "center",
-            //     align: "center",
-            //     flex: 0.5,
-            //     renderCell: function render({row}) {
-            //         return (
-            //             <BooleanField
-            //                 svgIconProps={{
-            //                     sx: {width: "16px", height: "16px"},
-            //                 }}
-            //                 value={row.allDay}
-            //             />
-            //         );
-            //     },
-            // },
             // {
             //     field: "organization",
             //     headerName: t("booking_transport.fields.organization"),
@@ -253,9 +262,11 @@ export const Booking_transportList = () => {
                 headerName: t("booking_transport.fields.subunit"),
                 headerAlign: "center",
                 align: "left",
-                flex: 1,
+                flex: 2,
                 renderCell: function render({row}) {
-                    return row.subunit?.title;
+                    return <Typography noWrap variant={"body2"} title={row.subunit?.title}>
+                        {row.subunit?.title}
+                    </Typography>;
                 },
             },
             {
@@ -264,18 +275,19 @@ export const Booking_transportList = () => {
                 headerAlign: "center",
                 align: "center",
                 flex: 1,
-                // renderCell: function render({row}) {
-                //     return row.subunit?.title
-                // },
+                renderCell: function render({row}) {
+                    return <Chip avatar={<Avatar><GroupsIcon/></Avatar>} label={row.count_man}  />
+                },
             },
             {
                 field: "transport",
                 headerName: t("booking_transport.fields.transport"),
                 headerAlign: "center",
                 align: "left",
-                flex: 1,
+                flex: 2,
                 renderCell: function render({row}) {
-                    return <Avatar
+
+                    return (row.transport !== null ? <Chip avatar={<Avatar
                         src={`${apiUrl}/${row.transport?.image_url}`}
                         sx={{
                             cursor: "pointer",
@@ -287,10 +299,13 @@ export const Booking_transportList = () => {
                                 xs: 20,
                                 md: 50,
                             },
-                            borderRadius:1
+                            //borderRadius:1
                         }}
                         alt={row.transport?.title}
+                        />} label={<Typography variant={"caption"}>{row.transport?.title}</Typography>}
+                     title={row.transport?.title}
                     />
+                        :'')
                    ;
                 },
             },
@@ -379,6 +394,11 @@ export const Booking_transportList = () => {
             return filters;
         },
     });
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
 
     return (
         <Grid container columnSpacing={{ xs: 1, sm: 1, md: 1 }} spacing={1}>
@@ -627,27 +647,47 @@ export const Booking_transportList = () => {
                 </Grid>
                 <Grid container>
                     <Grid item xs={12} lg={12} spacing={1}>
-                        <List createButtonProps={{ onClick: () => showCreateDrawer()}}>
+                        <List
+                            // createButtonProps={
+                            // { onClick: () => showCreateDrawer()}}
+                            headerButtons={()=>(
+                                <>
+                                    <Button
+                                        title={'Печать'}
+                                        startIcon={<LocalPrintshopOutlinedIcon/>}
+                                        onClick={() => {
+                                            setRecords(bookingList);
+                                            handleOpen();
+                                        }}
+                                    variant={"outlined"}
+                                    >
+                                        Печать
+                                    </Button>
+                                    <CreateButton onClick={() => showCreateDrawer()}/>
+                                </>
+                            )}
+                        >
                             <DataGrid
                                 localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                                 {...dataGridProps}
                                 columns={columns}
                                 filterModel={undefined}
-                                // calendar={{
-                                //     Toolbar: GridToolbar,
-                                // }}
                                 autoHeight
                                 sx={{
                                     "& .MuiDataGrid-cell:hover": {
                                         cursor: "pointer",
                                     },
                                 }}
+                                //components={{Toolbar: GridToolbar,}}
+                                rowsPerPageOptions={[5, 10, 20, 30, 100]}
                                 onRowClick={(row) => {
                                     show("booking_transport", row.id);
                                 }}
                             />
                         </List>
-
+                        <Dialog fullWidth={true} maxWidth={false} open={open} onClose={handleClose} >
+                            <PdfLayoutListBookingTransport records={bookingList}/>
+                        </Dialog >
                     </Grid>
                 </Grid>
             </Grid>

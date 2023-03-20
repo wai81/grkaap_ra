@@ -10,6 +10,7 @@ import {
 } from "../StyledList";
 import {isCurrentDay, isSelectedMonth} from "../Helpers/Functions";
 import {DISPLAY_MODE_DAY} from "../Helpers/Constants";
+import {Badge} from "@pankod/refine-mui";
 
 const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMode}) => {
     return(
@@ -22,15 +23,26 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                     justifyContent={'flex-end'}
                 >
                     {/*текущий день*/}
+
                     <ShowDayWrapper>
                         <DayWrapper onDoubleClick={(e) => openModalFormHandler('Добавить', null, dayItem)}>
+
                             {
                                 isCurrentDay(dayItem) ?(
                                     <CurrentDay>{dayItem.format('D')}</CurrentDay>
                                 ) : dayItem.format('D')
                             }
+
                         </DayWrapper>
+                        {/*<Badge badgeContent={events.length}*/}
+                        {/*                    anchorOrigin={{*/}
+
+                        {/*                        vertical: 'bottom',*/}
+                        {/*                        horizontal: 'left',*/}
+                        {/*                    }}*/}
+                        {/*                    color='warning'/>*/}
                     </ShowDayWrapper>
+
                     {/*события*/}
                     <EventListWrapper>
 
@@ -46,11 +58,12 @@ const CalendarCell = ({dayItem, today, openModalFormHandler,events,setDisplayMod
                             ))
                         }
                         {/*событие больше*/}
+
                         {
                             events.length > 2 ? (
                                 <EventListItemWrapper key="show more">
                                     <EventItemWrapper isMore onClick={()=> setDisplayMode(DISPLAY_MODE_DAY)}>
-                                        еще {events.length-2} ...
+                                        +{events.length-2} ...
                                     </EventItemWrapper>
                                 </EventListItemWrapper>
                             ) : null
