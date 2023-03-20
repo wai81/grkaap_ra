@@ -24,7 +24,7 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                         <View style={styles.tableHeader}>
                             <Text style={[
                                 styles.tableHeaderItem,
-                                { width: "7%", },
+                                { width: "5%", },
                             ]}>
                                 {t("booking_transport.fields.is_active")}
                             </Text>
@@ -37,7 +37,7 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                             </Text>
                             <Text style={[
                                 styles.tableHeaderItem,
-                                { width: "25%" },
+                                { width: "20%" },
                             ]}>
                                 {t("booking_transport.fields.title")}
                                 (заказ, адрес)
@@ -82,7 +82,7 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                     <Text
                                         style={[
                                             styles.tableCol,
-                                            { width: "7%", textAlign: "center", },
+                                            { width: "5%", textAlign: "center", },
                                         ]}
                                     >
                                         {item.is_active==true ? 'A':'X'}
@@ -98,7 +98,7 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                     <Text
                                         style={[
                                             styles.tableCol,
-                                            { width: "25%" },
+                                            { width: "20%" },
                                         ]}
                                     >
                                         {item.title}
@@ -163,7 +163,6 @@ const styles = StyleSheet.create({
     page: {
         display: "flex",
         padding: "0.4in 0.4in",
-        fontSize: 12,
         color: "#333",
         backgroundColor: "#fff",
     },
@@ -179,17 +178,19 @@ const styles = StyleSheet.create({
     tableHeaderItem: {
         paddingVertical: 8,
         border: "1px solid #000",
-        borderBottom: "none",
+        //borderBottom: "none",
+        fontSize: '8px',
         fontFamily : "Roboto"
     },
     tableRow: {
         display: "flex",
         flexDirection: "row",
-        fontFamily : "Roboto"
+        fontFamily : "Roboto",
+        fontSize: '8px',
     },
     tableCol: {
-        paddingVertical: 8,
+        paddingVertical: 1,
         paddingHorizontal: 4,
-        border: "1px solid #000",
+        border: "0.6px solid #000",
     },
 })
