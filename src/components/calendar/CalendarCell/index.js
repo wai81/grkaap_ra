@@ -10,12 +10,14 @@ import {
 } from "../StyledList";
 import {isCurrentDay, isSelectedMonth} from "../Helpers/Functions";
 import {DISPLAY_MODE_DAY} from "../Helpers/Constants";
-import {Badge} from "@pankod/refine-mui";
+import {Badge, Stack} from "@pankod/refine-mui";
 import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../booking_transports";
 import {useModalForm} from "@pankod/refine-react-hook-form";
 
 import {HttpError} from "@pankod/refine-core";
 import {IUpdateBookingTransport} from "../../../interfaces/IBookingTransport";
+import {CustomTooltip} from "../../customTooltip";
+import moment from "moment";
 
 const CalendarCell = ({dayItem, today,events,setDisplayMode}) => {
 
@@ -86,10 +88,24 @@ const CalendarCell = ({dayItem, today,events,setDisplayMode}) => {
                         {
                             events.length > 2 ? (
                                 <EventListItemWrapper key="show more">
+                                    <CustomTooltip arrow placement="top"
+                                                   title={
+                                                       <Stack sx={{ padding: "2px" }}>
+                                                           {events.map((event) => (
+                                                               <li key={event.id}>
+                                                                   {moment(event.startDate,'DD-MM-YYYY HH:mm:ss').format('HH:mm')} | {event.title} {event.subunit.title}
+                                                               </li>
+                                                           ))}
+                                                       </Stack>
+                                                   }>
                                     <EventItemWrapper isMore onClick={()=> {setDisplayMode(DISPLAY_MODE_DAY)
                                                                             today={dayItem}}}>
                                         +{events.length-2} ...
+
+
+
                                     </EventItemWrapper>
+                                    </CustomTooltip>
                                 </EventListItemWrapper>
                             ) : null
                         }
