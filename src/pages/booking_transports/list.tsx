@@ -69,7 +69,7 @@ export const Booking_transportList = () => {
         IBookingTransport,
         HttpError,
         IBookingTransportFilterVariables>({
-        initialPageSize: 5,
+        initialPageSize: 10,
         initialFilter:[
             {
                 field: "startDate_gte",
@@ -163,6 +163,9 @@ export const Booking_transportList = () => {
     const { data } = useList<IBookingTransport, HttpError>({
         resource: "booking_transport",
         config:{
+            pagination:{
+                pageSize: 100,
+            },
             filters: filters,
             sort:[{
                 field: "startDate",
@@ -171,7 +174,6 @@ export const Booking_transportList = () => {
         },
     })
     const bookingList = data?.data ?? [];
-
     const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
         refineCoreProps: { action: "create" },
         modalProps: {
@@ -409,13 +411,14 @@ export const Booking_transportList = () => {
                     <CalendarShow url={`${API_URL}/booking_transport`} />
                 </Card>
             </Grid>
+            {/*<Grid item xs={12} lg={5.5}>*/}
+            {/*    <Card sx={{paddingX: {xs: 2, md: 0}}}>*/}
+            {/*        <CalendarScheduler eventsCalendar={bookingList}/>*/}
+            {/*    </Card>*/}
+            {/*</Grid>*/}
             <Grid item xs={12} lg={6.5}>
-{/*                <Card sx={{paddingX: {xs: 2, md: 0}}}>*/}
-{/*2*/}
-{/*                </Card>*/}
-{/*            </Grid>*/}
-                <Grid container columnSpacing={{ xs: 1, sm: 1, md: 1 }} spacing={1}>
-                    <Grid item xs={12} lg={12} paddingY={1} spacing={1}>
+                <Grid container  columnSpacing={{ xs: 1, sm: 1, md: 1 }} spacing={1}>
+                    <Grid item xs={12} lg={12} paddingY={1}>
                         <Card sx={{paddingX: {xs: 2, md: 0}}}>
                             <CardHeader title={t("filter.title")}/>
                             <CardContent sx={{pt: 0}}>
@@ -645,8 +648,8 @@ export const Booking_transportList = () => {
 
                     </Grid>
                 </Grid>
-                <Grid container>
-                    <Grid item xs={12} lg={12} spacing={1}>
+                <Grid container spacing={1}>
+                    <Grid item xs={12} lg={12} >
                         <List
                             // createButtonProps={
                             // { onClick: () => showCreateDrawer()}}
@@ -681,7 +684,8 @@ export const Booking_transportList = () => {
                                 //components={{Toolbar: GridToolbar,}}
                                 rowsPerPageOptions={[5, 10, 20, 30, 100]}
                                 onRowClick={(row) => {
-                                    show("booking_transport", row.id);
+                                    showEditDrawer(row.id)
+                                    //show("booking_transport", row.id);
                                 }}
                             />
                         </List>

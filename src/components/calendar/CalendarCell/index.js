@@ -19,30 +19,30 @@ import {IUpdateBookingTransport} from "../../../interfaces/IBookingTransport";
 import {CustomTooltip} from "../../customTooltip";
 import moment from "moment";
 
-const CalendarCell = ({dayItem, today,events,setDisplayMode}) => {
+const CalendarCell = ({dayItem, today, events, setDisplayMode}) => {
 
     const createDrawerFormProps = useModalForm({
-        refineCoreProps: { action: "create" },
+        refineCoreProps: {action: "create"},
         defaultValues: {
             startDate: dayItem,
         }
     });
     const {
-        modal: { show: showCreateDrawer },
+        modal: {show: showCreateDrawer},
     } = createDrawerFormProps;
 
     const editDrawerFormProps = useModalForm({
-        refineCoreProps: { action: "edit" },
+        refineCoreProps: {action: "edit"},
     });
     const {
-        modal: { show: showEditDrawer },
+        modal: {show: showEditDrawer},
     } = editDrawerFormProps;
 
-    return(
+    return (
         <>
             <CellWrapper
                 key={dayItem.unix()} isSelectedMonth={isSelectedMonth(dayItem, today)}
-                isWeekend={dayItem.day() === 6 || dayItem.day() === 0 }
+                isWeekend={dayItem.day() === 6 || dayItem.day() === 0}
             >
                 <RowInCell
                     justifyContent={'flex-end'}
@@ -50,22 +50,14 @@ const CalendarCell = ({dayItem, today,events,setDisplayMode}) => {
                     {/*текущий день*/}
 
                     <ShowDayWrapper>
-                        {/*<DayWrapper onDoubleClick={(e) => openModalFormHandler('Добавить', null, dayItem)}>*/}
                         <DayWrapper onDoubleClick={(e) => showCreateDrawer(dayItem)}>
                             {
-                                isCurrentDay(dayItem) ?(
+                                isCurrentDay(dayItem) ? (
                                     <CurrentDay>{dayItem.format('D')}</CurrentDay>
                                 ) : dayItem.format('D')
                             }
 
                         </DayWrapper>
-                        {/*<Badge badgeContent={events.length}*/}
-                        {/*                    anchorOrigin={{*/}
-
-                        {/*                        vertical: 'bottom',*/}
-                        {/*                        horizontal: 'left',*/}
-                        {/*                    }}*/}
-                        {/*                    color='warning'/>*/}
                     </ShowDayWrapper>
 
                     {/*события*/}
@@ -73,38 +65,87 @@ const CalendarCell = ({dayItem, today,events,setDisplayMode}) => {
 
                         {
                             events
-                                .slice(0,2)
-                                .map(event => (
-                                <EventListItemWrapper key={event.id}>
-                                    <EventItemWrapper title={event.title} onClick={(e) => showEditDrawer(event.id)}>
-                                        {/*openModalFormHandler('Изменить', event )}>*/}
-                                        {event.title}
-                                    </EventItemWrapper>
-                                </EventListItemWrapper>
-                            ))
+                                .slice(0, 2).map((event) => {
+
+                                    <EventListItemWrapper key={event.id}>
+                                        <CustomTooltip arrow placement="top"
+                                                       title={
+                                                           <Stack sx={{padding: "2px"}}>
+                                                               <table>
+                                                                   <thead>
+                                                                   <tr>
+                                                                       <th>Время</th>
+                                                                       <th>Заказ Адрес</th>
+                                                                       <th>Подразделение</th>
+                                                                   </tr>
+                                                                   </thead>
+                                                                   <tbody>
+                                                                   <tr key={event.id}>
+                                                                       <td>
+                                                                           {moment(event.startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm')}
+                                                                       </td>
+                                                                       <td>
+                                                                           {event.title}
+                                                                       </td>
+                                                                       <td>
+                                                                           {event.subunit.title}
+                                                                       </td>
+                                                                   </tr>
+                                                                   </tbody>
+                                                               </table>
+                                                           </Stack>
+                                                       }>
+                                            <EventItemWrapper onClick={(e) => showEditDrawer(event.id)}>
+                                                {/*openModalFormHandler('Изменить', event )}>*/}
+                                                {event.title}
+                                            </EventItemWrapper>
+                                        </CustomTooltip>
+                                    </EventListItemWrapper>
+                                })
                         }
                         {/*событие больше*/}
-
                         {
                             events.length > 2 ? (
                                 <EventListItemWrapper key="show more">
                                     <CustomTooltip arrow placement="top"
                                                    title={
-                                                       <Stack sx={{ padding: "2px" }}>
-                                                           {events.map((event) => (
-                                                               <li key={event.id}>
-                                                                   {moment(event.startDate,'DD-MM-YYYY HH:mm:ss').format('HH:mm')} | {event.title} {event.subunit.title}
-                                                               </li>
-                                                           ))}
+                                                       <Stack sx={{padding: "2px"}}>
+                                                           <table >
+                                                               <thead>
+                                                               <tr>
+                                                                   <th></th>
+                                                                   <th>Время</th>
+                                                                   <th>Заказ Адрес</th>
+                                                                   <th>Подразделение</th>
+                                                               </tr>
+                                                               </thead>
+                                                               <tbody>
+                                                               {events.map((event,index) => (
+
+                                                                   <tr key={event.id}>
+                                                                       <td>
+                                                                            {index+1}
+                                                                       </td>
+                                                                       <td>
+                                                                           {moment(event.startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm')}
+                                                                       </td>
+                                                                       <td>
+                                                                           {event.title}
+                                                                       </td>
+                                                                       <td>
+                                                                           {event.subunit.title}
+                                                                       </td>
+                                                                   </tr>
+                                                               ))}
+                                                               </tbody>
+                                                           </table>
                                                        </Stack>
                                                    }>
-                                    <EventItemWrapper isMore onClick={()=> {setDisplayMode(DISPLAY_MODE_DAY)
-                                                                            today={dayItem}}}>
-                                        +{events.length-2} ...
-
-
-
-                                    </EventItemWrapper>
+                                        <EventItemWrapper isMore
+                                                          //onClick={() => {setDisplayMode(DISPLAY_MODE_DAY)}}
+                                        >
+                                            +{events.length - 2} еще
+                                        </EventItemWrapper>
                                     </CustomTooltip>
                                 </EventListItemWrapper>
                             ) : null

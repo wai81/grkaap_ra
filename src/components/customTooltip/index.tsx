@@ -9,7 +9,7 @@ export const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
         color: "rgba(0, 0, 0, 0.87)",
         boxShadow: theme.shadows[1],
         fontSize: 12,
-        minWidth: "450px",
+        minWidth: "500px",
     },
     [`& .${tooltipClasses.arrow}`]: {
         color: theme.palette.common.white,

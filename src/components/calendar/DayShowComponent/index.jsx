@@ -13,6 +13,8 @@ import {
 import {ITEMS_PER_DAY, ONE_SECOND} from "../Helpers/Constants";
 import moment from "moment";
 import {eventMapper} from "../Helpers/Mapper/eventMapper";
+import {useModalForm} from "@pankod/refine-react-hook-form";
+import {EditBookingTransportDrawer} from "../../booking_transports";
 
 const DayShowWrapper = styled('div')`
   display: flex;
@@ -65,7 +67,7 @@ const ScaleCellTimeWrapper = styled('div')`
   font-size: 8px;
 `;
 const ScaleCellEventWrapper = styled('div')`
-  min-height: 16px;
+  min-height: 25px;
 `;
 const SelectEventTimeWrapper= styled('div')`
   padding: 8px 14px;
@@ -126,8 +128,7 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
                     tempArr.push({...event, rank})
                 })
         });
-        // console.log(map);
-        // console.log(tempArr)
+
         setEventMap(tempArr);
         setHeightDiv(ref.current.clientHeight / ITEMS_PER_DAY);
         setWidthDiv((ref.current.clientWidth -70) / map.size);
@@ -166,6 +167,13 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
 
     const [, setCounter] = useState(0);
 
+    const editDrawerFormProps = useModalForm({
+        refineCoreProps: {action: "edit"},
+    });
+    const {
+        modal: {show: showEditDrawer},
+    } = editDrawerFormProps;
+
     useEffect(() => {
         const timerId = setInterval(() => {
          setCounter(prevState => prevState + 1);
@@ -175,6 +183,7 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
 
         return (
             <DayShowWrapper>
+                <EditBookingTransportDrawer {...editDrawerFormProps} />
                 <EventsListWrapper>
                     <ScaleWrapper ref={ref}>
                         {
@@ -204,115 +213,26 @@ const DayShowComponent = ({events, selectedEvent, today, updateEventByDragAndDro
                         }
                         {/*вывод событие*/}
                         {
-                            eventMap.map((event , i) => (
+                            eventMap?.map((event , i) => (
 
-                                <EventItemButtonWrapper  onClick={() => openFormHandler('Изменить',event)}
-                                                         left={37 + (widthDiv +5)*event.rank} w={widthDiv-2}
-                                                         h={heightDiv*event.duration.toFixed(0)-3}
-                                                         top={getTopPosition(event) + 1}
-                                                         draggable={true}
-                                                         onDragEnd={(e)=>onDragEndHandler(e, event)}
-
-                                >
-                                 {event.title}
-                                </EventItemButtonWrapper>
+                                    <EventItemButtonWrapper key={event.id}
+                                                            onClick={() => showEditDrawer(event.id)}
+                                                            // openFormHandler('Изменить',event)}
+                                                            left={37 + (widthDiv +5)*event.rank} w={widthDiv-2}
+                                                            h={heightDiv*event.duration.toFixed(0)-3}
+                                                            top={getTopPosition(event) + 1}
+                                                            draggable={true}
+                                                            onDragEnd={(e)=>onDragEndHandler(e, event)}
+                                                            title={`${event.title} / ${event.subunit.title}`}
+                                    >
+                                     {`${event.title} / ${event.subunit.title}`}
+                                    </EventItemButtonWrapper>
                             ))
                         }
                         {/*вывод событие*/}
                     </ScaleWrapper>
                 </EventsListWrapper>
-                <EventFormWrapper>
 
-                    {/*форма изменения выбранного события*/}
-                    {
-                        selectedEvent ? (
-                            <SelectedItemList>
-                                <div>
-                                    <EventTitle
-                                    onChange={e => changeEventHandler(e.target.value, 'title')}
-                                    value={selectedEvent.title}
-                                    placeholder="Введите название..."
-                                    maxLength={30}
-                                    />
-                                    <SelectEventTimeWrapper>
-                                        <PositionRelative>
-                                            <ButtonWrapperForms>
-                                            {
-                                                moment(selectedEvent.startDate).format('dddd, D MMMM')
-                                            }
-
-                                            </ButtonWrapperForms>
-                                        </PositionRelative>
-                                       {/*<PositionRelative>*/}
-                                       {/*    <ButtonWrapperForms onClick={() => setShowTimePicker(prevState => !prevState)}>*/}
-                                       {/*       Начало*/}
-                                       {/*        <p> {*/}
-                                       {/*            moment.unix(+selectedEvent.startDate).format('HH:mm')*/}
-                                       {/*        }</p>*/}
-                                       {/*    </ButtonWrapperForms>*/}
-                                       {/*    {*/}
-                                       {/*        showTimePicker ? (*/}
-                                       {/*            <ListOfHours>*/}
-                                       {/*                {*/}
-                                       {/*                    [... new Array(ITEMS_PER_DAY)].map((_, i) =>(*/}
-                                       {/*                        <li>*/}
-                                       {/*                            <HoursButton onClick={()=>setTimeForEvent(i)}>*/}
-                                       {/*                                {`${i}`.padStart(2,'0')}:00*/}
-                                       {/*                            </HoursButton>*/}
-                                       {/*                        </li>*/}
-                                       {/*                    ))*/}
-                                       {/*                }*/}
-                                       {/*            </ListOfHours>*/}
-                                       {/*        ): null*/}
-                                       {/*    }*/}
-                                       {/*</PositionRelative>*/}
-
-
-                                       {/* <PositionRelative>*/}
-                                       {/*     <ButtonWrapperForms onClick={() => setShowDurationPicker(prevState => !prevState)}>*/}
-                                       {/*         Длительность*/}
-                                       {/*         <p> {*/}
-                                       {/*             `${selectedEvent.duration}`.padStart(2, '0')*/}
-                                       {/*         }:00</p>*/}
-                                       {/*     </ButtonWrapperForms>*/}
-                                       {/*     {*/}
-                                       {/*         showDurationPicker ? (*/}
-                                       {/*             <ListOfHours>*/}
-                                       {/*                 {*/}
-                                       {/*                     [... new Array(ITEMS_PER_DAY)].map((_, i) =>(*/}
-                                       {/*                         <li>*/}
-                                       {/*                             <HoursButton onClick={()=>setDurationForEvent(i + 1)}>*/}
-                                       {/*                                 {`${i + 1 }`.padStart(2,'0')}:00*/}
-                                       {/*                             </HoursButton>*/}
-                                       {/*                         </li>*/}
-                                       {/*                     ))*/}
-                                       {/*                 }*/}
-                                       {/*             </ListOfHours>*/}
-                                       {/*         ): null*/}
-                                       {/*     }*/}
-                                       {/* </PositionRelative>*/}
-
-
-                                    </SelectEventTimeWrapper>
-                                    <EventBody
-                                        onChange={e => changeEventHandler(e.target.value, 'description')}
-                                        value={selectedEvent.description}
-                                        placeholder="Введите описание..."
-                                        maxLength={250}/>
-                                </div>
-                                <ButtonsWrapper>
-                                    <ButtonWrapper onClick={cancelButtonHandler}>Отмена</ButtonWrapper>
-                                    <ButtonWrapper onClick={eventFetchHandler}>{method}</ButtonWrapper>
-                                    { method === 'Изменить' ? (<ButtonWrapper isSDelete onClick={removeEventHandler}>Удалить </ButtonWrapper>) : null }
-
-                                </ButtonsWrapper>
-                            </SelectedItemList>
-                        ) : (
-                            <NoEventMsg>No event selected</NoEventMsg>
-                        )
-                    }
-                    {/*конец формы изменения выбранного события*/}
-                </EventFormWrapper>
             </DayShowWrapper>
     )
 }

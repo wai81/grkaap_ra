@@ -31,7 +31,6 @@ export const CreateBookingTransportDrawer: React.FC<
           formState: {errors},
           refineCore:{onFinish, formLoading},
           reset,
-
       }) => {
     const t = useTranslate();
     const {autocompleteProps: subunitAutocompleteProps} =
@@ -136,7 +135,7 @@ export const CreateBookingTransportDrawer: React.FC<
                     >
                         <TextField
                             {...register("number_order", {
-                                required: "This field is required",
+                                required: t('required.field')
                             })}
                             error={!!(errors as any)?.number_order}
                             helperText={(errors as any)?.number_order?.message}
@@ -151,7 +150,7 @@ export const CreateBookingTransportDrawer: React.FC<
                         />
                         <TextField
                             {...register("address_object", {
-                                required: "This field is required",
+                                required: "Это поле обязательно к заполнению",
                             })}
                             error={!!(errors as any)?.address_object}
                             helperText={(errors as any)?.address_object?.message}
@@ -188,7 +187,7 @@ export const CreateBookingTransportDrawer: React.FC<
                         />
                         <TextField
                             {...register("duration", {
-                                required: "This field is required",
+                                required: t('required.field')
                             })}
                             error={!!(errors as any)?.duration}
                             helperText={(errors as any)?.duration?.message}

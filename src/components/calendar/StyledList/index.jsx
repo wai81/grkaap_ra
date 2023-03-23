@@ -57,13 +57,13 @@ export const EventItemWrapper = styled('button')`
   white-space: nowrap;
   width: 100%;
   border: unset;
-  background: ${props => props.isMore ? '#909494' : 'rgba(71,132,255,0.75)' };
-  border-radius: 10px;
-  color: #DDDDDD;
+  background: ${props => props.isMore ? 'rgba(144,148,148,0.56)' : 'rgba(103,190,35,0.45)'};
+  border-radius: 3px;
+  color: #fff;
   cursor: pointer;
-  padding-left: 10px;
+  padding-left: 5px;
   height: 17px;
-  margin: 3px 3px 0px;  
+  margin: 2px 2px 0px;
   text-align: left;
 `;
 export const EventItemButtonWrapper = styled(EventItemWrapper)`

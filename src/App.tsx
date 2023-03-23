@@ -133,15 +133,17 @@ function App() {
                                 //edit: TransportEdit,
                                 show: TransportShow,
                                 icon: <DriveEtaTwoToneIcon/>
-                            },{
-                                name: 'calendar',
-                                parentName: 'bookingTransport',
-                                list: CalendarShow,
-                                create: TransportCreate,
-                                edit: TransportEdit,
-                                show: CalendarShow,
-                                icon: <CalendarTodayIcon/>
-                            }, {
+                            },
+                            // {
+                            //     name: 'calendar',
+                            //     parentName: 'bookingTransport',
+                            //     list: CalendarShow,
+                            //     create: TransportCreate,
+                            //     edit: TransportEdit,
+                            //     show: CalendarShow,
+                            //     icon: <CalendarTodayIcon/>
+                            // },
+                            {
                                 name: 'organizations',
                                 parentName: 'reference',
                                 list: OrganizationList,

@@ -77,74 +77,75 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
 
                         </View>
                         {records?.map((item)=>{
-                            return(
-                                <View key={item.id} style={styles.tableRow}>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "5%", textAlign: "center", },
-                                        ]}
-                                    >
-                                        {item.is_active==true ? 'A':'X'}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "12%" },
-                                        ]}
-                                    >
-                                        {moment(item.startDate).format("DD.MM.YYYY (HH:mm)")}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "20%" },
-                                        ]}
-                                    >
-                                        {item.title}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "5%", textAlign: "center", },
-                                        ]}
-                                    >
-                                        {item.duration}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "20%" },
-                                        ]}
-                                    >
-                                        {item.subunit.title}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "5%", textAlign: "center",},
-                                        ]}
-                                    >
-                                        {item.count_man}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "15%" },
-                                        ]}
-                                    >
-                                        {item.transport?.title}
-                                    </Text>
-                                    <Text
-                                        style={[
-                                            styles.tableCol,
-                                            { width: "20%" },
-                                        ]}
-                                    >
-                                        {item.description}
-                                    </Text>
-                                </View>
-                            )
+                            if (item.is_active)
+                                return(
+                                    <View key={item.id} style={styles.tableRow}>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "5%", textAlign: "center", },
+                                            ]}
+                                        >
+                                            {item.is_active==true ? 'A':'X'}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "12%" },
+                                            ]}
+                                        >
+                                            {moment(item.startDate).format("DD.MM.YYYY (HH:mm)")}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "20%" },
+                                            ]}
+                                        >
+                                            {item.title}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "5%", textAlign: "center", },
+                                            ]}
+                                        >
+                                            {item.duration}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "20%" },
+                                            ]}
+                                        >
+                                            {item.subunit.title}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "5%", textAlign: "center",},
+                                            ]}
+                                        >
+                                            {item.count_man}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "15%" },
+                                            ]}
+                                        >
+                                            {item.transport?.title}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "20%" },
+                                            ]}
+                                        >
+                                            {item.description}
+                                        </Text>
+                                    </View>
+                                )
                         })}
                     </View>
                 </Page>
