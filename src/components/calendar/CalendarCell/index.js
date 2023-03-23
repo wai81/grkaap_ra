@@ -65,8 +65,7 @@ const CalendarCell = ({dayItem, today, events, setDisplayMode}) => {
 
                         {
                             events
-                                .slice(0, 2).map((event) => {
-
+                                .slice(0, 2).map((event) => (
                                     <EventListItemWrapper key={event.id}>
                                         <CustomTooltip arrow placement="top"
                                                        title={
@@ -101,7 +100,7 @@ const CalendarCell = ({dayItem, today, events, setDisplayMode}) => {
                                             </EventItemWrapper>
                                         </CustomTooltip>
                                     </EventListItemWrapper>
-                                })
+                            ))
                         }
                         {/*событие больше*/}
                         {
