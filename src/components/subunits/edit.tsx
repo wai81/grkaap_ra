@@ -90,7 +90,7 @@ export const EditSubunit: React.FC<UseModalFormReturnType<ISubunit, HttpError, I
                     ),
                     action: null,
                 }}
-                cardProps={{sx: {overflowY: "scroll", height: "100vh"}}}
+                wrapperProps={{sx: {overflowY: "scroll", height: "100vh"}}}
                 saveButtonProps={{
                     type: 'submit',
                 }}
