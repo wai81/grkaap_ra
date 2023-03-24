@@ -1,7 +1,6 @@
 import {ISubunit} from "./ISubunit";
 import {ITransport} from "./ITransport";
 import {IOrganization} from "./IOrganization";
-import {Moment} from "moment";
 
 export interface IBookingTransport {
     id: string;

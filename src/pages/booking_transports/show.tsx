@@ -1,16 +1,13 @@
 import {
-  IResourceComponentsProps,
   useOne,
   useShow,
   useTranslate,
 } from "@pankod/refine-core";
-import { MuiInferencer } from "@pankod/refine-inferencer/mui";
 import {
   BooleanField,
   DateField,
   Show,
   Stack,
-  TextField,
   Typography,
 } from "@pankod/refine-mui";
 import { IBookingTransport } from "interfaces/IBookingTransport";

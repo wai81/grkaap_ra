@@ -19,7 +19,7 @@ import AvTimerTwoToneIcon from "@mui/icons-material/AvTimerTwoTone";
 import GroupsIcon from "@mui/icons-material/Groups";
 
 export const EditBookingTransportDrawer: React.FC<
-    UseModalFormReturnType<ICreateBookingTransport, HttpError>
+    UseModalFormReturnType<ICreateBookingTransport>
 >=({
     watch,
     setValue,

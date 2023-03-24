@@ -1,5 +1,4 @@
 import { IOrganization } from './IOrganization';
-import {ISubunitFilterVariables} from "./ISubunit";
 
 export interface IUser {
   id: string;

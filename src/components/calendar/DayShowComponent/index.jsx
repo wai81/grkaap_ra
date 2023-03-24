@@ -2,13 +2,7 @@ import React, {useEffect, useRef, useState} from 'react'
 import {isDayContainCurrentEvent, isDayContainCurrentTimestamp} from "../Helpers/Functions";
 import styled from "styled-components";
 import {
-    ButtonsWrapper,
-    ButtonWrapper, ButtonWrapperForms,
-    EventBody, EventItemButtonWrapper,
-    EventItemWrapper,
-    EventListItemWrapper,
-    EventListWrapper,
-    EventTitle
+    EventItemButtonWrapper
 } from "../StyledList";
 import {ITEMS_PER_DAY, ONE_SECOND} from "../Helpers/Constants";
 import moment from "moment";

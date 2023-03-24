@@ -1,25 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import moment from "moment";
-import Header from "../../components/calendar/Header";
 import Monitor from "../../components/calendar/Monitor";
 import CalendarGrid from "../../components/calendar/CalendarGrid";
-import styled from "styled-components";
 import {
     DISPLAY_MODE_DAY,
     DISPLAY_MODE_MONTH,
     DISPLAY_MODE_WEEK, TOTAL_DAYS
-} from "../../components/calendar/Helpers/Constants";
+} from "./Helpers/Constants";
 import DayShowComponent from "./DayShowComponent";
 import WeekShowComponent from "./WeekShowComponent";
-import {
-    ButtonsWrapper,
-    ButtonWrapper,
-    CurrentDay,
-    EventBody,
-    EventTitle,
-    TextWrapper,
-    TitleWrapper
-} from "./StyledList";
+
 import 'moment/locale/ru'
 import {Card, CardContent, CardHeader} from "@pankod/refine-mui";
 
@@ -46,8 +36,8 @@ export const CalendarShow = ({url}) => {
 
     const [events, setEvents] = useState([]);
     const [event, setEvent] = useState(null);
-    const [isShowForm, setShowForm] = useState(false)
-    const [method, setMethod] = useState(null)
+
+    const [method] = useState(null)
 
     const startDayQuery = startDay.clone().format('YYYY-MM-DD hh:mm:ss');
     const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')

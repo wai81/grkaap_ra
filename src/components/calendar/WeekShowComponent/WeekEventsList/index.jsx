@@ -1,15 +1,9 @@
 import React from 'react'
-import {isCurrentDay, isDayContainCurrentEvent, isSelectedMonth} from "../../Helpers/Functions";
 import {
-    CellWrapper,
-    CurrentDay,
-    DayWrapper, EventItemWrapper,
+    EventItemWrapper,
     EventListItemWrapper,
-    EventListWrapper,
-    RowInCell,
-    ShowDayWrapper
+    EventListWrapper
 } from "../../StyledList";
-import {DISPLAY_MODE_DAY} from "../../Helpers/Constants";
 import styled from "styled-components";
 
 const DayWrapperName = styled('div')`

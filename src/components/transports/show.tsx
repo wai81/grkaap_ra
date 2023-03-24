@@ -1,11 +1,9 @@
 import {CloseOutlined} from "@mui/icons-material";
 import {DateTimePicker} from "@mui/x-date-pickers";
-import {HttpError, useApiUrl, useShow, useTranslate} from "@pankod/refine-core";
+import {HttpError, useApiUrl, useTranslate} from "@pankod/refine-core";
 import {
     Avatar,
-    BooleanField,
     Box,
-    DateField,
     Drawer,
     FormControl,
     FormControlLabel,
@@ -16,7 +14,6 @@ import {
     Show,
     Stack,
     TextField,
-    Typography,
 } from "@pankod/refine-mui";
 import {
     Controller,
@@ -26,7 +23,7 @@ import {ITransport} from "interfaces/ITransport";
 import moment from "moment";
 import React from "react";
 
-export const ShowTransportDrawer: React.FC<UseModalFormReturnType<ITransport, HttpError>> = ({
+export const ShowTransportDrawer: React.FC<UseModalFormReturnType<ITransport>> = ({
                                                                                                  watch,
                                                                                                  setValue,
                                                                                                  register,

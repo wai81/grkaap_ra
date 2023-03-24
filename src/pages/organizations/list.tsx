@@ -51,7 +51,7 @@ export const OrganizationList = () => {
         flex: 1,
         renderCell: function render({row}){
           return (
-            row.is_active === false? <s>{row.title}</s> : row.title
+            !row.is_active? <s>{row.title}</s> : row.title
           )
         }
       },

@@ -1,3 +1,5 @@
+// noinspection JSUnusedLocalSymbols
+
 import { CloseOutlined } from "@mui/icons-material";
 import { HttpError, useApiUrl, useTranslate } from "@pankod/refine-core";
 import {
@@ -16,12 +18,12 @@ import {
 } from "@pankod/refine-mui";
 import { UseModalFormReturnType } from "@pankod/refine-react-hook-form";
 import axios from "axios";
-import { url } from "inspector";
 import { ICreateTransport } from "interfaces/ITransport";
 import React from "react";
 
+// noinspection JSUnusedLocalSymbols
 export const CreateTransportDrawer: React.FC<
-  UseModalFormReturnType<ICreateTransport, HttpError>
+  UseModalFormReturnType<ICreateTransport>
 > = ({
   watch,
   setValue,
@@ -62,6 +64,7 @@ export const CreateTransportDrawer: React.FC<
     );
 
     // eslint-disable-next-line
+    // noinspection JSUnusedLocalSymbols
     const imagePaylod: any = [
       {
          filename: res.data.url,

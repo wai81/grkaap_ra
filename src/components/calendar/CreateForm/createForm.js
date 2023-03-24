@@ -66,4 +66,3 @@ const FormCreate = (cancelButtonHandler,changeEventHandler,eventFetchHandler,rem
         </FormPositionWrapper>
     )
 }
-export default FormCreate

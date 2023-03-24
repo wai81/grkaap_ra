@@ -1,5 +1,5 @@
 import React from "react";
-import {Controller, useModalForm, UseModalFormReturnType} from "@pankod/refine-react-hook-form";
+import {Controller, UseModalFormReturnType} from "@pankod/refine-react-hook-form";
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
 import {CrudFilters, HttpError, useTranslate} from "@pankod/refine-core";
 import {
@@ -19,7 +19,7 @@ import AvTimerTwoToneIcon from "@mui/icons-material/AvTimerTwoTone";
 import GroupsIcon from "@mui/icons-material/Groups";
 
 export const CreateBookingTransportDrawer: React.FC<
-    UseModalFormReturnType<ICreateBookingTransport, HttpError>
+    UseModalFormReturnType<ICreateBookingTransport>
     > = ({
          modal: {
               visible,

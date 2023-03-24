@@ -36,7 +36,6 @@ import { Controller, useForm } from "@pankod/refine-react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 
 export const SubunitsList = () => {
-  //const {show, edit.tsx} = useNavigation();
   const { show } = useNavigation();
   const t = useTranslate();
   const { dataGridProps, search, filters, sorter } = useDataGrid<
@@ -104,7 +103,7 @@ export const SubunitsList = () => {
         filterable: false,
         renderCell: function render({row}){
           return (
-            row.is_active === false? <s>{row.title}</s> : row.title
+            !row.is_active? <s>{row.title}</s> : row.title
           )
         }
       },

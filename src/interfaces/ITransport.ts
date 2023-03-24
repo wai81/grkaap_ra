@@ -1,5 +1,3 @@
-import {ISubunitFilterVariables} from "./ISubunit";
-
 export interface ITransport {
     id: string;
     title: string;

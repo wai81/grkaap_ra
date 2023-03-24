@@ -2,15 +2,10 @@ import {
     BaseRecord,
     CrudFilters,
     getDefaultFilter,
-    HttpError, useApiUrl, useList, useModal,
-    useNavigation,
-    useSelect,
-    useTranslate
+    HttpError, useApiUrl, useList, useTranslate
 } from "@pankod/refine-core";
-//import { MuiInferencer } from "@pankod/refine-inferencer/mui";
 import {
     Autocomplete, Avatar,
-    BooleanField,
     Box,
     Button,
     Card,
@@ -21,10 +16,10 @@ import {
     EditButton,
     FormControl,
     Grid,
-    GridColumns, GridToolbar,
+    GridColumns,
     InputLabel,
     List,
-    MenuItem, Modal,
+    MenuItem,
     ruRU,
     Select, Stack,
     TextField, Typography,
@@ -32,7 +27,6 @@ import {
     useDataGrid,
 } from "@pankod/refine-mui";
 import {Controller, useForm, useModalForm} from "@pankod/refine-react-hook-form";
-import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import {ItemStatus} from "components/itemStatus";
 import React, {useState} from "react";
 import {
@@ -40,9 +34,7 @@ import {
     IBookingTransportFilterVariables,
     ICreateBookingTransport, IUpdateBookingTransport
 } from "../../interfaces/IBookingTransport";
-import {IOrganization} from "../../interfaces/IOrganization";
-import DatePicker, {DateObject} from "react-multi-date-picker"
-import type {Value} from "react-multi-date-picker"
+import DatePicker from "react-multi-date-picker"
 import Footer from "react-multi-date-picker/plugins/range_picker_footer"
 import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 
@@ -59,13 +51,12 @@ import {PdfLayoutListBookingTransport} from "../../components/pdf";
 
 export const Booking_transportList = () => {
 
-    const {show} = useNavigation();
     const t = useTranslate();
     const startDay = moment().clone().startOf('month').startOf('week');
     const [records, setRecords] = useState<IBookingTransport[] | undefined>(undefined);
 
 
-    const {dataGridProps, search, filters, sorter} = useDataGrid<
+    const {dataGridProps, search, filters,} = useDataGrid<
         IBookingTransport,
         HttpError,
         IBookingTransportFilterVariables>({
@@ -221,7 +212,7 @@ export const Booking_transportList = () => {
                 flex: 0.5,
                 renderCell: function render({row}) {
                     return (
-                        row.is_active === false ?
+                        !row.is_active ?
                             <s><DateField value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/></s> :
                             <DateField value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/>
                     );
@@ -234,7 +225,7 @@ export const Booking_transportList = () => {
                 flex: 2,
                 renderCell: function render({row}) {
                     return (
-                        row.is_active === false ? <s>{row.title}</s> : row.title
+                        !row.is_active ? <s>{row.title}</s> : row.title
                     )
                 }
             },

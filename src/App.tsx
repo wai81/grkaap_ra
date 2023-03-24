@@ -41,25 +41,20 @@ import PeopleTwoToneIcon from '@mui/icons-material/PeopleTwoTone';
 import EmojiTransportationTwoToneIcon from '@mui/icons-material/EmojiTransportationTwoTone';
 import AirportShuttleTwoToneIcon from '@mui/icons-material/AirportShuttleTwoTone';
 import DriveEtaTwoToneIcon from '@mui/icons-material/DriveEtaTwoTone';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import {
     TransportList,
-    TransportCreate,
-    TransportEdit,
     TransportShow
 } from "pages/transports";
 
 import {
     Booking_transportList,
     Booking_transportCreate,
-    Booking_transportEdit,
     Booking_transportShow
 } from "pages/booking_transports";
 
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import 'moment/locale/ru';
-import CalendarShow from 'pages/calendar/CalendarShow';
 
 const axiosInstance = axios.create();
 

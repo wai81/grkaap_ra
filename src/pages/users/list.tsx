@@ -2,7 +2,6 @@ import React from "react";
 import {
   useDataGrid,
   DataGrid,
-  GridColumns,
   EditButton,
   List,
   Checkbox,
@@ -16,7 +15,7 @@ import {
   TextField,
   Autocomplete,
   Button,
-  ruRU,
+  ruRU, GridColumns,
 } from "@pankod/refine-mui";
 import {
   useTranslate,
@@ -28,9 +27,8 @@ import {
 } from "@pankod/refine-core";
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
 import { Controller, useForm } from "@pankod/refine-react-hook-form";
-import { ISubunitFilterVariables } from "../../interfaces/ISubunit";
 import { ItemStatus } from "components/itemStatus";
-import moment from "moment";
+
 
 export const UserList = () => {
   const { show } = useNavigation();
@@ -156,17 +154,6 @@ export const UserList = () => {
         headerName: t("table.actions"), //'Actions',
         flex: 1,
         minWidth: 100,
-        // getActions: ({id}) => [
-        //     // @ts-expect-error `@mui/x-data-grid@5.17.12` broke the props of `GridActionsCellItem` and requires `onResize` and `onResizeCapture` props which should be optional.
-        //     <GridActionsCellItem
-        //         key={1}
-        //         sx={{padding: "2px 6px"}}
-        //         label={t('buttons.edit.tsx')}
-        //         icon={<Edit color="success"/>}
-        //         onClick={() => edit.tsx("users", row.id)}
-        //         showInMenu
-        //     />
-        // ],
         renderCell: function render({ row }) {
           return (
             <>

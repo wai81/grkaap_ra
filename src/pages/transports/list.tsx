@@ -3,7 +3,6 @@ import {
   CrudFilters,
   getDefaultFilter,
   HttpError, useApiUrl,
-  useNavigation,
   useTranslate,
 } from "@pankod/refine-core";
 //import {MuiInferencer} from "@pankod/refine-inferencer/mui";
@@ -46,7 +45,6 @@ import { CreateTransportDrawer, EditTransportDrawer } from "components/transport
 import { ShowTransportDrawer } from "components/transports/show";
 
 export const TransportList = () => {
-  const { show } = useNavigation();
   const t = useTranslate();
   const { dataGridProps, search, filters } = useDataGrid<
     ITransport,
@@ -151,7 +149,7 @@ export const TransportList = () => {
         flex: 1,
         renderCell: function render({ row }) {
           return  <Typography variant="body2">
-                    {row.is_active === false ? <s>{row.title}</s> : row.title}
+                    {!row.is_active ? <s>{row.title}</s> : row.title}
                   </Typography>;
         },
       },

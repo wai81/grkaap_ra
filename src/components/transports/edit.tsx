@@ -21,7 +21,7 @@ import {IUpdateTransport} from "interfaces/ITransport";
 import React from "react";
 import axios from "axios";
 
-export const EditTransportDrawer: React.FC<UseModalFormReturnType<IUpdateTransport, HttpError>> = ({
+export const EditTransportDrawer: React.FC<UseModalFormReturnType<IUpdateTransport>> = ({
                                                                                                        watch,
                                                                                                        setValue,
                                                                                                        register,

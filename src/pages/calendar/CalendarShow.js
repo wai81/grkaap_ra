@@ -14,11 +14,8 @@ import WeekShowComponent from "../../components/calendar/WeekShowComponent";
 import {
     ButtonsWrapper,
     ButtonWrapper,
-    CurrentDay,
     EventBody,
-    EventTitle,
-    TextWrapper,
-    TitleWrapper
+    EventTitle
 } from "../../components/calendar/StyledList";
 import 'moment/locale/ru'
 import {API_URL} from "../../constants";
@@ -170,7 +167,7 @@ const CalendarShow = () => {
             },
         })
             .then(res => res.json())
-            .then(res => {
+            .then(() => {
                 setEvents(prevState => prevState.filter(eventEl => eventEl.id !== event.id))
                 cancelButtonHandler()
             })

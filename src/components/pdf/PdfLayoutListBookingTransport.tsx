@@ -86,7 +86,7 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                                 { width: "5%", textAlign: "center", },
                                             ]}
                                         >
-                                            {item.is_active==true ? 'A':'X'}
+                                            {item.is_active ? 'A':'X'}
                                         </Text>
                                         <Text
                                             style={[

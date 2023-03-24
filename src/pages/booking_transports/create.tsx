@@ -7,7 +7,6 @@ import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
 import moment from "moment";
 import GroupsIcon from '@mui/icons-material/Groups';
 import AvTimerTwoToneIcon from '@mui/icons-material/AvTimerTwoTone';
-import AirportShuttleTwoToneIcon from '@mui/icons-material/AirportShuttleTwoTone';
 
 
 export const Booking_transportCreate = () => {
