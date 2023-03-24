@@ -84,7 +84,7 @@ export const EditTransportDrawer: React.FC<UseModalFormReturnType<IUpdateTranspo
         >
             <Edit
                 saveButtonProps={saveButtonProps}
-                cardHeaderProps={{
+                headerProps={{
                     action: (
                         <IconButton
                             onClick={() => close()}
@@ -95,7 +95,7 @@ export const EditTransportDrawer: React.FC<UseModalFormReturnType<IUpdateTranspo
                     ),
                     avatar: null,
                 }}
-                cardProps={{sx: {overflowY: "scroll", height: "100vh"}}}
+                wrapperProps={{sx: {overflowY: "scroll", height: "100vh"}}}
                 breadcrumb={""}
             >
                 <Box

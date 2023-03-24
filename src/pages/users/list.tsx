@@ -30,6 +30,7 @@ import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
 import { Controller, useForm } from "@pankod/refine-react-hook-form";
 import { ISubunitFilterVariables } from "../../interfaces/ISubunit";
 import { ItemStatus } from "components/itemStatus";
+import moment from "moment";
 
 export const UserList = () => {
   const { show } = useNavigation();
@@ -144,8 +145,8 @@ export const UserList = () => {
         headerName: t("users.fields.created_at"),
         flex: 1,
         minWidth: 80,
-        renderCell: function render({ value }) {
-          return <DateField value={value} format={"DD.MM.YYYY"} />;
+        renderCell: function render({ row }) {
+          return <DateField value={row.created_at} format={"DD.MM.YYYY"} />;
         },
       },
       {
@@ -182,9 +183,9 @@ export const UserList = () => {
   );
 
   const { register, handleSubmit, control } = useForm<
-    BaseRecord,
-    HttpError,
-    ISubunitFilterVariables
+      BaseRecord,
+      HttpError,
+      IUserFilterVariables
   >({
     defaultValues: {
       q: getDefaultFilter("q", filters, "eq"),
@@ -243,7 +244,7 @@ export const UserList = () => {
                       return (
                         organizationAutocompleteProps?.options?.find(
                           (p) => p.id.toString() === item.id.toString()
-                        )?.name ?? ""
+                        )?.title ?? ""
                       );
                     }}
                     isOptionEqualToValue={(option, value) => {

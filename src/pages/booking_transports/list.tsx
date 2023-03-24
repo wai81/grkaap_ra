@@ -556,9 +556,9 @@ export const Booking_transportList = () => {
                                                     renderInput={(params) => (
                                                         <TextField
                                                             {...params}
-                                                            label={t("booking_transport.filter.subuinit.label")}
+                                                            label={t("booking_transport.filter.subunit.label")}
                                                             placeholder={t(
-                                                                "booking_transport.filter.subuinit.placeholder"
+                                                                "booking_transport.filter.subunit.placeholder"
                                                             )}
                                                             margin="dense"
                                                             variant="outlined"

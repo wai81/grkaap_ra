@@ -56,7 +56,7 @@ export const ShowTransportDrawer: React.FC<UseModalFormReturnType<ITransport, Ht
             PaperProps={{sx: {width: {sm: "100%", md: 500}}}}
         >
             <Show
-                cardHeaderProps={{
+                headerProps={{
                     action: (
                         <IconButton
                             onClick={() => close()}
@@ -67,7 +67,7 @@ export const ShowTransportDrawer: React.FC<UseModalFormReturnType<ITransport, Ht
                     ),
                     avatar: null,
                 }}
-                cardProps={{sx: {overflowY: "scroll", height: "100vh"}}}
+                wrapperProps={{sx: {overflowY: "scroll", height: "100vh"}}}
                 breadcrumb={""}
             >
                 <Box

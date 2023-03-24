@@ -101,7 +101,7 @@ export const EditBookingTransportDrawer: React.FC<
                     saveButtonProps={{
                         type: 'submit',
                     }}
-                    cardHeaderProps={{
+                    headerProps={{
                         action: (
                             <IconButton
                                 onClick={() => close()}
@@ -112,7 +112,7 @@ export const EditBookingTransportDrawer: React.FC<
                         ),
                         avatar: null,
                     }}
-                    cardProps={{ sx: { overflowY: "scroll", height: "100vh" } }}
+                    wrapperProps={{ sx: { overflowY: "scroll", height: "100vh" } }}
                     breadcrumb={''}
                 >
                     <Box
@@ -181,7 +181,7 @@ export const EditBookingTransportDrawer: React.FC<
                         <Controller
                             control={control}
                             name="subunit"
-                            rules={{required: 'This field is required'}}
+                            rules={{required: t('required.field')}}
                             defaultValue={null as any}
                             render={({field}) => (
                                 <Autocomplete
@@ -208,8 +208,8 @@ export const EditBookingTransportDrawer: React.FC<
                                             label={t('booking_transport.fields.subunit')}
                                             margin="normal"
                                             variant="outlined"
-                                            error={!!(errors as any)?.subunit?.id}
-                                            helperText={(errors as any)?.subunit?.id?.message}
+                                            error={!!(errors)?.subunit}
+                                            helperText={(errors as any)?.subunit?.message}
                                             required
                                             size={'small'}
                                         />
@@ -257,7 +257,7 @@ export const EditBookingTransportDrawer: React.FC<
                         />
                         <TextField
                             {...register("count_man", {
-                                required: "This field is required",
+                                required: t('required.field'),
                             })}
                             error={!!(errors as any)?.count_man}
                             helperText={(errors as any)?.count_man?.message}

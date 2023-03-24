@@ -91,7 +91,7 @@ export const CreateTransportDrawer: React.FC<
           ),
           avatar: null,
         }}
-        cardProps={{ sx: { overflowY: "scroll", height: "100vh" } }}
+        wrapperProps={{ sx: { overflowY: "scroll", height: "100vh" } }}
         breadcrumb={""}
       >
         <Box
