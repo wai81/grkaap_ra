@@ -4,6 +4,7 @@ import { notificationProvider, RefineSnackbarProvider, ReadyPage, ErrorComponent
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import {dataProvider} from './providers/data-provider/';
 import routerProvider from "@refinedev/react-router-v6/legacy";
+//import routerProvider from "@refinedev/react-router-v6";
 import {useTranslation} from 'react-i18next';
 import { RefineKbarProvider } from "@refinedev/kbar";
 import {ColorModeContextProvider} from 'contexts';
@@ -95,6 +96,7 @@ function App() {
                         Layout={Layout} //Шаблон
                         Header={Header} //
                         legacyRouterProvider={routerProvider}
+                        //routerProvider={routerProvider}
                         i18nProvider={i18nProvider}
                         OffLayoutArea={OffLayoutArea}
                         legacyAuthProvider={authProvider(axiosInstance)}
