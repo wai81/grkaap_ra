@@ -1,61 +1,54 @@
 // "axios" package needs to be installed
 import { AxiosInstance } from "axios";
+// "stringify" function is re-exported from "query-string" package by "@refinedev/simple-rest"
 import { stringify } from "@refinedev/simple-rest";
 import { DataProvider } from "@refinedev/core";
 import { axiosInstance, generateSort, generateFilter } from "./utils";
 
-//import { API_URL } from "../../constants";
 export const dataProvider = (
-  apiUrl: string,
-  httpClient: AxiosInstance = axiosInstance
+    apiUrl: string,
+    httpClient: AxiosInstance = axiosInstance
 ): Omit<
-  Required<DataProvider>,
-  "createMany" | "updateMany" | "deleteMany"
-> => ({
-  getList: async ({
-    resource,
-    hasPagination = true,
-    pagination = { current: 1, pageSize: 10 },
-    filters,
-    sort,
-  }) => {
+    Required<DataProvider>,
+    "createMany" | "updateMany" | "deleteMany"
+    > => ({
+  getList: async ({ resource, pagination, filters, sorters }) => {
     const url = `${apiUrl}/${resource}`;
 
-    const { current = 1, pageSize = 10 } = pagination ?? {};
+    const { current = 1, pageSize = 10, mode = "server" } = pagination ?? {};
 
     const queryFilters = generateFilter(filters);
-
-    //console.log(queryFilters)
 
     const query: {
       page?: number;
       size?: number;
       order_by?: string;
-      // sort?: string;
-      // order?: string;
-    } = hasPagination
-      ? {
-          page: current,
-          size: pageSize,
-        }
-      : {};
+      //_start?: number;
+      //_end?: number;
+      // _sort?: string;
+      // _order?: string;
+    } = {};
 
-    const generatedSort = generateSort(sort);
+    if (mode === "server") {
+      query.page= current;
+      query.size= pageSize;
+      // query._start = (current - 1) * pageSize;
+      // query._end = current * pageSize;
+    }
+
+    const generatedSort = generateSort(sorters);
     if (generatedSort) {
       const { _sort, _order } = generatedSort;
-      // query.sort = _sort.join(',');
-      // query.order = _order.join(',');
+      // query._sort = _sort.join(",");
+      // query._order = _order.join(",");
       query.order_by = `${_order}${_sort}`;
     }
 
-    //const { data, headers } = await httpClient.get(
-    const { data } = await httpClient.get(
-      `${url}?${stringify(query)}&${stringify(queryFilters)}`
+    const { data, headers } = await httpClient.get(
+        `${url}?${stringify(query)}&${stringify(queryFilters)}`
     );
 
-    //console.log(data.items)
-    //console.log(data.total)
-    //const total = +headers["x-total-count"];
+    const total = +headers["x-total-count"];
 
     return {
       data: data.items,
@@ -65,7 +58,7 @@ export const dataProvider = (
 
   getMany: async ({ resource, ids }) => {
     const { data } = await httpClient.get(
-      `${apiUrl}/${resource}?${stringify({ id: ids })}`
+        `${apiUrl}/${resource}?${stringify({ id: ids })}`
     );
 
     return {
@@ -86,7 +79,7 @@ export const dataProvider = (
   update: async ({ resource, id, variables }) => {
     const url = `${apiUrl}/${resource}/${id}`;
 
-    const { data } = await httpClient.put(url, variables);
+    const { data } = await httpClient.patch(url, variables);
 
     return {
       data,
@@ -119,16 +112,24 @@ export const dataProvider = (
     return apiUrl;
   },
 
-  custom: async ({ url, method, filters, sort, payload, query, headers }) => {
+  custom: async ({
+                   url,
+                   method,
+                   filters,
+                   sorters,
+                   payload,
+                   query,
+                   headers,
+                 }) => {
     let requestUrl = `${url}?`;
 
-    if (sort) {
-      const generatedSort = generateSort(sort);
+    if (sorters) {
+      const generatedSort = generateSort(sorters);
       if (generatedSort) {
         const { _sort, _order } = generatedSort;
         const sortQuery = {
-          sort: _sort.join(","),
-          order: _order.join(","),
+          _sort: _sort.join(","),
+          _order: _order.join(","),
         };
         requestUrl = `${requestUrl}&${stringify(sortQuery)}`;
       }

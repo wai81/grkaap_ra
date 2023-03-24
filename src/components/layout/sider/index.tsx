@@ -1,5 +1,3 @@
-// noinspection UnnecessaryLocalVariableJS
-
 import React, { useState } from "react";
 import { Sider as DefaultSider } from "@refinedev/mui";
 
@@ -28,15 +26,15 @@ import {
 } from "@mui/icons-material";
 
 import {
-  CanAccess,
-  ITreeMenu,
-  useIsExistAuthentication,
-  useLogout,
-  useTitle,
-  useTranslate,
-  useRouterContext,
-  useMenu,
-  useRefineContext,
+    CanAccess,
+    ITreeMenu,
+    useIsExistAuthentication,
+    useLogout,
+    useTitle,
+    useTranslate,
+    useRouterContext,
+    useMenu,
+    useRefineContext, useLink,
 } from "@refinedev/core";
 
 import { Title as DefaultTitle } from "../title";
@@ -52,6 +50,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
 
   const t = useTranslate();
   const { Link } = useRouterContext();
+    //const Link  = useLink();
   const { hasDashboard } = useRefineContext();
   const translate = useTranslate();
 
