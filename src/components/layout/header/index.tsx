@@ -1,9 +1,5 @@
 import React, { useContext } from 'react';
-import {
-  useGetIdentity,
-  useGetLocale,
-  useSetLocale,
-} from '@pankod/refine-core';
+import { useGetIdentity, useGetLocale, useSetLocale } from "@refinedev/core";
 import {
   AppBar,
   IconButton,
@@ -14,7 +10,7 @@ import {
   Select,
   Toolbar,
   Typography,
-} from '@pankod/refine-mui';
+} from "@mui/material";
 import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material';
 
 import { ColorModeContext } from 'contexts';
@@ -27,7 +23,9 @@ export const Header: React.FC = () => {
   const locale = useGetLocale();
   const currentLocale = locale();
 
-  const { data: user } = useGetIdentity();
+  const { data: user } = useGetIdentity({
+    v3LegacyAuthProviderCompatible: true
+  });
   const showUserInfo = user && (user.name || user.avatar);
 
   return (

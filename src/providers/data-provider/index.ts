@@ -1,8 +1,7 @@
 // "axios" package needs to be installed
 import { AxiosInstance } from "axios";
-// "stringify" function is re-exported from "query-string" package by "@pankod/refine-simple-rest"
-import { stringify } from "@pankod/refine-simple-rest";
-import { DataProvider } from "@pankod/refine-core";
+import { stringify } from "@refinedev/simple-rest";
+import { DataProvider } from "@refinedev/core";
 import { axiosInstance, generateSort, generateFilter } from "./utils";
 
 //import { API_URL } from "../../constants";

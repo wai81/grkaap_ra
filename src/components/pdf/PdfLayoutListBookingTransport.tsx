@@ -1,6 +1,6 @@
 import {IBookingTransport} from "../../interfaces/IBookingTransport";
 import {PDFViewer,Document,Page,View,Text, StyleSheet, Font} from "@react-pdf/renderer";
-import {useTranslate} from "@pankod/refine-core";
+import { useTranslate } from "@refinedev/core";
 import moment from "moment";
 
 Font.register({

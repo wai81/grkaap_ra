@@ -1,8 +1,9 @@
-import {HttpError, useLogin, useTranslate} from "@pankod/refine-core";
-import {FormProvider, useForm} from '@pankod/refine-react-hook-form';
+import { HttpError, useLogin, useTranslate } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { FormProvider } from "react-hook-form";
 import React from "react";
 import {layoutStyles, titleStyles} from "./styles";
-import {Box, Button, Card, CardContent, Container, TextField, Typography} from "@pankod/refine-mui";
+import { Box, Button, Card, CardContent, Container, TextField, Typography } from "@mui/material";
 
 export interface ILoginForm {
     username: string;
@@ -11,7 +12,9 @@ export interface ILoginForm {
 
 export const Login: React.FC = () => {
     const methods = useForm<ILoginForm, HttpError, ILoginForm>();
-    const {mutate: login, isLoading} = useLogin<ILoginForm>();
+    const {mutate: login, isLoading} = useLogin<ILoginForm>({
+        v3LegacyAuthProviderCompatible: true
+    });
     const {
         register,
         handleSubmit,

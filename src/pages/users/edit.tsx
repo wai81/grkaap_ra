@@ -1,19 +1,21 @@
+import { Edit, useAutocomplete } from "@refinedev/mui";
+
 import {
     Autocomplete,
     Box,
     Checkbox,
-    Edit,
     FormControl,
     FormControlLabel,
     FormLabel,
     Radio,
     RadioGroup,
     TextField,
-    useAutocomplete,
-} from '@pankod/refine-mui';
-import {Controller, useForm} from '@pankod/refine-react-hook-form';
+} from "@mui/material";
+
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import {IUpdateUser} from 'interfaces/IUser';
-import {CrudFilters, useTranslate} from "@pankod/refine-core";
+import { CrudFilters, useTranslate } from "@refinedev/core";
 
 export const UserEdit = () => {
     const {
@@ -33,7 +35,7 @@ export const UserEdit = () => {
     const {autocompleteProps: organizationAutocompleteProps} =
         useAutocomplete({
             resource: 'organizations',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -48,6 +50,8 @@ export const UserEdit = () => {
                 usersData?.organization == null
                     ? null
                     : queryResult?.data?.data.organization.id,
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const handleOnSubmit = (data: any) => {

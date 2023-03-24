@@ -1,10 +1,9 @@
-//import { MuiInferencer } from "@pankod/refine-inferencer/mui";
+import { CrudFilters, useTranslate } from "@refinedev/core";
+import { Edit, useAutocomplete } from "@refinedev/mui";
 
-import {CrudFilters, useTranslate} from "@pankod/refine-core";
 import {
     Autocomplete,
     Box,
-    Edit,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -12,10 +11,11 @@ import {
     Radio,
     RadioGroup,
     TextField,
-    useAutocomplete
-} from "@pankod/refine-mui";
+} from "@mui/material";
+
 import {DateTimePicker} from '@mui/x-date-pickers';
-import {Controller, useForm} from "@pankod/refine-react-hook-form";
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import {IUpdateBookingTransport} from "interfaces/IBookingTransport";
 import moment from "moment";
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -35,7 +35,7 @@ export const Booking_transportEdit = () => {
     const {autocompleteProps: subunitAutocompleteProps} =
         useAutocomplete({
             resource: 'subunits',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -44,13 +44,15 @@ export const Booking_transportEdit = () => {
                     value: (value.length) > 0 ? value : undefined,
                 });
                 return filters
-            })
+            }),
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const {autocompleteProps: transportAutocompleteProps} =
         useAutocomplete({
             resource: 'transports',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -59,7 +61,9 @@ export const Booking_transportEdit = () => {
                     value: (value.length) > 0 ? value : undefined,
                 });
                 return filters
-            })
+            }),
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const getEndDate = (startDate:Date, duration:number)=>{

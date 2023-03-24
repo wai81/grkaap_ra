@@ -1,4 +1,4 @@
-import { AuthProvider } from '@pankod/refine-core';
+import { LegacyAuthProvider as AuthProvider } from "@refinedev/core";
 
 import { TOKEN_KEY, API_URL } from '../../constants';
 import axios, { AxiosInstance } from 'axios';

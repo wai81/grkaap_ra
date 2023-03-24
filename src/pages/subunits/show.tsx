@@ -1,5 +1,6 @@
-import {useOne, useShow, useTranslate} from "@pankod/refine-core";
-import {BooleanField, DateField, Show, Stack, TextFieldComponent as TextField, Typography} from "@pankod/refine-mui";
+import { useOne, useShow, useTranslate } from "@refinedev/core";
+import { BooleanField, DateField, Show, TextFieldComponent as TextField } from "@refinedev/mui";
+import { Stack, Typography } from "@mui/material";
 
 
 export const SubunitShow = () => {

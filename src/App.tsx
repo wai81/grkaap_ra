@@ -1,17 +1,11 @@
 import React from 'react';
-import {Refine} from '@pankod/refine-core';
-import {
-    notificationProvider,
-    RefineSnackbarProvider,
-    CssBaseline,
-    GlobalStyles,
-    ReadyPage,
-    ErrorComponent,
-} from '@pankod/refine-mui';
+import { Refine } from "@refinedev/core";
+import { notificationProvider, RefineSnackbarProvider, ReadyPage, ErrorComponent } from "@refinedev/mui";
+import { CssBaseline, GlobalStyles } from "@mui/material";
 import {dataProvider} from './providers/data-provider/';
-import routerProvider from '@pankod/refine-react-router-v6';
+import routerProvider from "@refinedev/react-router-v6/legacy";
 import {useTranslation} from 'react-i18next';
-import {RefineKbarProvider} from '@pankod/refine-kbar';
+import { RefineKbarProvider } from "@refinedev/kbar";
 import {Title, Sider, Layout, Header} from 'components/layout';
 import {ColorModeContextProvider} from 'contexts';
 import {OffLayoutArea} from 'components/offLayoutArea';
@@ -97,10 +91,10 @@ function App() {
                         Sider={Sider} //Боковое меню
                         Layout={Layout} //Шаблон
                         Header={Header} //
-                        routerProvider={routerProvider}
+                        legacyRouterProvider={routerProvider}
                         i18nProvider={i18nProvider}
                         OffLayoutArea={OffLayoutArea}
-                        authProvider={authProvider(axiosInstance)}
+                        legacyAuthProvider={authProvider(axiosInstance)}
                         LoginPage={() => (
                             <Login/>
                         )}
