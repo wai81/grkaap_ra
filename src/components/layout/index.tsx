@@ -1,13 +1,13 @@
 import React from "react";
-import { LayoutProps } from "@refinedev/core";
+import { Header as DefaultHeader } from "./header";
+import { Sider as DefaultSider } from "./sider";
 import { Box } from "@mui/material";
+import type { RefineLayoutLayoutProps } from "@refinedev/mui";
 
-import { Sider as DefaultSider } from "../sider";
-import { Header as DefaultHeader } from "../header";
-
-export const Layout: React.FC<LayoutProps> = ({
+export const Layout: React.FC<RefineLayoutLayoutProps> = ({
   Sider,
   Header,
+  Title,
   Footer,
   OffLayoutArea,
   children,
@@ -17,7 +17,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <Box display="flex" flexDirection="row">
-      <SiderToRender />
+      <SiderToRender Title={Title} />
       <Box
         sx={{
           display: "flex",

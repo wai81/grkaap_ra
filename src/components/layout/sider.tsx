@@ -1,19 +1,21 @@
 import React, { useState } from "react";
-import { Sider as DefaultSider } from "@refinedev/mui";
-
 import {
-  Box,
-  Drawer,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
-  Tooltip,
-  Button,
-  IconButton,
-} from "@mui/material";
-
-import { List as MuiList } from "@mui/material";
+  CanAccess,
+  ITreeMenu,
+  useIsExistAuthentication,
+  useLogout,
+  useTitle,
+  useTranslate,
+  useRouterContext,
+  useRouterType,
+  useLink,
+  useMenu,
+  useRefineContext,
+  useActiveAuthProvider,
+  pickNotDeprecated,
+  useWarnAboutChange,
+} from "@refinedev/core";
+import { Title as DefaultTitle } from "@refinedev/mui";
 import {
   ListOutlined,
   Logout,
@@ -24,22 +26,25 @@ import {
   MenuRounded,
   Dashboard,
 } from "@mui/icons-material";
-
 import {
-    CanAccess,
-    ITreeMenu,
-    useIsExistAuthentication,
-    useLogout,
-    useTitle,
-    useTranslate,
-    useRouterContext,
-    useMenu,
-    useRefineContext, useLink,
-} from "@refinedev/core";
+  Box,
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  Tooltip,
+  Button,
+  IconButton,
+} from "@mui/material";
+import type { RefineLayoutSiderProps } from "@refinedev/mui";
 
-import { Title as DefaultTitle } from "../title";
-
-export const Sider: typeof DefaultSider = ({ render }) => {
+export const Sider: React.FC<RefineLayoutSiderProps> = ({
+  Title: TitleFromProps,
+  render,
+  meta,
+}) => {
   const [collapsed, setCollapsed] = useState(false);
   const [opened, setOpened] = useState(false);
 
@@ -49,23 +54,29 @@ export const Sider: typeof DefaultSider = ({ render }) => {
   };
 
   const t = useTranslate();
-  const { Link } = useRouterContext();
-    //const Link  = useLink();
+  const routerType = useRouterType();
+  const Link = useLink();
+  const { Link: LegacyLink } = useRouterContext();
+  const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
   const { hasDashboard } = useRefineContext();
   const translate = useTranslate();
+  const { warnWhen, setWarnWhen } = useWarnAboutChange();
 
-  const { menuItems, selectedKey, defaultOpenKeys } = useMenu();
+  const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta });
   const isExistAuthentication = useIsExistAuthentication();
+  const TitleFromContext = useTitle();
+  const authProvider = useActiveAuthProvider();
   const { mutate: mutateLogout } = useLogout({
-    v3LegacyAuthProviderCompatible: true
+    v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
   });
-  const Title = useTitle();
 
   const [open, setOpen] = useState<{ [k: string]: any }>({});
 
   React.useEffect(() => {
-    setOpen((previousOpen) => {
-      const previousOpenKeys: string[] = Object.keys(previousOpen);
+    setOpen((previous) => {
+      const previousKeys: string[] = Object.keys(previous);
+      const previousOpenKeys = previousKeys.filter((key) => previous[key]);
+
       const uniqueKeys = new Set([...previousOpenKeys, ...defaultOpenKeys]);
       const uniqueKeysRecord = Object.fromEntries(
         Array.from(uniqueKeys.values()).map((key) => [key, true])
@@ -74,31 +85,35 @@ export const Sider: typeof DefaultSider = ({ render }) => {
     });
   }, [defaultOpenKeys]);
 
-  const RenderToTitle = Title ?? DefaultTitle;
+  const RenderToTitle = TitleFromProps ?? TitleFromContext ?? DefaultTitle;
 
   const handleClick = (key: string) => {
     setOpen({ ...open, [key]: !open[key] });
   };
 
-  const renderTreeView = (tree: ITreeMenu[], selectedKey: string) => {
+  const renderTreeView = (tree: ITreeMenu[], selectedKey?: string) => {
     return tree.map((item: ITreeMenu) => {
-      const { icon, label, route, name, children, parentName } = item;
-      const isOpen = open[route || ""] || false;
+      const { icon, label, route, name, children, parentName, meta, options } =
+        item;
+      const isOpen = open[item.key || ""] || false;
 
-      const isSelected = route === selectedKey;
-      const isNested = !(parentName === undefined);
+      const isSelected = item.key === selectedKey;
+      const isNested = !(
+        pickNotDeprecated(meta?.parent, options?.parent, parentName) ===
+        undefined
+      );
 
       if (children.length > 0) {
         return (
           <CanAccess
-            key={route}
+            key={item.key}
             resource={name.toLowerCase()}
             action="list"
             params={{
               resource: item,
             }}
           >
-            <div key={route}>
+            <div key={item.key}>
               <Tooltip
                 title={label ?? name}
                 placement="right"
@@ -110,10 +125,10 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                     if (collapsed) {
                       setCollapsed(false);
                       if (!isOpen) {
-                        handleClick(route || "");
+                        handleClick(item.key || "");
                       }
                     } else {
-                      handleClick(route || "");
+                      handleClick(item.key || "");
                     }
                   }}
                   sx={{
@@ -131,7 +146,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                     sx={{
                       justifyContent: "center",
                       minWidth: 36,
-                      color: "primary.contrastText",
+                      color: "secondary.contrastText",
                     }}
                   >
                     {icon ?? <ListOutlined />}
@@ -148,10 +163,14 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                 </ListItemButton>
               </Tooltip>
               {!collapsed && (
-                <Collapse in={open[route || ""]} timeout="auto" unmountOnExit>
-                  <MuiList component="div" disablePadding>
+                <Collapse
+                  in={open[item.key || ""]}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding>
                     {renderTreeView(children, selectedKey)}
-                  </MuiList>
+                  </List>
                 </Collapse>
               )}
             </div>
@@ -161,7 +180,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
 
       return (
         <CanAccess
-          key={route}
+          key={item.key}
           resource={name.toLowerCase()}
           action="list"
           params={{ resource: item }}
@@ -173,7 +192,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             arrow
           >
             <ListItemButton
-              component={Link}
+              component={ActiveLink}
               to={route}
               selected={isSelected}
               onClick={() => {
@@ -195,7 +214,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                 sx={{
                   justifyContent: "center",
                   minWidth: 36,
-                  color: "primary.contrastText",
+                  color: "secondary.contrastText",
                 }}
               >
                 {icon ?? <ListOutlined />}
@@ -224,7 +243,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
         arrow
       >
         <ListItemButton
-          component={Link}
+          component={ActiveLink}
           to="/"
           selected={selectedKey === "/"}
           onClick={() => {
@@ -246,7 +265,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             sx={{
               justifyContent: "center",
               minWidth: 36,
-              color: "primary.contrastText",
+              color: "secondary.contrastText",
             }}
           >
             <Dashboard />
@@ -264,6 +283,24 @@ export const Sider: typeof DefaultSider = ({ render }) => {
     </CanAccess>
   ) : null;
 
+  const handleLogout = () => {
+    if (warnWhen) {
+      const confirm = window.confirm(
+        translate(
+          "warnWhenUnsavedChanges",
+          "Are you sure you want to leave? You have unsaved changes."
+        )
+      );
+
+      if (confirm) {
+        setWarnWhen(false);
+        mutateLogout();
+      }
+    } else {
+      mutateLogout();
+    }
+  };
+
   const logout = isExistAuthentication && (
     <Tooltip
       title={t("buttons.logout", "Logout")}
@@ -273,14 +310,14 @@ export const Sider: typeof DefaultSider = ({ render }) => {
     >
       <ListItemButton
         key="logout"
-        onClick={() => mutateLogout()}
+        onClick={handleLogout}
         sx={{ justifyContent: "center" }}
       >
         <ListItemIcon
           sx={{
             justifyContent: "center",
             minWidth: 36,
-            color: "primary.contrastText",
+            color: "secondary.contrastText",
           }}
         >
           <Logout />
@@ -317,9 +354,9 @@ export const Sider: typeof DefaultSider = ({ render }) => {
   };
 
   const drawer = (
-    <MuiList disablePadding sx={{ mt: 1, color: "primary.contrastText" }}>
+    <List disablePadding sx={{ mt: 1, color: "secondary.contrastText" }}>
       {renderSider()}
-    </MuiList>
+    </List>
   );
 
   return (
@@ -406,7 +443,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           <Button
             sx={{
               background: "rgba(0,0,0,.5)",
-              color: "primary.contrastText",
+              color: "secondary.contrastText",
               textAlign: "center",
               borderRadius: 0,
               borderTop: "1px solid #ffffff1a",

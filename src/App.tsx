@@ -6,7 +6,6 @@ import {dataProvider} from './providers/data-provider/';
 import routerProvider from "@refinedev/react-router-v6/legacy";
 import {useTranslation} from 'react-i18next';
 import { RefineKbarProvider } from "@refinedev/kbar";
-import {Title, Sider, Layout, Header} from 'components/layout';
 import {ColorModeContextProvider} from 'contexts';
 import {OffLayoutArea} from 'components/offLayoutArea';
 //import {MuiInferencer} from '@pankod/refine-inferencer/mui';
@@ -49,6 +48,10 @@ import {
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 import 'moment/locale/ru';
+import {Title} from "./components/layout/title";
+import {Sider} from "./components/layout/sider";
+import {Layout} from "./components/layout";
+import {Header} from "./components/layout/header";
 
 const axiosInstance = axios.create();
 
