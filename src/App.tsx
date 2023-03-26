@@ -16,7 +16,7 @@ import routerProvider, {
 } from "@refinedev/react-router-v6";
 import { useTranslation } from "react-i18next";
 import { RefineKbarProvider } from "@refinedev/kbar";
-import { ColorModeContextProvider } from "contexts";
+import { ColorModeContextProvider } from "./contexts/color-mode";
 import { OffLayoutArea } from "components/offLayoutArea";
 //import {MuiInferencer} from '@pankod/refine-inferencer/mui';
 import { API_URL, TOKEN_KEY } from "./constants";
@@ -94,14 +94,10 @@ function App() {
                 notificationProvider={notificationProvider}
                 ReadyPage={ReadyPage}
                 catchAll={<ErrorComponent />}
-                //Title={Title} //Заголовок бкового меню и кнопка свернуть меню
-                //Sider={Sider} //Боковое меню
-                //Layout={Layout} //Шаблон
-                //Header={Header} //
-                //legacyRouterProvider={routerProvider}
                 routerProvider={routerProvider}
                 i18nProvider={i18nProvider}
-                legacyAuthProvider={authProvider(axiosInstance)}
+                //legacyAuthProvider={authProvider(axiosInstance)}
+                authProvider={authProvider}
                 resources={[
                   {
                     name: "booking-transport",

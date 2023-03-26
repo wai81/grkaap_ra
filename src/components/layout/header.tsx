@@ -1,12 +1,22 @@
-import React, {useContext} from "react";
-import {useGetIdentity, useActiveAuthProvider, useGetLocale, useSetLocale} from "@refinedev/core";
-import {AppBar, Stack, Toolbar, Typography, Avatar, IconButton, FormControl, Select, MenuItem} from "@mui/material";
-import type { RefineLayoutHeaderProps } from "@refinedev/mui";
 import {DarkModeOutlined, LightModeOutlined} from "@mui/icons-material";
-import {ColorModeContext} from "../../contexts";
+import {
+  AppBar,
+  Stack,
+  Toolbar,
+  Typography,
+  Avatar,
+  IconButton,
+  FormControl,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import {useGetIdentity, useActiveAuthProvider, useGetLocale, useSetLocale} from "@refinedev/core";
 import i18n from "../../i18n";
+import React, {useContext} from "react";
+import {ColorModeContext} from "../../contexts/color-mode";
 
-export const Header: React.FC<RefineLayoutHeaderProps> = () => {
+
+export const Header: React.FC = () => {
   const { mode, setMode } = useContext(ColorModeContext);
   const changeLanguage = useSetLocale();
   const locale = useGetLocale();
@@ -17,9 +27,9 @@ export const Header: React.FC<RefineLayoutHeaderProps> = () => {
     v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
   });
 
-  const shouldRenderHeader = user && (user.name || user.avatar);
+  const showUserInfo = user && (user.name || user.avatar);
 
-  return shouldRenderHeader ? (
+  return  (
     <AppBar color="default" position="sticky" elevation={1}>
       <Toolbar>
         <Stack
@@ -75,7 +85,7 @@ export const Header: React.FC<RefineLayoutHeaderProps> = () => {
               ))}
             </Select>
           </FormControl>
-          <Stack
+          {/* <Stack
             direction="row"
             gap="16px"
             alignItems="center"
@@ -83,9 +93,17 @@ export const Header: React.FC<RefineLayoutHeaderProps> = () => {
           >
             <Typography variant="subtitle2">{user?.name}</Typography>
             <Avatar src={user?.avatar} alt={user?.name} />
-          </Stack>
+          </Stack> */}
+          {showUserInfo && (
+            <Stack direction="row" gap="16px" alignItems="center">
+              {user.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
+              {user.name && (
+                <Typography variant="subtitle2">{user?.name}</Typography>
+              )}
+            </Stack>
+          )}
         </Stack>
       </Toolbar>
     </AppBar>
-  ) : null;
+  );
 };
