@@ -44,11 +44,12 @@ export const dataProvider = (
       query.order_by = `${_order}${_sort}`;
     }
 
-    const { data, headers } = await httpClient.get(
+    //const { data, headers } = await httpClient.get(
+      const { data } = await httpClient.get(
         `${url}?${stringify(query)}&${stringify(queryFilters)}`
     );
 
-    const total = +headers["x-total-count"];
+    //const total = +headers["x-total-count"];
 
     return {
       data: data.items,

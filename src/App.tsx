@@ -35,6 +35,7 @@ import {
 } from "pages/subunits";
 import axios, { AxiosRequestConfig } from "axios";
 import { authProvider } from "providers/auth-provider";
+//import { authProvider } from "authProvider";
 import { Login } from "pages/auth/login";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
@@ -90,14 +91,14 @@ function App() {
           <RefineSnackbarProvider>
             <RefineKbarProvider>
               <Refine
-                dataProvider={dataProvider(API_URL)}
+                dataProvider={dataProvider(API_URL, axiosInstance)}
                 notificationProvider={notificationProvider}
                 ReadyPage={ReadyPage}
                 catchAll={<ErrorComponent />}
                 routerProvider={routerProvider}
                 i18nProvider={i18nProvider}
-                //legacyAuthProvider={authProvider(axiosInstance)}
-                authProvider={authProvider}
+                legacyAuthProvider={authProvider(axiosInstance)}
+                //authProvider={authProvider(axiosInstance)}
                 resources={[
                   {
                     name: "booking-transport",
@@ -106,7 +107,7 @@ function App() {
                       },
                   },
                   {
-                    name: "booking_transport",
+                    name: "booking_transport/",
                     list: "/booking-transport/booking_transport",
                     show: "/booking-transport/booking_transport/show/:id",
                     
@@ -117,7 +118,7 @@ function App() {
   
                   },
                   {
-                    name: "transports",
+                    name: "transports/",
                     list: "/booking-transport/transports",
                     show: "/booking-transport/transports/show/:id",
                     
@@ -134,7 +135,7 @@ function App() {
                     },
                   },
                   {
-                    name: "organizations",
+                    name: "organizations/",
                     list: "/reference/organizations",
                     create: "/reference/organizations/create",
                     edit: "/reference/organizations/edit/:id",
@@ -146,7 +147,7 @@ function App() {
                     },
                   },
                   {
-                    name: "subunits",
+                    name: "subunits/",
                     list: "/reference/subunits",
                     create: "/reference/subunits/create",
                     edit: "/reference/subunits/edit/:id",
@@ -165,7 +166,7 @@ function App() {
                     },
                   },
                   {
-                    name: "users",
+                    name: "users/",
                     list: "/settings/users",
                     create: "/settings/users/create",
                     edit: "/settings/users/edit/:id",
@@ -243,7 +244,7 @@ function App() {
                   <Route
                     element={
                       <Authenticated fallback={<Outlet />}>
-                        <NavigateToResource resource="users" />
+                        <NavigateToResource />
                       </Authenticated>
                     }
                   >
