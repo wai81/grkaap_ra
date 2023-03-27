@@ -98,6 +98,17 @@ function App() {
                 i18nProvider={i18nProvider}
                 legacyAuthProvider={authProvider(axiosInstance)}
                 //authProvider={authProvider(axiosInstance)}
+                  options={{
+                      syncWithLocation: true,
+                      warnWhenUnsavedChanges: true,
+                      liveMode:"auto",
+                      // reactQuery:{
+                      //     devtoolConfig:false, // отключение среды разработчика
+                      // }
+                      //mutationMode: "undoable",
+                      //undoableTimeout: 3500
+                  }}
+
                 resources={[
                   {
                     name: "booking-transport",
@@ -197,7 +208,7 @@ function App() {
                     {/* маршрутизация на главную страницу(по умолчанию) поле аутенфикации */}
                     <Route
                       index
-                      element={<NavigateToResource resource="users" />}
+                      element={<NavigateToResource resource="booking_transport" />}
                     />
 
                     {/* маршрутизация для страниц в меню */}

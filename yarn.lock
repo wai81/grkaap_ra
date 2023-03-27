@@ -2184,10 +2184,10 @@
   dependencies:
     "@babel/runtime" "^7.20.13"
 
-"@refinedev/cli@latest":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.1.0.tgz#27715da4cf299168ece748feb6298e9fca8c72cb"
-  integrity sha512-MzPa9IXpnbZNAa/eIi0QMHXN0UJYyqn/G7o43gAuOWpLMDIvHBCkYIeH3VXUorl2Y5UXxhHQ/j1U7ImoIAFCTw==
+"@refinedev/cli@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@refinedev/cli/-/cli-2.1.2.tgz#8bdde40eba26bcb250f2fabb42ce2fb69995f3a3"
+  integrity sha512-yNfxp3nqvxpznbqs5OI4Jz7AtftTPldQU3ZL1dItcMA7WDgBHpAnvEWSfGdYYFBHxSxrJJPtpoIPEtr53/dnZg==
   dependencies:
     boxen "^5.1.2"
     cardinal "^2.1.1"
