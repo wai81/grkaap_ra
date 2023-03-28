@@ -1,14 +1,7 @@
 import React from "react";
-import {
-  DataGrid,
-  DateField,
-  EditButton,
-  GridColumns,
-  List,
-  ruRU,
-  useDataGrid,
-} from "@pankod/refine-mui";
-import { useNavigation, useTranslate } from "@pankod/refine-core";
+import { DateField, EditButton, List, useDataGrid } from "@refinedev/mui";
+import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+import { useNavigation, useTranslate } from "@refinedev/core";
 import { IOrganization } from "../../interfaces/IOrganization";
 import { ItemStatus } from "components/itemStatus";
 

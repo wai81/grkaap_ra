@@ -1,6 +1,8 @@
 import {CloseOutlined} from "@mui/icons-material";
 import {DateTimePicker} from "@mui/x-date-pickers";
-import {HttpError, useApiUrl, useTranslate} from "@pankod/refine-core";
+import { HttpError, useApiUrl, useTranslate } from "@refinedev/core";
+import { Show } from "@refinedev/mui";
+
 import {
     Avatar,
     Box,
@@ -8,17 +10,16 @@ import {
     FormControl,
     FormControlLabel,
     FormLabel,
-    IconButton, Input,
+    IconButton,
+    Input,
     Radio,
     RadioGroup,
-    Show,
     Stack,
     TextField,
-} from "@pankod/refine-mui";
-import {
-    Controller,
-    UseModalFormReturnType,
-} from "@pankod/refine-react-hook-form";
+} from "@mui/material";
+
+import { UseModalFormReturnType } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import {ITransport} from "interfaces/ITransport";
 import moment from "moment";
 import React from "react";

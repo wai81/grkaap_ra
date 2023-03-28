@@ -151,8 +151,8 @@
   "reference": {
     "reference":"Справочники"
   },
-  "bookingTransport": {
-    "bookingTransport":"Бронь транспорта"
+  "booking-transport": {
+    "booking-transport":"Бронь транспорта"
   },
 
   "users": {

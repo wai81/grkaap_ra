@@ -1,20 +1,18 @@
-import {
-  HttpError,
-  useTranslate,
-} from "@pankod/refine-core";
-//import { MuiInferencer } from "@pankod/refine-inferencer/mui";
-import { Controller, useForm } from "@pankod/refine-react-hook-form";
+import { HttpError, useTranslate } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import { IUpdateTransport } from "../../interfaces/ITransport";
+import { Edit } from "@refinedev/mui";
+
 import {
   Box,
-  Edit,
   FormControl,
   FormControlLabel,
   FormLabel,
   Radio,
   RadioGroup,
   TextField,
-} from "@pankod/refine-mui";
+} from "@mui/material";
 
 export const TransportEdit = () => {
   const {

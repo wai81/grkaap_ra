@@ -1,4 +1,7 @@
 import React from "react";
+import { EditButton, ExportButton, List, useAutocomplete, useDataGrid } from "@refinedev/mui";
+import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+
 import {
   Autocomplete,
   Box,
@@ -6,23 +9,16 @@ import {
   Card,
   CardContent,
   CardHeader,
-  DataGrid,
-  EditButton,
-  ExportButton,
   FormControl,
   Grid,
-  GridColumns,
   InputLabel,
-  List,
   MenuItem,
-  ruRU,
   Select,
   TextField,
-  useAutocomplete,
-  useDataGrid,
-} from "@pankod/refine-mui";
+} from "@mui/material";
 
 import { ISubunit, ISubunitFilterVariables } from "../../interfaces/ISubunit";
+
 import {
   BaseRecord,
   CrudFilters,
@@ -31,14 +27,16 @@ import {
   useExport,
   useNavigation,
   useTranslate,
-} from "@pankod/refine-core";
-import { Controller, useForm } from "@pankod/refine-react-hook-form";
+} from "@refinedev/core";
+
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 
 export const SubunitsList = () => {
   const { show } = useNavigation();
   const t = useTranslate();
-  const { dataGridProps, search, filters, sorter } = useDataGrid<
+  const { dataGridProps, search, filters, sorters: sorter } = useDataGrid<
     ISubunit,
     HttpError,
     ISubunitFilterVariables
@@ -67,12 +65,15 @@ export const SubunitsList = () => {
       });
       return filters;
     },
-    initialSorter: [
-      {
-        field: "title",
-        order: "asc",
-      },
-    ],
+
+    sorters: {
+      initial: [
+        {
+          field: "title",
+          order: "asc",
+        },
+      ]
+    }
   });
 
   const columns = React.useMemo<GridColumns<ISubunit>>(
@@ -139,10 +140,10 @@ export const SubunitsList = () => {
   );
 
   const { isLoading, triggerExport } = useExport<ISubunit>({
-    sorter,
     filters,
     pageSize: 100,
     maxItemCount: 100,
+
     mapData: (item) => {
       return {
         id: item.id,
@@ -153,6 +154,8 @@ export const SubunitsList = () => {
         created: item.created_at,
       };
     },
+
+    sorters: sorter
   });
 
   const { register, handleSubmit, control } = useForm<
@@ -168,8 +171,8 @@ export const SubunitsList = () => {
 
   const { autocompleteProps: organizationAutocompleteProps } = useAutocomplete({
     resource: "organizations",
-    sort: [{ field: "id", order: "asc" }],
     defaultValue: getDefaultFilter("organization.id", filters, "eq"),
+
     onSearch: (value) => {
       const filters: CrudFilters = [];
       filters.push({
@@ -179,6 +182,8 @@ export const SubunitsList = () => {
       });
       return filters;
     },
+
+    sorters: [{ field: "id", order: "asc" }]
   });
 
   return (

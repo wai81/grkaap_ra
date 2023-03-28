@@ -1,18 +1,19 @@
-import {CrudFilters, useTranslate} from "@pankod/refine-core";
-//import {MuiInferencer} from "@pankod/refine-inferencer/mui";
-import {Controller, useForm} from "@pankod/refine-react-hook-form";
+import { CrudFilters, useTranslate } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
+import { Edit, useAutocomplete } from "@refinedev/mui";
+
 import {
     Autocomplete,
     Box,
-    Edit,
     FormControl,
     FormControlLabel,
     FormLabel,
     Radio,
     RadioGroup,
     TextField,
-    useAutocomplete
-} from "@pankod/refine-mui";
+} from "@mui/material";
+
 import {IUpdateSubunit} from "../../interfaces/ISubunit";
 
 export const SubunitEdit = () => {
@@ -32,7 +33,7 @@ export const SubunitEdit = () => {
     const {autocompleteProps: organizationAutocompleteProps} =
         useAutocomplete({
             resource: 'organizations/',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -47,6 +48,8 @@ export const SubunitEdit = () => {
                 usersData?.organization == null
                     ? null
                     : queryResult?.data?.data.organization.id,
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const handleOnSubmit = (data: any) => {

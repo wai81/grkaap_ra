@@ -2,10 +2,14 @@ import {
   BaseRecord,
   CrudFilters,
   getDefaultFilter,
-  HttpError, useApiUrl,
+  HttpError,
+  useApiUrl,
   useTranslate,
-} from "@pankod/refine-core";
-//import {MuiInferencer} from "@pankod/refine-inferencer/mui";
+} from "@refinedev/core";
+
+import { EditButton, List, useDataGrid } from "@refinedev/mui";
+import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+
 import {
   Avatar,
   Box,
@@ -13,19 +17,15 @@ import {
   Card,
   CardContent,
   CardHeader,
-  DataGrid,
-  EditButton,
   FormControl,
   Grid,
-  GridColumns,
   InputLabel,
-  List,
   MenuItem,
-  ruRU,
   Select,
-  TextField, Typography,
-  useDataGrid,
-} from "@pankod/refine-mui";
+  TextField,
+  Typography,
+} from "@mui/material";
+
 import React from "react";
 
 import {
@@ -35,11 +35,8 @@ import {
   IUpdateTransport,
 } from "../../interfaces/ITransport";
 import { IBookingTransportFilterVariables } from "../../interfaces/IBookingTransport";
-import {
-  Controller,
-  useForm,
-  useModalForm,
-} from "@pankod/refine-react-hook-form";
+import { useForm, useModalForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 import { CreateTransportDrawer, EditTransportDrawer } from "components/transports";
 import { ShowTransportDrawer } from "components/transports/show";
@@ -67,12 +64,15 @@ export const TransportList = () => {
       });
       return filters;
     },
-    initialSorter: [
-      {
-        field: "title",
-        order: "asc",
-      },
-    ],
+
+    sorters: {
+      initial: [
+        {
+          field: "title",
+          order: "asc",
+        },
+      ]
+    }
   });
 
   const apiUrl = useApiUrl();

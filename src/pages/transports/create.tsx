@@ -1,7 +1,7 @@
-import {HttpError, useTranslate} from "@pankod/refine-core";
-//import { MuiInferencer } from "@pankod/refine-inferencer/mui";
-import {useForm} from "@pankod/refine-react-hook-form";
-import {Box, Create, TextField} from "@pankod/refine-mui";
+import { HttpError, useTranslate } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { Create } from "@refinedev/mui";
+import { Box, TextField } from "@mui/material";
 import {ICreateTransport} from "../../interfaces/ITransport";
 
 

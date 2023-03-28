@@ -11,7 +11,7 @@ import DayShowComponent from "./DayShowComponent";
 import WeekShowComponent from "./WeekShowComponent";
 
 import 'moment/locale/ru'
-import {Card, CardContent, CardHeader} from "@pankod/refine-mui";
+import { Card, CardContent, CardHeader } from "@mui/material";
 
 const totalDays = TOTAL_DAYS;
 

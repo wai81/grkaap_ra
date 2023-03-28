@@ -7,7 +7,7 @@ import {
 import {ITEMS_PER_DAY, ONE_SECOND} from "../Helpers/Constants";
 import moment from "moment";
 import {eventMapper} from "../Helpers/Mapper/eventMapper";
-import {useModalForm} from "@pankod/refine-react-hook-form";
+import { useModalForm } from "@refinedev/react-hook-form";
 import {EditBookingTransportDrawer} from "../../booking_transports";
 
 const DayShowWrapper = styled('div')`

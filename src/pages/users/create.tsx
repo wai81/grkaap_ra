@@ -1,7 +1,9 @@
-import {Autocomplete, Box, Create, TextField, useAutocomplete,} from '@pankod/refine-mui';
-import {Controller, useForm} from '@pankod/refine-react-hook-form';
+import { Create, useAutocomplete } from "@refinedev/mui";
+import { Autocomplete, Box, TextField } from "@mui/material";
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import {ICreateUser} from 'interfaces/IUser';
-import {CrudFilters, useTranslate} from "@pankod/refine-core";
+import { CrudFilters, useTranslate } from "@refinedev/core";
 
 export const UserCreate = () => {
     const {
@@ -16,7 +18,7 @@ export const UserCreate = () => {
     const {autocompleteProps: organizationAutocompleteProps} =
         useAutocomplete({
             resource: 'organizations',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -25,7 +27,9 @@ export const UserCreate = () => {
                     value: (value.length) > 0 ? value : undefined,
                 });
                 return filters
-            })
+            }),
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const handleOnSubmit = (data: any) => {

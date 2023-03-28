@@ -1,22 +1,20 @@
 import React from "react";
+import { useDataGrid, EditButton, List, DateField, useAutocomplete } from "@refinedev/mui";
+
 import {
-  useDataGrid,
-  DataGrid,
-  EditButton,
-  List,
   Checkbox,
-  DateField,
   Grid,
   Card,
   CardHeader,
   CardContent,
   Box,
-  useAutocomplete,
   TextField,
   Autocomplete,
   Button,
-  ruRU, GridColumns,
-} from "@pankod/refine-mui";
+} from "@mui/material";
+
+import { DataGrid, ruRU, GridColumns } from "@mui/x-data-grid";
+
 import {
   useTranslate,
   useNavigation,
@@ -24,9 +22,11 @@ import {
   CrudFilters,
   BaseRecord,
   getDefaultFilter,
-} from "@pankod/refine-core";
+} from "@refinedev/core";
+
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
-import { Controller, useForm } from "@pankod/refine-react-hook-form";
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 
 
@@ -62,12 +62,15 @@ export const UserList = () => {
       // });
       return filters;
     },
-    initialSorter: [
-      {
-        field: "last_name",
-        order: "desc",
-      },
-    ],
+
+    sorters: {
+      initial: [
+        {
+          field: "last_name",
+          order: "desc",
+        },
+      ]
+    }
   });
 
   const columns = React.useMemo<GridColumns<IUser>>(
@@ -182,8 +185,8 @@ export const UserList = () => {
 
   const { autocompleteProps: organizationAutocompleteProps } = useAutocomplete({
     resource: "organizations",
-    sort: [{ field: "id", order: "asc" }],
     defaultValue: getDefaultFilter("organization.id", filters, "eq"),
+
     onSearch: (value) => {
       const filters: CrudFilters = [];
       filters.push({
@@ -193,6 +196,8 @@ export const UserList = () => {
       });
       return filters;
     },
+
+    sorters: [{ field: "id", order: "asc" }]
   });
 
   return (

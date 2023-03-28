@@ -1,6 +1,8 @@
-import {CrudFilters, useTranslate} from "@pankod/refine-core";
-import {Controller, useForm} from "@pankod/refine-react-hook-form";
-import {Autocomplete, Box, Create, TextField, useAutocomplete} from "@pankod/refine-mui";
+import { CrudFilters, useTranslate } from "@refinedev/core";
+import { useForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
+import { Create, useAutocomplete } from "@refinedev/mui";
+import { Autocomplete, Box, TextField } from "@mui/material";
 import {ICreateSubunit} from "../../interfaces/ISubunit";
 
 export const SubunitCreate = () => {
@@ -17,7 +19,7 @@ export const SubunitCreate = () => {
     const {autocompleteProps: organizationAutocompleteProps} =
         useAutocomplete({
             resource: 'organizations',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -26,7 +28,9 @@ export const SubunitCreate = () => {
                     value: (value.length) > 0 ? value : undefined,
                 });
                 return filters
-            })
+            }),
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const handleOnSubmit = (data: any) => {

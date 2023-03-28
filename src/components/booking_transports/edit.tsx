@@ -1,17 +1,24 @@
 import React from "react";
-import {Controller, UseModalFormReturnType} from "@pankod/refine-react-hook-form";
+import { UseModalFormReturnType } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import {ICreateBookingTransport, IUpdateBookingTransport} from "../../interfaces/IBookingTransport";
-import {CrudFilters, HttpError, useTranslate} from "@pankod/refine-core";
+import { CrudFilters, HttpError, useTranslate } from "@refinedev/core";
+import { Edit, useAutocomplete } from "@refinedev/mui";
+
 import {
     Autocomplete,
     Box,
     Drawer,
-    Edit, FormControl, FormControlLabel, FormLabel,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
     IconButton,
-    InputAdornment, Radio, RadioGroup,
+    InputAdornment,
+    Radio,
+    RadioGroup,
     TextField,
-    useAutocomplete
-} from "@pankod/refine-mui";
+} from "@mui/material";
+
 import moment from "moment/moment";
 import {CloseOutlined} from "@mui/icons-material";
 import {DateTimePicker} from "@mui/x-date-pickers";
@@ -38,7 +45,7 @@ export const EditBookingTransportDrawer: React.FC<
     const {autocompleteProps: subunitAutocompleteProps} =
         useAutocomplete({
             resource: 'subunits',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -47,13 +54,15 @@ export const EditBookingTransportDrawer: React.FC<
                     value: (value.length) > 0 ? value : undefined,
                 });
                 return filters
-            })
+            }),
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const {autocompleteProps: transportAutocompleteProps} =
         useAutocomplete({
             resource: 'transports',
-            sort: [{field: 'id', order: 'asc'}],
+
             onSearch: ((value) => {
                 const filters: CrudFilters = [];
                 filters.push({
@@ -62,7 +71,9 @@ export const EditBookingTransportDrawer: React.FC<
                     value: (value.length) > 0 ? value : undefined,
                 });
                 return filters
-            })
+            }),
+
+            sorters: [{field: 'id', order: 'asc'}]
         });
 
     const getEndDate = (startDate:Date, duration:number)=>{

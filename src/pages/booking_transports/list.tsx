@@ -2,31 +2,37 @@ import {
     BaseRecord,
     CrudFilters,
     getDefaultFilter,
-    HttpError, useApiUrl, useList, useTranslate
-} from "@pankod/refine-core";
+    HttpError,
+    useApiUrl,
+    useList,
+    useTranslate,
+} from "@refinedev/core";
+
+import { CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid } from "@refinedev/mui";
+import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+
 import {
-    Autocomplete, Avatar,
+    Autocomplete,
+    Avatar,
     Box,
     Button,
     Card,
     CardContent,
-    CardHeader, Chip, CreateButton,
-    DataGrid,
-    DateField, Dialog,
-    EditButton,
+    CardHeader,
+    Chip,
+    Dialog,
     FormControl,
     Grid,
-    GridColumns,
     InputLabel,
-    List,
     MenuItem,
-    ruRU,
-    Select, Stack,
-    TextField, Typography,
-    useAutocomplete,
-    useDataGrid,
-} from "@pankod/refine-mui";
-import {Controller, useForm, useModalForm} from "@pankod/refine-react-hook-form";
+    Select,
+    Stack,
+    TextField,
+    Typography,
+} from "@mui/material";
+
+import { useForm, useModalForm } from "@refinedev/react-hook-form";
+import { Controller } from "react-hook-form";
 import {ItemStatus} from "components/itemStatus";
 import React, {useState} from "react";
 import {
@@ -60,19 +66,6 @@ export const Booking_transportList = () => {
         IBookingTransport,
         HttpError,
         IBookingTransportFilterVariables>({
-        initialPageSize: 10,
-        initialFilter:[
-            {
-                field: "startDate_gte",
-                operator: "eq",
-                value: moment().startOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.format('YYYY-MM-DD hh:mm:ss'),
-            },
-            {
-                field: "startDate_lte",
-                operator: "eq",
-                value: moment().endOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
-            },
-        ],
         onSearch: (params) => {
             const filters: CrudFilters = [];
             const {
@@ -140,29 +133,50 @@ export const Booking_transportList = () => {
             });
             return filters;
         },
-        initialSorter: [
-            {
-                field: "startDate",
-                order: "desc",
-            },
-        ],
 
+        pagination: {
+            pageSize: 10
+        },
 
+        filters: {
+            initial: [
+                {
+                    field: "startDate_gte",
+                    operator: "eq",
+                    value: moment().startOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.format('YYYY-MM-DD hh:mm:ss'),
+                },
+                {
+                    field: "startDate_lte",
+                    operator: "eq",
+                    value: moment().endOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
+                },
+            ]
+        },
+
+        sorters: {
+            initial: [
+                {
+                    field: "startDate",
+                    order: "desc",
+                },
+            ]
+        }
     });
 
 
     const { data } = useList<IBookingTransport, HttpError>({
         resource: "booking_transport",
-        config:{
-            pagination:{
-                pageSize: 100,
-            },
-            filters: filters,
-            sort:[{
-                field: "startDate",
-                order: "desc",
-            }]
+
+        pagination:{
+            pageSize: 100,
         },
+
+        filters: filters,
+
+        sorters: [{
+            field: "startDate",
+            order: "desc",
+        }]
     })
     const bookingList = data?.data ?? [];
     const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
@@ -345,8 +359,8 @@ export const Booking_transportList = () => {
 
     const {autocompleteProps: organizationAutocompleteProps} = useAutocomplete({
         resource: "organizations",
-        sort: [{field: "id", order: "asc"}],
         defaultValue: getDefaultFilter("organization.id", filters, "eq"),
+
         onSearch: (value) => {
             const filters: CrudFilters = [];
             filters.push({
@@ -356,12 +370,14 @@ export const Booking_transportList = () => {
             });
             return filters;
         },
+
+        sorters: [{field: "id", order: "asc"}]
     });
 
     const {autocompleteProps: subunitAutocompleteProps} = useAutocomplete({
         resource: "subunits",
-        sort: [{field: "organization_id", order: "asc"}],
         defaultValue: getDefaultFilter("subunit.id", filters, "eq"),
+
         onSearch: (value) => {
             const filters: CrudFilters = [];
             filters.push({
@@ -371,12 +387,14 @@ export const Booking_transportList = () => {
             });
             return filters;
         },
+
+        sorters: [{field: "organization_id", order: "asc"}]
     });
 
     const {autocompleteProps: transportAutocompleteProps} = useAutocomplete({
         resource: "transports",
-        sort: [{field: "title", order: "asc"}],
         defaultValue: getDefaultFilter("transport.id", filters, "eq"),
+
         onSearch: (value) => {
             const filters: CrudFilters = [];
             filters.push({
@@ -386,6 +404,8 @@ export const Booking_transportList = () => {
             });
             return filters;
         },
+
+        sorters: [{field: "title", order: "asc"}]
     });
 
     const [open, setOpen] = React.useState(false);

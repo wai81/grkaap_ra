@@ -1,15 +1,6 @@
-import {
-  useOne,
-  useShow,
-  useTranslate,
-} from "@pankod/refine-core";
-import {
-  BooleanField,
-  DateField,
-  Show,
-  Stack,
-  Typography,
-} from "@pankod/refine-mui";
+import { useOne, useShow, useTranslate } from "@refinedev/core";
+import { BooleanField, DateField, Show } from "@refinedev/mui";
+import { Stack, Typography } from "@mui/material";
 import { IBookingTransport } from "interfaces/IBookingTransport";
 
 export const Booking_transportShow = () => {
