@@ -61,14 +61,15 @@ export const CreateBookingTransportDrawer: React.FC<
         });
 
     const getEndDate = (startDate: Date, duration: number) => {
-        return moment(startDate).add(duration, 'h').toISOString();
+        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
+        return result
     }
 
    const handleOnSubmit = (data: any) => {
 
         const event: ICreateBookingTransport = {
             title: `${data.number_order} ${data.address_object}`,
-            startDate: data.startDate,
+            startDate: moment(data.startDate).toISOString(),//data.startDate,
             duration: data.duration,
             endDate: getEndDate(data.startDate, data.duration),
             allDay: false,
@@ -80,7 +81,6 @@ export const CreateBookingTransportDrawer: React.FC<
         };
         onFinish(event);
         reset((formValues) => {
-
             formValues.number_order = '';
             formValues.address_object= '';
             formValues.startDate = '';
@@ -89,7 +89,6 @@ export const CreateBookingTransportDrawer: React.FC<
             formValues.subunit = '';
             formValues.transport='';
             formValues.organization='';
-            console.log(formValues)
             close();
         });
 
