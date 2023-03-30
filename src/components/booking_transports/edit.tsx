@@ -77,7 +77,8 @@ export const EditBookingTransportDrawer: React.FC<
         });
 
     const getEndDate = (startDate:Date, duration:number)=>{
-        return moment(startDate).add(duration,'h').toISOString();
+        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
+        return result
     }
 
     const handleOnSubmit = (data: any) => {
@@ -85,7 +86,7 @@ export const EditBookingTransportDrawer: React.FC<
         const event: IUpdateBookingTransport = {
 
             title: data.title,
-            startDate: data.startDate,
+            startDate: moment(data.startDate).toISOString(),
             duration: data.duration,
             endDate: getEndDate(data.startDate, data.duration),
             allDay: false,

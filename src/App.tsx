@@ -100,8 +100,8 @@ function App() {
                 //authProvider={authProvider(axiosInstance)}
                   options={{
                       syncWithLocation: true,
-                      warnWhenUnsavedChanges: true,
-                      liveMode:"auto",
+                      //warnWhenUnsavedChanges: true,
+                      //liveMode:"auto",
                       // reactQuery:{
                       //     devtoolConfig:false, // отключение среды разработчика
                       // }
