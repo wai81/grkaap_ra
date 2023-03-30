@@ -101,7 +101,7 @@ function App() {
                   options={{
                       syncWithLocation: true,
                       //warnWhenUnsavedChanges: true,
-                      //liveMode:"auto",
+                      liveMode:"auto",
                       // reactQuery:{
                       //     devtoolConfig:false, // отключение среды разработчика
                       // }
