@@ -254,16 +254,6 @@ export const Booking_transportList = () => {
                     return (`${row.duration} ч.`)
                 }
             },
-            // {
-            //     field: "organization",
-            //     headerName: t("booking_transport.fields.organization"),
-            //     headerAlign: "center",
-            //     align: "left",
-            //     flex: 1,
-            //     renderCell: function render({row}) {
-            //         return row.organization?.title;
-            //     },
-            // },
             {
                 field: "subunit",
                 headerName: t("booking_transport.fields.subunit"),

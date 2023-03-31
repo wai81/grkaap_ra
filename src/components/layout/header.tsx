@@ -27,8 +27,6 @@ export const Header: React.FC = () => {
     v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
   });
 
-  const showUserInfo = user && (user.name || user.avatar);
-
   return  (
     <AppBar color="default" position="sticky" elevation={1}>
       <Toolbar>
@@ -85,23 +83,19 @@ export const Header: React.FC = () => {
               ))}
             </Select>
           </FormControl>
-          {/* <Stack
+          <Stack
             direction="row"
             gap="16px"
             alignItems="center"
             justifyContent="center"
           >
-            <Typography variant="subtitle2">{user?.name}</Typography>
-            <Avatar src={user?.avatar} alt={user?.name} />
-          </Stack> */}
-          {showUserInfo && (
-            <Stack direction="row" gap="16px" alignItems="center">
-              {user.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
-              {user.name && (
-                <Typography variant="subtitle2">{user?.name}</Typography>
-              )}
-            </Stack>
-          )}
+            <Typography variant="subtitle2">{user?.last_name} {user?.first_name}</Typography>
+            {user?.avatar == null ?
+                <Avatar src={user?.last_name} alt={user?.last_name} />
+                :<Avatar src={user?.avatar} alt={user?.last_name} />
+            }
+            {/*<Avatar src={user?.avatar} alt={user?.last_name} />*/}
+          </Stack>
         </Stack>
       </Toolbar>
     </AppBar>
