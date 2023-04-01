@@ -6,33 +6,41 @@ export const authProvider = (axiosInstance: AxiosInstance): AuthBindings => {
 //    export const authProvider4 : AuthBindings = {
   return {
     login: async ({ username, password }) => {
-      try {
-        delete axios.defaults.headers.common["Authorization"];
-        const form_data = new FormData();
-        const grant_type = "password";
-        const item: any = { grant_type, username, password };
-        for (const key in item) {
-          form_data.append(key, item[key]);
+      if (username && password) {
+        try {
+          delete axios.defaults.headers.common["Authorization"];
+          const form_data = new FormData();
+          const grant_type = "password";
+          const item: any = { grant_type, username, password };
+          for (const key in item) {
+            form_data.append(key, item[key]);
+          }
+          const { data } = await axios.post(`${API_URL}/auth/login`, form_data);
+          localStorage.setItem(TOKEN_KEY, data.access_token);
+        } catch (error) {
+          return {
+            success: false,
+            error: {
+              name: "Login Error",
+              message: "Username or password is incorrect",
+              },
+          };
         }
-        const { data } = await axios.post(`${API_URL}/auth/login`, form_data);
-        localStorage.setItem(TOKEN_KEY, data.access_token);
-        // axiosInstance.defaults.headers.common = {
-        //     Authorization: `Bearer ${data.access_token}`,
-        // };
-      } catch (error) {
+  
         return {
-          success: false,
-          error: {
-            name: "Login Error",
-            message: "Username or password is incorrect",
-            },
+          success: true,
+          redirectTo: "/",
         };
       }
 
       return {
-        success: true,
-        redirectTo: "/",
+        success: false,
+        error: {
+          name: "LoginError",
+          message: "Invalid username or password",
+        },
       };
+      
     },
     check: async () => {
       const token = localStorage.getItem(TOKEN_KEY);

@@ -35,7 +35,6 @@ import {
 import axios, { AxiosRequestConfig } from "axios";
 import { authProvider } from "providers/auth-provider";
 //import { authProvider } from "authProvider";
-import { Login } from "pages/auth/login";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
@@ -55,6 +54,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import "moment/locale/ru";
 import { Header, Layout, Sider, Title } from "components/layout";
+import { AuthPage } from "components/pages/auth";
 
 const axiosInstance = axios.create();
 
@@ -90,7 +90,7 @@ function App() {
           <RefineSnackbarProvider>
             <RefineKbarProvider>
               <Refine
-                dataProvider={dataProvider(API_URL, axiosInstance)}
+                dataProvider={dataProvider(API_URL)}
                 notificationProvider={notificationProvider}
                 //ReadyPage={ReadyPage}
                 //catchAll={<ErrorComponent />}
@@ -98,6 +98,7 @@ function App() {
                 i18nProvider={i18nProvider}
                 legacyAuthProvider={authProvider(axiosInstance)}
                 //authProvider={authProvider(axiosInstance)}
+                //authProvider={authProvider}
                   options={{
                       syncWithLocation: true,
                       //warnWhenUnsavedChanges: true,
@@ -191,10 +192,9 @@ function App() {
                 <Routes>
                   <Route
                     element={
-                      <Authenticated
-                        fallback={<CatchAllNavigate to="/login" />}
-                      >
-                        <Layout
+                      <Authenticated 
+                      fallback={<CatchAllNavigate to="/login" />}>
+                        <Layout 
                           Header={Header}
                           Title={Title}
                           Sider={Sider}
@@ -248,8 +248,6 @@ function App() {
                     </Route>
                   
                   </Route>
-
-
                   {/* маршрутизация для страницы логина   */}
                   <Route
                     element={
@@ -261,16 +259,16 @@ function App() {
                     <Route
                       path="/login"
                       element={
-                        <Login />
-                        //   <AuthPage
-                        //     type="login"
-                        //     formProps={{
-                        //       defaultValues: {
-                        //         email: "demo@refine.dev",
-                        //         password: "demodemo",
-                        //       },
-                        //     }}
-                        //   />
+                        //<Login />
+                          <AuthPage
+                            type="login"
+                            // formProps={{
+                            //   defaultValues: {
+                            //     email: "demo@refine.dev",
+                            //     password: "demodemo",
+                            //   },
+                            // }}
+                          />
                       }
                     />
                   </Route>
