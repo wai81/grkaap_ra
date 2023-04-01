@@ -3,7 +3,6 @@ import * as React from "react";
 import { FormProvider } from "react-hook-form";
 import {
   LoginPageProps,
-  useActiveAuthProvider,
   BaseRecord,
   HttpError,
   useLogin,
@@ -66,13 +65,7 @@ export const LoginPage: React.FC<LoginProps> = ({
     handleSubmit,
     formState: { errors },
   } = methods;
-
-  const authProvider = useActiveAuthProvider();
-  console.log('auth login '+Boolean(authProvider?.isLegacy))
-  const { mutate: login, isLoading } = useLogin<ILoginForm>(
-    //{v3LegacyAuthProviderCompatible: false//Boolean(authProvider?.isLegacy),}
- );
-  console.log('login '+login)
+  const { mutate: login, isLoading } = useLogin<ILoginForm>();
   const translate = useTranslate();
   const routerType = useRouterType();
   const Link = useLink();

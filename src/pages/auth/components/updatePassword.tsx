@@ -3,13 +3,11 @@ import * as React from "react";
 import {
   UpdatePasswordFormTypes,
   UpdatePasswordPageProps,
-  useActiveAuthProvider,
   BaseRecord,
   HttpError,
   useTranslate,
   useUpdatePassword,
 } from "@refinedev/core";
-import { ThemedTitle } from "@refinedev/mui";
 import { FormPropsType } from "../index";
 import { layoutStyles, titleStyles } from "./styles";
 import {
@@ -23,6 +21,7 @@ import {
   BoxProps,
   CardContentProps,
 } from "@mui/material";
+import { Title } from "components/layout";
 
 type UpdatePasswordProps = UpdatePasswordPageProps<
   BoxProps,
@@ -51,11 +50,9 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
     ...useFormProps,
   });
 
-  const authProvider = useActiveAuthProvider();
+  
   const { mutate: update, isLoading } =
-    useUpdatePassword<UpdatePasswordFormTypes>({
-      v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
-    });
+    useUpdatePassword<UpdatePasswordFormTypes>();
 
   const translate = useTranslate();
 
@@ -69,7 +66,7 @@ export const UpdatePasswordPage: React.FC<UpdatePasswordProps> = ({
           fontSize: "20px",
         }}
       >
-        {title ?? <ThemedTitle collapsed={false} />}
+         {title ?? <Title collapsed={false} />}
       </div>
     );
 

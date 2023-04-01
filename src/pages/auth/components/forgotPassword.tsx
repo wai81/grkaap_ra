@@ -11,7 +11,6 @@ import {
   useLink,
   useForgotPassword,
 } from "@refinedev/core";
-import { ThemedTitle } from "@refinedev/mui";
 import { FormPropsType } from "../index";
 import { layoutStyles, titleStyles } from "./styles";
 import {
@@ -26,6 +25,7 @@ import {
   CardContentProps,
   Link as MuiLink,
 } from "@mui/material";
+import { Title } from "components/layout";
 
 type ForgotPasswordProps = ForgotPasswordPageProps<
   BoxProps,
@@ -72,7 +72,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordProps> = ({
           fontSize: "20px",
         }}
       >
-        {title ?? <ThemedTitle collapsed={false} />}
+         {title ?? <Title collapsed={false} />}
       </div>
     );
 

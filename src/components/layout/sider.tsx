@@ -11,7 +11,6 @@ import {
   useLink,
   useMenu,
   useRefineContext,
-  useActiveAuthProvider,
   pickNotDeprecated,
   useWarnAboutChange,
 } from "@refinedev/core";
@@ -65,12 +64,8 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
   const { menuItems, selectedKey, defaultOpenKeys } = useMenu({ meta });
   const isExistAuthentication = useIsExistAuthentication();
   const TitleFromContext = useTitle();
-  const authProvider = useActiveAuthProvider();
-   const { mutate: mutateLogout } = useLogout(
-    //{v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),}
-  );
-  console.log('auth sidebar '+ mutateLogout)
-
+  const { mutate: mutateLogout } = useLogout();
+  
   const [open, setOpen] = useState<{ [k: string]: any }>({});
 
   React.useEffect(() => {

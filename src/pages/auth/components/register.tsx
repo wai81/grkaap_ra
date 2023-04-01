@@ -3,7 +3,6 @@ import * as React from "react";
 import {
   RegisterFormTypes,
   RegisterPageProps,
-  useActiveAuthProvider,
   BaseRecord,
   HttpError,
   useTranslate,
@@ -14,7 +13,6 @@ import {
 } from "@refinedev/core";
 import { FormPropsType } from "../index";
 import { layoutStyles, titleStyles } from "./styles";
-//import { ThemedTitle } from "./components/themedLayout/title";
 import {
   Button,
   TextField,
@@ -29,6 +27,7 @@ import {
   Link as MuiLink,
   Stack,
 } from "@mui/material";
+import { Title } from "components/layout";
 
 type RegisterProps = RegisterPageProps<
   BoxProps,
@@ -57,11 +56,8 @@ export const RegisterPage: React.FC<RegisterProps> = ({
   } = useForm<BaseRecord, HttpError, RegisterFormTypes>({
     ...useFormProps,
   });
-
-  const authProvider = useActiveAuthProvider();
-  const { mutate: registerMutate, isLoading } = useRegister<RegisterFormTypes>({
-    v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
-  });
+  
+  const { mutate: registerMutate, isLoading } = useRegister<RegisterFormTypes>();
   const translate = useTranslate();
   const routerType = useRouterType();
   const Link = useLink();
@@ -79,7 +75,7 @@ export const RegisterPage: React.FC<RegisterProps> = ({
           fontSize: "20px",
         }}
       >
-         {title /*?? <ThemedTitle collapsed={false} /> */}
+          {title ?? <Title collapsed={false} />}
 
       </div>
     );

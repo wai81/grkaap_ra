@@ -2218,7 +2218,23 @@
     temp "^0.9.4"
     tslib "^2.3.1"
 
-"@refinedev/core@^4.1.2", "@refinedev/core@^4.5.0", "@refinedev/core@latest":
+"@refinedev/core@4.5.8", "@refinedev/core@^4.5.4":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.5.8.tgz#11ce6058bbb1b6da55f855de76cb84f985d2f6a0"
+  integrity sha512-Pv4NKGyjCTIvAQusqaMZnJ3RLQXPbwiRDrcHPZXluOt2xTuu+ukvSqFYnrrwXajjUsuezeMihmrc11zjJ76sqw==
+  dependencies:
+    "@tanstack/react-query" "^4.10.1"
+    "@tanstack/react-query-devtools" "^4.10.1"
+    export-to-csv-fix-source-map "^0.2.1"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+    papaparse "^5.3.0"
+    pluralize "^8.0.0"
+    qs "^6.10.1"
+    tslib "^2.3.1"
+    warn-once "^0.1.0"
+
+"@refinedev/core@^4.1.2":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@refinedev/core/-/core-4.5.2.tgz#bb2db375036432c56be0500d9127c792301bbbf8"
   integrity sha512-9oqn2I/SAabGnEbu9yglm7wY9zKeL07qtYrz/WTNUJlsWefbg9TYHNuyOx7AxxlVgScLg+KwZbDSqwRto/U4Yg==
@@ -2234,10 +2250,10 @@
     tslib "^2.3.1"
     warn-once "^0.1.0"
 
-"@refinedev/inferencer@latest":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-3.1.2.tgz#a42261bea0cfc36f224cf1c1f0bfa924d75521ed"
-  integrity sha512-Z3FuONgk5OZ0/S6h+x3CgXD9DNxJx9HU6Orm6gwnNUi6/b/Atug8NCweRbqANvSm+O8Z1MAynktmu3FGmvqyYg==
+"@refinedev/inferencer@3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@refinedev/inferencer/-/inferencer-3.1.4.tgz#7b2652d43bfee809fbd4fd656d8939a4b9d2ec3e"
+  integrity sha512-7ayFUD/J+NOLElpSSmWdnrLh4V14NTgaSD2e8UYdlN6tqepugJnGBs7GqdATORfVPJNzZ05b3uM7A1kjQ+BfNA==
   dependencies:
     "@aliemir/react-live" "^4.0.0"
     "@refinedev/core" "^4.1.2"
@@ -2259,10 +2275,10 @@
   dependencies:
     kbar "^0.1.0-beta.36"
 
-"@refinedev/mui@latest":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.5.0.tgz#810d6db5815833ee545eceb85a1dc476a5adb3ca"
-  integrity sha512-NIfkXh+KwrrYhGjIw05mLtthjrvVH2vQ9zQhAV2OoKLoHNxi+BLGYs6vpOc2jHMETDDGLhtRmmfxAkt7buBM1g==
+"@refinedev/mui@4.5.8":
+  version "4.5.8"
+  resolved "https://registry.yarnpkg.com/@refinedev/mui/-/mui-4.5.8.tgz#ac9618de665b5aca6dc47e8cbe388a4819b04593"
+  integrity sha512-kYmvr0ZN4xI3cEC8aJ6aTi8jID0re/WAqCYuw42LseC/EWoM7U/8hlgizD4ZJ+dLiOPR4rrhIznjIWUddHmhIQ==
   dependencies:
     "@emotion/react" "^11.8.2"
     "@emotion/styled" "^11.8.1"
@@ -2271,7 +2287,7 @@
     "@mui/material" "^5.8.6"
     "@mui/x-data-grid" "^5.12.1"
     "@refinedev/react-hook-form" "^4.1.0"
-    "@refinedev/ui-types" "^1.3.0"
+    "@refinedev/ui-types" "^1.5.0"
     dayjs "^1.10.7"
     lodash "^4.17.21"
     lodash-es "^4.17.21"
@@ -2297,10 +2313,10 @@
     qs "^6.10.1"
     react-router-dom "^6.8.1"
 
-"@refinedev/react-table@latest":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@refinedev/react-table/-/react-table-5.1.2.tgz#1a99f6cd03d90cd8d7a296964c4c8d39584b8316"
-  integrity sha512-30aAjc5MX4CwEqnaggwuMFGb4zHEoq7RpdEA//15Zz6buRXH+No+nOz2o44IKKtqlG0Oal6N6FSrQVYOAk3gTg==
+"@refinedev/react-table@5.1.4":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@refinedev/react-table/-/react-table-5.1.4.tgz#5d7c90fb39507e486539d422482cb6dba01e0eec"
+  integrity sha512-5HJ4UNNkBBIkqGMi6vKoapxdo0/up7er+igt9ncC92ZHNaoCsuLKj0ly4WaDSZ8iwF1cGQ/BWO7l7e23t0TJhA==
   dependencies:
     "@tanstack/react-table" "^8.2.6"
 
@@ -2312,12 +2328,12 @@
     axios "^0.26.1"
     query-string "^7.1.1"
 
-"@refinedev/ui-types@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.3.0.tgz#008a18425b241faa92f1a14bd467a5f017cbd466"
-  integrity sha512-k7fVPO5vj58BYxTx7tsmVeMg5AmBw1MStznBi2TfxJeMThIHnzCW8M9EQX27pwjjMMU0Fdh8jLI+spCOuDN5yg==
+"@refinedev/ui-types@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@refinedev/ui-types/-/ui-types-1.5.0.tgz#a9593ea1a021d5e823c5ab2ed2717a12c110eeda"
+  integrity sha512-KNYvW9jOYXpBWU62IYpKKfU1Uxx34n2kh0mmQRmQgTK0KF+bHa57KMuR0Pa9B65UZmjNzKyMWGHNzh7Qp9scZA==
   dependencies:
-    "@refinedev/core" "^4.5.0"
+    "@refinedev/core" "^4.5.4"
     dayjs "^1.10.7"
     tslib "^2.3.1"
 

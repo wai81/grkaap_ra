@@ -16,7 +16,6 @@ axiosInstance.interceptors.response.use(
         message: error.response?.data?.detail,
         statusCode: error.response?.status,
       };
-      console.log(error.response?.data)
       return Promise.reject(customError);
     }
 );

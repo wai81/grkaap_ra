@@ -10,7 +10,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import {useGetIdentity, useActiveAuthProvider, useGetLocale, useSetLocale} from "@refinedev/core";
+import {useApiUrl, useGetIdentity, useGetLocale, useSetLocale} from "@refinedev/core";
 import i18n from "../../i18n";
 import React, {useContext} from "react";
 import {ColorModeContext} from "../../contexts/color-mode";
@@ -18,15 +18,12 @@ import { IUser } from "interfaces/IUser";
 
 
 export const Header: React.FC = () => {
+  const apiUrl = useApiUrl();
   const { mode, setMode } = useContext(ColorModeContext);
   const changeLanguage = useSetLocale();
   const locale = useGetLocale();
   const currentLocale = locale();
-  //const authProvider = useActiveAuthProvider();
-  const { data: user } = useGetIdentity<IUser>(
-    //{v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),}
-  );
-  console.log('header user '+ user)
+  const { data: user } = useGetIdentity<IUser>();
   return  (
     <AppBar color="default" position="sticky" elevation={1}>
       <Toolbar>
@@ -92,7 +89,7 @@ export const Header: React.FC = () => {
             <Typography variant="subtitle2">{user?.last_name} {user?.first_name}</Typography>
             {user?.avatar == null ?
                 <Avatar src={user?.last_name} alt={user?.last_name} />
-                :<Avatar src={user?.avatar} alt={user?.last_name} />
+                :<Avatar src={`${apiUrl}/${user?.avatar}`} alt={user?.last_name} />
             } 
             {/* <Avatar src={user?.avatar} alt={user?.last_name} /> */}
           </Stack>

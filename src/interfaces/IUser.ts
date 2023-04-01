@@ -20,6 +20,7 @@ export interface ICreateUser {
   first_name: string;
   patronymic: string;
   password: string;
+  avatar?: string;
   organization_id: number;
 }
 
@@ -29,6 +30,7 @@ export interface IUpdateUser {
   first_name: string;
   patronymic: string;
   password: string;
+  avatar?: string;
   organization_id: number | null;
   is_superuser: boolean;
   is_active: boolean;

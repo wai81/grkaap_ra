@@ -88,14 +88,12 @@ function App() {
           <RefineSnackbarProvider>
             <RefineKbarProvider>
               <Refine
-                dataProvider={dataProvider(API_URL)}
+                dataProvider={dataProvider(API_URL, axiosInstance)}
                 notificationProvider={notificationProvider}
                 routerProvider={routerBindings}
                 i18nProvider={i18nProvider}
-                //legacyAuthProvider={authProvider(axiosInstance)}
                 authProvider={authProvider(axiosInstance)}
-                //authProvider={authProvider}
-                  options={{
+                options={{
                       syncWithLocation: true,
                       //warnWhenUnsavedChanges: true,
                       liveMode:"auto",
