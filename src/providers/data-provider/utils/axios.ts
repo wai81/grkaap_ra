@@ -10,12 +10,13 @@ axiosInstance.interceptors.response.use(
       return response;
     },
     (error) => {
+      
       const customError: HttpError = {
         ...error,
-        message: error.response?.data?.message,
+        message: error.response?.data?.detail,
         statusCode: error.response?.status,
       };
-
+      console.log(error.response?.data)
       return Promise.reject(customError);
     }
 );

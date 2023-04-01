@@ -66,9 +66,10 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
   const isExistAuthentication = useIsExistAuthentication();
   const TitleFromContext = useTitle();
   const authProvider = useActiveAuthProvider();
-  const { mutate: mutateLogout } = useLogout({
-    v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
-  });
+   const { mutate: mutateLogout } = useLogout(
+    //{v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),}
+  );
+  console.log('auth sidebar '+ mutateLogout)
 
   const [open, setOpen] = useState<{ [k: string]: any }>({});
 

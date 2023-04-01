@@ -14,6 +14,7 @@ import {useGetIdentity, useActiveAuthProvider, useGetLocale, useSetLocale} from 
 import i18n from "../../i18n";
 import React, {useContext} from "react";
 import {ColorModeContext} from "../../contexts/color-mode";
+import { IUser } from "interfaces/IUser";
 
 
 export const Header: React.FC = () => {
@@ -21,12 +22,11 @@ export const Header: React.FC = () => {
   const changeLanguage = useSetLocale();
   const locale = useGetLocale();
   const currentLocale = locale();
-
-  const authProvider = useActiveAuthProvider();
-  const { data: user } = useGetIdentity({
-    v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),
-  });
-
+  //const authProvider = useActiveAuthProvider();
+  const { data: user } = useGetIdentity<IUser>(
+    //{v3LegacyAuthProviderCompatible: Boolean(authProvider?.isLegacy),}
+  );
+  console.log('header user '+ user)
   return  (
     <AppBar color="default" position="sticky" elevation={1}>
       <Toolbar>
@@ -93,8 +93,8 @@ export const Header: React.FC = () => {
             {user?.avatar == null ?
                 <Avatar src={user?.last_name} alt={user?.last_name} />
                 :<Avatar src={user?.avatar} alt={user?.last_name} />
-            }
-            {/*<Avatar src={user?.avatar} alt={user?.last_name} />*/}
+            } 
+            {/* <Avatar src={user?.avatar} alt={user?.last_name} /> */}
           </Stack>
         </Stack>
       </Toolbar>

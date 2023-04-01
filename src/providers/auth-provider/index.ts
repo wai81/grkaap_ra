@@ -1,53 +1,93 @@
-import { LegacyAuthProvider as AuthProvider } from "@refinedev/core";
-
+import type { AuthBindings } from "@refinedev/core";
 import { TOKEN_KEY, API_URL } from '../../constants';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 
-export const authProvider = (axiosInstance: AxiosInstance): AuthProvider => {
+export const authProvider = (axiosInstance: AxiosInstance): AuthBindings => {
+  //    export const authProvider4 : AuthBindings = {
   return {
     login: async ({ username, password }) => {
-      try {
-        delete axios.defaults.headers.common['Authorization'];
-        const form_data = new FormData();
-        const grant_type = 'password';
-        const item: any = { grant_type, username, password };
-        for (const key in item) {
-          form_data.append(key, item[key]);
+      if (username && password) {
+        try {
+          delete axios.defaults.headers.common["Authorization"];
+          const form_data = new FormData();
+          const grant_type = "password";
+          const item: any = { grant_type, username, password };
+          for (const key in item) {
+            form_data.append(key, item[key]);
+          }
+          const { data } = await axios.post(`${API_URL}/auth/login`, form_data);
+          localStorage.setItem(TOKEN_KEY, data.access_token);
+        } catch (error) {
+          return {
+            success: false,
+            error: {
+              name: "Login Error",
+              message: "Username or password is incorrect",
+            },
+          };
         }
-        const { data } = await axios.post(`${API_URL}/auth/login`, form_data);
-        localStorage.setItem(TOKEN_KEY, data.access_token);
-        //localStorage.setItem(TOKEN_KEY, data.user.token);
-      } catch (error) {
-        return Promise.reject(error);
+
+        return {
+          success: true,
+          redirectTo: "/",
+        };
       }
 
-      return Promise.resolve('/');
+      return {
+        success: false,
+        error: {
+          name: "LoginError",
+          message: "Invalid username or password",
+        },
+      };
     },
-    logout: (props) => {
+    logout: async () => {
       localStorage.removeItem(TOKEN_KEY);
-      return Promise.resolve(props?.redirectPath);
+      return {
+        success: true,
+        redirectTo: "/login",
+      };
     },
-    checkError: (error) => {
-      if (error?.response?.status === 401) {
-        return Promise.reject('/auth/user/signup');
-      }
-      return Promise.resolve();
-    },
-    checkAuth: () => {
-      return localStorage.getItem(TOKEN_KEY)
-        ? Promise.resolve()
-        : Promise.reject();
-    },
-    getPermissions: () => Promise.resolve(),
-    getUserIdentity: async () => {
+    check: async () => {
       const token = localStorage.getItem(TOKEN_KEY);
-      if (!token) {
-        return Promise.reject();
+      if (token) {
+        return {
+          authenticated: true,
+        };
+      } else {
+        return {
+          authenticated: false,
+          logout: true,
+          redirectTo: "/login",
+          error: new Error("User is not authenticated"),
+        };
       }
-
-      const userInfo = await axiosInstance.get(`${API_URL}/auth/user`);
-
-      return Promise.resolve(userInfo.data);
+    },
+    onError: async ({ error }) => {
+      if (error.status === 401 || error.status === 403) {
+        return {
+          logout: true,
+          redirectTo: "/login",
+          error,
+        };
+      }
+      return {};
+    },
+    getIdentity: async () => {
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (token) {
+        const userInfo = await axiosInstance.get(`${API_URL}/auth/user`);
+        return userInfo.data;
+      }
+      return null;
+    },
+    getPermissions: async () => {
+      const token = localStorage.getItem("TOKEN_KEY");
+      if (token) {
+        const userInfo = await axiosInstance.get(`${API_URL}/auth/user`);
+        return userInfo.data;
+      }
+      return null;
     },
   };
 };

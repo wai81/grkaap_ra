@@ -7,8 +7,7 @@ import {
 } from "@refinedev/mui";
 import { CssBaseline, GlobalStyles } from "@mui/material";
 import { dataProvider } from "./providers/data-provider/";
-//import routerProvider from '@refinedev/react-router-v6/legacy';
-import routerProvider, {
+import routerBindings, {
   CatchAllNavigate,
   NavigateToResource,
   UnsavedChangesNotifier,
@@ -34,7 +33,6 @@ import {
 } from "pages/subunits";
 import axios, { AxiosRequestConfig } from "axios";
 import { authProvider } from "providers/auth-provider";
-//import { authProvider } from "authProvider";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import BusinessTwoToneIcon from "@mui/icons-material/BusinessTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
@@ -54,7 +52,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import "moment/locale/ru";
 import { Header, Layout, Sider, Title } from "components/layout";
-import { AuthPage } from "components/pages/auth";
+import { AuthPage } from "pages/auth";
 
 const axiosInstance = axios.create();
 
@@ -92,12 +90,10 @@ function App() {
               <Refine
                 dataProvider={dataProvider(API_URL)}
                 notificationProvider={notificationProvider}
-                //ReadyPage={ReadyPage}
-                //catchAll={<ErrorComponent />}
-                routerProvider={routerProvider}
+                routerProvider={routerBindings}
                 i18nProvider={i18nProvider}
-                legacyAuthProvider={authProvider(axiosInstance)}
-                //authProvider={authProvider(axiosInstance)}
+                //legacyAuthProvider={authProvider(axiosInstance)}
+                authProvider={authProvider(axiosInstance)}
                 //authProvider={authProvider}
                   options={{
                       syncWithLocation: true,
@@ -193,7 +189,10 @@ function App() {
                   <Route
                     element={
                       <Authenticated 
-                      fallback={<CatchAllNavigate to="/login" />}>
+                          fallback={
+                          <CatchAllNavigate to="/login" />
+                          }
+                        >
                         <Layout 
                           Header={Header}
                           Title={Title}
@@ -252,7 +251,7 @@ function App() {
                   <Route
                     element={
                       <Authenticated fallback={<Outlet />}>
-                        <NavigateToResource />
+                        <NavigateToResource resource="booking_transport"/>
                       </Authenticated>
                     }
                   >
@@ -262,12 +261,6 @@ function App() {
                         //<Login />
                           <AuthPage
                             type="login"
-                            // formProps={{
-                            //   defaultValues: {
-                            //     email: "demo@refine.dev",
-                            //     password: "demodemo",
-                            //   },
-                            // }}
                           />
                       }
                     />

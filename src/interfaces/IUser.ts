@@ -8,6 +8,7 @@ export interface IUser {
   patronymic: string;
   is_superuser: boolean;
   is_active: boolean;
+  avatar?: string;
   organization: IOrganization;
   access_tors: [IOrganization];
   created_at: string;
