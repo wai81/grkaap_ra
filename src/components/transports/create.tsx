@@ -22,6 +22,7 @@ import { UseModalFormReturnType } from "@refinedev/react-hook-form";
 import axios from "axios";
 import { ICreateTransport } from "interfaces/ITransport";
 import React from "react";
+import { TOKEN_KEY } from "../../constants";
 
 // noinspection JSUnusedLocalSymbols
 export const CreateTransportDrawer: React.FC<
@@ -47,12 +48,10 @@ export const CreateTransportDrawer: React.FC<
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const formData = new FormData();
-
     const target = event.target;
     const file: File = (target.files as FileList)[0];
-
     formData.append("image", file);
-    
+    const token = localStorage.getItem(TOKEN_KEY);
 
     const res = await axios.post<{ url: string }>(
       `${apiUrl}/transports/image`,
@@ -61,12 +60,12 @@ export const CreateTransportDrawer: React.FC<
         withCredentials: false,
         headers: {
           "Access-Control-Allow-Origin": "*",
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
 
     // eslint-disable-next-line
-    // noinspection JSUnusedLocalSymbols
     const imagePaylod: any = [
       {
          filename: res.data.url,
@@ -125,13 +124,7 @@ export const CreateTransportDrawer: React.FC<
                     }}
                     onChange={onChangeHandler}
                   />
-                  <input
-                    id="file"
-                    {...register("image_url", {
-                      required: t("errors.required.field", { field: "Image" }),
-                    })}
-                    type="hidden"
-                  />
+                  <input id="file" {...register("image_url")} accept="image/*" type="hidden" />
                   <Avatar
                     sx={{
                       cursor: "pointer",

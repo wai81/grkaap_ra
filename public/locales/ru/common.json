@@ -159,7 +159,11 @@
     "users": "Пользователи",
     "fields": {
       "id": "Id",
+      "image": "Изображение транспорта",
+      "image_description": "Фото пользователя",
+      "image_validation": "480х480 px",
       "username": "Имя Пользователя",
+      "fullname": "ФИО",
       "last_name": "Фамилия",
       "first_name": "Имя",
       "patronymic": "Отчество",
@@ -168,6 +172,7 @@
         "enable": "Активен",
         "disable": "Не активен"
       },
+      "label_superuser": "Администрирование",
       "is_superuser": "Полные права",
       "organization": {
         "title": "Организация",

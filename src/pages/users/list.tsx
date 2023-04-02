@@ -11,6 +11,9 @@ import {
   TextField,
   Autocomplete,
   Button,
+  Stack,
+  Avatar,
+  Typography,
 } from "@mui/material";
 
 import { DataGrid, ruRU, GridColumns } from "@mui/x-data-grid";
@@ -22,6 +25,7 @@ import {
   CrudFilters,
   BaseRecord,
   getDefaultFilter,
+  useApiUrl,
 } from "@refinedev/core";
 
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
@@ -73,6 +77,8 @@ export const UserList = () => {
     }
   });
 
+  const apiUrl = useApiUrl();
+
   const columns = React.useMemo<GridColumns<IUser>>(
     () => [
       {
@@ -94,21 +100,23 @@ export const UserList = () => {
       },
       {
         field: "last_name",
-        headerName: t("users.fields.last_name"),
-        flex: 1,
+        headerName: t("users.fields.fullname"),
+        flex: 1.5,
         minWidth: 150,
-      },
-      {
-        field: "first_name",
-        headerName: t("users.fields.first_name"),
-        flex: 1,
-        minWidth: 150,
-      },
-      {
-        field: "patronymic",
-        headerName: t("users.fields.patronymic"),
-        flex: 1,
-        minWidth: 150,
+        renderCell: function render({ row }) {
+          return (
+            <Stack alignItems="center" direction="row" spacing={2}>
+            <Avatar
+                alt={`${row.last_name} ${row.first_name}`}
+                //src={row.avatar}
+                src={`${apiUrl}/${row.avatar}`}
+            />
+              <Typography variant="body2">
+                {row.last_name} {row.first_name} {row.patronymic}
+              </Typography>
+            </Stack>
+          );
+        },
       },
       {
         field: "organization",
@@ -117,18 +125,11 @@ export const UserList = () => {
         valueGetter: ({ row }) => row?.organization?.title,
         minWidth: 150,
         sortable: false,
-        // renderCell: function render({ value }) {
-        //   return organizationIsLoading ? (
-        //     <>Loading...</>
-        //   ) : (
-        //     organizationData?.data?.find((item) => item.id === value)?.name
-        //   );
-        // },
       },
       {
         field: "is_superuser",
         headerName: "Is Superuser",
-        flex: 1,
+        flex: 0.5,
         minWidth: 50,
         renderCell: function render({ value }) {
           return <Checkbox checked={!!value} />;
@@ -139,12 +140,12 @@ export const UserList = () => {
         field: "username",
         headerName: t("users.fields.username"),
         flex: 1,
-        minWidth: 200,
+        minWidth: 150,
       },
       {
         field: "created_at",
         headerName: t("users.fields.created_at"),
-        flex: 1,
+        flex: 0.5,
         minWidth: 80,
         renderCell: function render({ row }) {
           return <DateField value={row.created_at} format={"DD.MM.YYYY"} />;
@@ -155,7 +156,7 @@ export const UserList = () => {
         type: "actions",
         sortable: false,
         headerName: t("table.actions"), //'Actions',
-        flex: 1,
+        flex: 0.5,
         minWidth: 100,
         renderCell: function render({ row }) {
           return (

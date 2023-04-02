@@ -146,7 +146,7 @@ export const CreateBookingTransportDrawer: React.FC<
                         />
                         <TextField
                             {...register("address_object", {
-                                required: "Это поле обязательно к заполнению",
+                                required: t('required.field')
                             })}
                             error={!!(errors as any)?.address_object}
                             helperText={(errors as any)?.address_object?.message}
