@@ -2,7 +2,7 @@ import React from "react";
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
-import { CrudFilters, useTranslate } from "@refinedev/core";
+import {CrudFilters, useGetIdentity, useTranslate} from "@refinedev/core";
 import { Create, useAutocomplete } from "@refinedev/mui";
 import { Autocomplete, Box, Drawer, IconButton, InputAdornment, TextField } from "@mui/material";
 import moment from "moment/moment";
@@ -10,6 +10,7 @@ import {CloseOutlined} from "@mui/icons-material";
 import {DateTimePicker} from "@mui/x-date-pickers";
 import AvTimerTwoToneIcon from "@mui/icons-material/AvTimerTwoTone";
 import GroupsIcon from "@mui/icons-material/Groups";
+import {IUser} from "../../interfaces/IUser";
 
 export const CreateBookingTransportDrawer: React.FC<
     UseModalFormReturnType<ICreateBookingTransport>
@@ -65,8 +66,10 @@ export const CreateBookingTransportDrawer: React.FC<
         return result
     }
 
-   const handleOnSubmit = (data: any) => {
+   const { data: user } = useGetIdentity<IUser>();
 
+   const handleOnSubmit = (data: any) => {
+       console.log('creator ' + user?.id + user?.username)
         const event: ICreateBookingTransport = {
             title: `${data.number_order} ${data.address_object}`,
             startDate: moment(data.startDate).toISOString(),//data.startDate,
