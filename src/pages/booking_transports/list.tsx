@@ -351,18 +351,27 @@ export const Booking_transportList = () => {
                    ;
                 },
             },
-            // {
-            //     field: "description",
-            //     headerName: t("booking_transport.fields.description"),
-            //     minWidth: 160,
-            //     flex: 1,
-            //     sortable: false,
-            //     renderCell: function render({row}) {
-            //         return (
-            //             row.description
-            //         )
-            //     }
-            // },
+            {
+                field: "creator",
+                headerName: t("booking_transport.fields.creator"),
+                headerAlign: "center",
+                align: "center",
+                flex: 0.8,
+                renderCell: function render({row}) {
+                    return (
+                      <Stack alignItems="center" direction="row" spacing={2}>
+                        <Avatar
+                          alt={`${row.creator?.last_name} ${row.creator?.first_name}`}
+                          src={`${apiUrl}/${row.creator?.avatar}`}
+                          title={`${row.creator?.last_name} ${row.creator?.first_name}`}
+                        />
+                        <Typography variant="body2">
+                          {row.creator?.last_name} {row.creator?.first_name} {row.creator?.patronymic}
+                        </Typography>
+                      </Stack>
+                    );
+                },
+            },
             {
                 field: "actions",
                 type: "actions",

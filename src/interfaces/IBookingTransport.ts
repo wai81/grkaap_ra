@@ -1,6 +1,7 @@
 import {ISubunit} from "./ISubunit";
 import {ITransport} from "./ITransport";
 import {IOrganization} from "./IOrganization";
+import { IUser } from "./IUser";
 
 export interface IBookingTransport {
     id: string;
@@ -15,6 +16,7 @@ export interface IBookingTransport {
     transport: ITransport;
     organization: IOrganization;
     created_at: string;
+    creator: IUser;
     is_active: boolean;
 }
 
@@ -40,6 +42,7 @@ export interface ICreateBookingTransport {
     subunit_id?: ISubunit["id"];
     transport_id?: ITransport["id"];
     organization_id?: IOrganization["id"];
+    creator_id?: IUser["id"];
 }
 
 export interface IUpdateBookingTransport {

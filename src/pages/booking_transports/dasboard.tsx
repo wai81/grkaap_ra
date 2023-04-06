@@ -31,7 +31,6 @@ import {BaseRecord, CrudFilters, getDefaultFilter, HttpError, useApiUrl, useList
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
 import {DataGrid, GridColumns, ruRU} from "@mui/x-data-grid";
 import {ItemStatus} from "../../components/itemStatus";
-import GroupsIcon from "@mui/icons-material/Groups";
 import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
 import {PdfLayoutListBookingTransport} from "../../components/pdf";
 import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../components/booking_transports";
@@ -320,6 +319,20 @@ export const DashboardBookingTransport: React.FC = () => {
                         />
                         :'')
                         ;
+                },
+            },
+            {
+                field: "creator",
+                headerName: t("booking_transport.fields.creator"),
+                headerAlign: "center",
+                align: "center",
+                flex: 0.5,
+                renderCell: function render({row}) {
+                    return <Avatar
+                    alt={`${row.creator?.last_name} ${row.creator?.first_name}`}
+                    src={`${apiUrl}/${row.creator?.avatar}`}
+                    title={`${row.creator?.last_name} ${row.creator?.first_name}`}
+                    />;
                 },
             },
             {

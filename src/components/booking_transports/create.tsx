@@ -80,7 +80,8 @@ export const CreateBookingTransportDrawer: React.FC<
             description: data.description,
             subunit_id: data.subunit.id,
             transport_id: data.transport == null ? null : data.transport.id,
-            organization_id: data.subunit.organization.id
+            organization_id: data.subunit.organization.id,
+            creator_id: user?.id,
         };
         onFinish(event);
         reset((formValues) => {
