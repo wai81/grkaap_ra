@@ -15,7 +15,7 @@ function  CustomRangeInput ({openCalendar, value,handleValueChange, label, margi
             variant="outlined"
             size="small"
             ref={ref}
-            sx={{width: 230, paddingX: 0.5}}
+            //sx={{width: 230, paddingX: 0.5}}
         />
     )
 }

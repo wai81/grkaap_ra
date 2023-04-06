@@ -20,7 +20,11 @@ const Monitor = ({
                  }) => {
 
     const createDrawerFormProps = useModalForm({
-        refineCoreProps: { action: "create" },
+        refineCoreProps: {
+            resource: "booking_transport",
+            action: "create",
+            redirect: false,
+        },
     });
     const {
         modal: { show: showCreateDrawer },

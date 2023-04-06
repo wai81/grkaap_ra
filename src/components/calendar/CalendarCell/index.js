@@ -19,7 +19,11 @@ import moment from "moment";
 const CalendarCell = ({dayItem, today, events, setDisplayMode}) => {
 
     const createDrawerFormProps = useModalForm({
-        refineCoreProps: {action: "create"},
+        refineCoreProps: {
+            action: "create",
+            resource: "booking_transport",
+            redirect: false,
+        },
         defaultValues: {
             startDate: dayItem,
         }
@@ -29,7 +33,11 @@ const CalendarCell = ({dayItem, today, events, setDisplayMode}) => {
     } = createDrawerFormProps;
 
     const editDrawerFormProps = useModalForm({
-        refineCoreProps: {action: "edit"},
+        refineCoreProps: {
+            action: "edit",
+            resource: "booking_transport",
+            redirect: false,
+        },
     });
     const {
         modal: {show: showEditDrawer},

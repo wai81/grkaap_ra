@@ -30,14 +30,19 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                             </Text>
                             <Text style={[
                                 styles.tableHeaderItem,
-                                { width: "12%" },
+                                { width: "7%" },
                             ]}>
                                 {t("booking_transport.fields.startDate")}
-                                 (дата время)
                             </Text>
                             <Text style={[
                                 styles.tableHeaderItem,
-                                { width: "20%" },
+                                { width: "5%" },
+                            ]}>
+                                {t("booking_transport.fields.startTime")}
+                            </Text>
+                            <Text style={[
+                                styles.tableHeaderItem,
+                                { width: "30%" },
                             ]}>
                                 {t("booking_transport.fields.title")}
                                 (заказ, адрес)
@@ -91,15 +96,23 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                         <Text
                                             style={[
                                                 styles.tableCol,
-                                                { width: "12%" },
+                                                { width: "7%",textAlign: "center", },
                                             ]}
                                         >
-                                            {moment(item.startDate).format("DD.MM.YYYY (HH:mm)")}
+                                            {moment(item.startDate).format("DD.MM.YYYY")}
                                         </Text>
                                         <Text
                                             style={[
                                                 styles.tableCol,
-                                                { width: "20%" },
+                                                { width: "5%", textAlign: "center", },
+                                            ]}
+                                        >
+                                            {moment(item.startDate).format("HH:mm")}
+                                        </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "30%" },
                                             ]}
                                         >
                                             {item.title}
@@ -156,7 +169,7 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
 
 const styles = StyleSheet.create({
     viewer: {
-        paddingTop: 32,
+        paddingTop: 20,
         width: "100%",
         height: "80vh",
         border: "none",

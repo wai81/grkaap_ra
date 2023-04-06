@@ -198,7 +198,7 @@ export const TransportList = () => {
       <CreateTransportDrawer {...createDrawerFormProps} />
       <EditTransportDrawer {...editDrawerFormProps} />
       <ShowTransportDrawer {...showDrawerFormProps} />
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={2}>
         <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
           <CardHeader title={t("filter.title")} />
           <CardContent sx={{ pt: 0 }}>
@@ -251,7 +251,7 @@ export const TransportList = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={10}>
         <List createButtonProps={{ onClick: () => showCreateDrawer()}}>
           <DataGrid
             localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}

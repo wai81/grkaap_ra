@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { RefineKbarProvider } from "@refinedev/kbar";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 import { OffLayoutArea } from "components/offLayoutArea";
+import LibraryBooksTwoToneIcon from '@mui/icons-material/LibraryBooksTwoTone';
 //import {MuiInferencer} from '@pankod/refine-inferencer/mui';
 import { API_URL, TOKEN_KEY } from "./constants";
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
@@ -53,6 +54,7 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import "moment/locale/ru";
 import { Header, Layout, Sider, Title } from "components/layout";
 import { AuthPage } from "pages/auth";
+import {DashboardBookingTransport} from "./pages/booking_transports/dasboard";
 
 const axiosInstance = axios.create();
 
@@ -111,13 +113,23 @@ function App() {
                         icon: <AirportShuttleTwoToneIcon />,
                       },
                   },
+                    {
+                        name: "dashboard_transport",
+                        list: "/booking-transport/dashboard_transport",
+                        //show: "/booking-transport/booking_transport/show/:id",
+
+                        meta: {
+                            icon: <EmojiTransportationTwoToneIcon/>,
+                            parent: "booking-transport",
+                        },
+                    },
                   {
                     name: "booking_transport",
                     list: "/booking-transport/booking_transport",
                     show: "/booking-transport/booking_transport/show/:id",
                     
                     meta: {
-                        icon: <EmojiTransportationTwoToneIcon />,
+                        icon: <LibraryBooksTwoToneIcon />,
                         parent: "booking-transport",
                       },
   
@@ -205,7 +217,7 @@ function App() {
                     {/* маршрутизация на главную страницу(по умолчанию) поле аутенфикации */}
                     <Route
                       index
-                      element={<NavigateToResource resource="booking_transport" />}
+                      element={<NavigateToResource resource="dashboard_transport" />}
                     />
 
                     {/* маршрутизация для страниц в меню */}
@@ -234,6 +246,10 @@ function App() {
                     </Route>
 
                     <Route path="booking-transport">
+                        <Route path="dashboard_transport">
+                            <Route index element={<DashboardBookingTransport />} />
+                            {/*<Route path="show/:id" element={<TransportShow />} />*/}
+                        </Route>
                         <Route path="booking_transport">
                             <Route index element={<BookingTransportList />} />
                             <Route path="show/:id" element={<BookingTransportShow />} />

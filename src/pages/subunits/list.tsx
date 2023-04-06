@@ -188,7 +188,7 @@ export const SubunitsList = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={2}>
         <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
           <CardHeader title={t("filter.title")} />
           <CardContent sx={{ pt: 0 }}>
@@ -202,7 +202,7 @@ export const SubunitsList = () => {
                 {...register("q")}
                 label={t("subunits.filter.search.label")}
                 placeholder={t("subunits.filter.search.placeholder")}
-                margin="normal"
+                margin="dense"
                 fullWidth
                 autoFocus
                 size="small"
@@ -238,7 +238,7 @@ export const SubunitsList = () => {
                         placeholder={t(
                           "subunits.filter.organization.placeholder"
                         )}
-                        margin="normal"
+                        margin="dense"
                         variant="outlined"
                         size="small"
                       />
@@ -250,7 +250,7 @@ export const SubunitsList = () => {
                 control={control}
                 name="is_active"
                 render={({ field }) => (
-                  <FormControl margin="normal" size="small">
+                  <FormControl margin="dense" size="small">
                     <InputLabel id="isActive-select">
                       {t("subunits.filter.is_active.label")}
                     </InputLabel>
@@ -280,7 +280,7 @@ export const SubunitsList = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={10}>
         <List
           headerButtons={({ defaultButtons }) => (
             <>
@@ -295,6 +295,7 @@ export const SubunitsList = () => {
             columns={columns}
             filterModel={undefined}
             autoHeight
+            disableColumnMenu={true}
             sx={{
               "& .MuiDataGrid-cell:hover": {
                 cursor: "pointer",

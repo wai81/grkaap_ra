@@ -94,6 +94,7 @@ export const OrganizationList = () => {
         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
         {...dataGridProps}
         columns={columns}
+        disableColumnMenu={true}
         autoHeight
         sx={{
           "& .MuiDataGrid-cell:hover": {

@@ -9,7 +9,7 @@ import {
 } from "@refinedev/core";
 
 import { CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid } from "@refinedev/mui";
-import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+import {DataGrid, GridColumns, GridRowSpacingParams, ruRU} from "@mui/x-data-grid";
 
 import {
     Autocomplete,
@@ -28,7 +28,7 @@ import {
     Select,
     Stack,
     TextField,
-    Typography,
+    Typography, withStyles,
 } from "@mui/material";
 
 import { useForm, useModalForm } from "@refinedev/react-hook-form";
@@ -53,7 +53,7 @@ import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../co
 import GroupsIcon from "@mui/icons-material/Groups";
 import LocalPrintshopOutlinedIcon from '@mui/icons-material/LocalPrintshopOutlined';
 import {PdfLayoutListBookingTransport} from "../../components/pdf";
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export const Booking_transportList = () => {
 
@@ -205,7 +205,8 @@ export const Booking_transportList = () => {
                 headerName: t("booking_transport.fields.is_active"),
                 align: "center",
                 headerAlign: "center",
-                flex: 0.5,
+
+                flex: 0.4,
                 renderCell: function render({row}) {
                     return (
                         <ItemStatus
@@ -217,31 +218,70 @@ export const Booking_transportList = () => {
                     );
                 },
             },
+
             {
                 field: "startDate",
                 headerAlign: "center",
                 headerName: t("booking_transport.fields.startDate"),
                 align: "center",
-                minWidth: 150,
+                minWidth: 100,
                 flex: 0.5,
                 renderCell: function render({row}) {
                     return (
                         !row.is_active ?
-                            <s><DateField value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/></s> :
-                            <DateField value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/>
+                            <s><DateField value={row.startDate} format={"DD.MM.YYYY"}/></s> :
+                            <DateField value={row.startDate} format={"DD.MM.YYYY"}/>
+                    );
+                },
+            },
+            {
+                field: "startTime",
+                headerAlign: "center",
+                headerName: t("booking_transport.fields.startTime"),
+                align: "center",
+                flex: 0.3,
+                minWidth: 50,
+                sortable: false,
+                renderCell: function render({row}) {
+                    return (
+                        !row.is_active ?
+                            <s><DateField value={row.startDate} format={"HH:mm"}/></s> :
+                            <DateField value={row.startDate} format={"HH:mm"}/>
                     );
                 },
             },
             {
                 field: "title",
                 headerName: t("booking_transport.fields.title"),
-                minWidth: 100,
-                flex: 2,
+                minWidth: 150,
+                flex: 3,
                 renderCell: function render({row}) {
-                    return (
-                        !row.is_active ? <s>{row.title}</s> : row.title
-                    )
-                }
+                    return (<div>
+                        <Typography>
+                            {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
+                        </Typography>
+                        <Typography variant={"body2"}>
+                            <Chip
+                                //size="small"
+                                variant="outlined"
+                                //color={"primary"}
+                                sx={{
+                                    height: 'auto',
+                                    '& .MuiChip-label': {
+                                        display: 'block',
+                                        whiteSpace: 'normal',
+                                    },
+                                }}
+                                //avatar={<Avatar><GroupsIcon/></Avatar>}
+                                label={`${row.count_man} чел. ${row.subunit?.title}`}/>
+                        </Typography>
+                        <Typography color={'textSecondary'} noWrap={true} variant={"caption"} title={row.subunit?.title}>
+                            {row.description}
+                        </Typography>
+                    </div>
+                        );
+                },
+
             },
             {
                 field: "duration",
@@ -254,34 +294,39 @@ export const Booking_transportList = () => {
                     return (`${row.duration} ч.`)
                 }
             },
-            {
-                field: "subunit",
-                headerName: t("booking_transport.fields.subunit"),
-                headerAlign: "center",
-                align: "left",
-                flex: 2,
-                renderCell: function render({row}) {
-                    return <Typography noWrap variant={"body2"} title={row.subunit?.title}>
-                        {row.subunit?.title}
-                    </Typography>;
-                },
-            },
-            {
-                field: "count_man",
-                headerName: t("booking_transport.fields.count_man"),
-                headerAlign: "center",
-                align: "center",
-                flex: 1,
-                renderCell: function render({row}) {
-                    return <Chip avatar={<Avatar><GroupsIcon/></Avatar>} label={row.count_man}  />
-                },
-            },
+            // {
+            //     field: "subunit",
+            //     headerName: t("booking_transport.fields.subunit"),
+            //     headerAlign: "center",
+            //     align: "left",
+            //     minWidth: 150,
+            //     flex: 1.5,
+            //     sortable: false,
+            //     renderCell: function render({row}) {
+            //         return <Typography noWrap={false} variant={"body2"} title={row.subunit?.title}>
+            //             {row.subunit?.title}
+            //         </Typography>;
+            //     },
+            // },
+            // {
+            //     field: "count_man",
+            //     headerName: t("booking_transport.fields.count_man"),
+            //     headerAlign: "center",
+            //     align: "center",
+            //     flex: 0.2,
+            //     renderCell: function render({row}) {
+            //         //return <Chip avatar={<Avatar><GroupsIcon/></Avatar>} label={row.count_man}  />
+            //         return `${row.count_man} чел.`
+            //     },
+            // },
+
             {
                 field: "transport",
                 headerName: t("booking_transport.fields.transport"),
                 headerAlign: "center",
                 align: "left",
-                flex: 2,
+                flex: 1,
+                sortable: false,
                 renderCell: function render({row}) {
 
                     return (row.transport !== null ? <Chip avatar={<Avatar
@@ -306,6 +351,18 @@ export const Booking_transportList = () => {
                    ;
                 },
             },
+            // {
+            //     field: "description",
+            //     headerName: t("booking_transport.fields.description"),
+            //     minWidth: 160,
+            //     flex: 1,
+            //     sortable: false,
+            //     renderCell: function render({row}) {
+            //         return (
+            //             row.description
+            //         )
+            //     }
+            // },
             {
                 field: "actions",
                 type: "actions",
@@ -404,297 +461,271 @@ export const Booking_transportList = () => {
 
 
     return (
-        <Grid container columnSpacing={{ xs: 1, sm: 1, md: 1 }} spacing={1}>
+        <Grid container spacing={2}>
             <CreateBookingTransportDrawer {...createDrawerFormProps} />
             <EditBookingTransportDrawer {...editDrawerFormProps} />
-            <Grid item xs={12} lg={5.5}>
+
+            <Grid item xs={12} lg={2}>
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
-                    <CalendarShow url={`${API_URL}/booking_transport`} />
+                    <CardHeader title={t("filter.title")}/>
+                    <CardContent sx={{pt: 0}}>
+                        <Box
+                            component="form"
+                            sx={{display: "flex", flexDirection: "column"}}
+                            autoComplete="off"
+                            onSubmit={handleSubmit(search)}
+                        >
+                            <TextField
+                                {...register("q")}
+                                label={t("booking_transport.filter.search.label")}
+                                placeholder={t("booking_transport.filter.search.placeholder")}
+                                margin="dense"
+                                fullWidth
+                                autoFocus
+                                size="small"
+                            />
+                            <Controller
+                                control={control}
+                                name="startDate"
+                                render={({field: {onChange, name, value},}) => (
+                                    <>
+                                        <DatePicker
+                                            value={value}
+                                            onChange={(startDate) => {
+                                                onChange(startDate?.valueOf() ? startDate : ["", ""]);
+                                            }}
+                                            locale={locale_ru}
+                                            format={"DD.MM.YYYY"}
+                                            range
+                                            render={
+                                                <CustomRangeInput
+                                                    margin="dense"
+                                                    openCalendar
+                                                    value={value}
+                                                    handleValueChange
+                                                    label={t("booking_transport.filter.rangeDate")}
+                                                />
+                                            }
+                                            numberOfMonths={2}
+                                            plugins={[
+                                                <Footer
+                                                    position="bottom"
+                                                    format={"DD.MM.YYYY"}
+                                                    names={{
+                                                        selectedDates: "Период:",
+                                                        from: "с:",
+                                                        to: "по:",
+                                                        selectDate: "Выберите период",
+                                                        close: "Закрыть",
+                                                        separator: "-",
+                                                    }}
+                                                />,
+                                                weekends([0, 6])
+                                            ]}
+                                        />
+                                    </>
+                                )}
+                            />
+                            <Controller
+                                control={control}
+                                name="organization"
+                                //defaultValue={null}
+                                render={({field}) => (
+                                    <Autocomplete
+                                        {...organizationAutocompleteProps}
+                                        {...field}
+                                        onChange={(_, value) => {
+                                            field.onChange(value?.id ?? value);
+                                        }}
+                                        getOptionLabel={(item) => {
+                                            return (
+                                                organizationAutocompleteProps?.options?.find(
+                                                    (p) => p.id.toString() === item.id.toString()
+                                                )?.title ?? ""
+                                            );
+                                        }}
+                                        isOptionEqualToValue={(option, value) => {
+                                            return (
+                                                option.id.toString() === value.id?.toString() ||
+                                                option.id.toString() === value.toString()
+                                            );
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label={t("booking_transport.filter.organization.label")}
+                                                placeholder={t(
+                                                    "booking_transport.filter.organization.placeholder"
+                                                )}
+                                                margin="dense"
+                                                variant="outlined"
+                                                size="small"
+
+                                            />
+                                        )}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                control={control}
+                                name="subunit"
+                                render={({field}) => (
+                                    <Autocomplete
+                                        {...subunitAutocompleteProps}
+                                        {...field}
+                                        onChange={(_, value) => {
+                                            field.onChange(value?.id ?? value);
+                                        }}
+                                        getOptionLabel={(item) => {
+                                            return (
+                                                subunitAutocompleteProps?.options?.find(
+                                                    (p) => p.id.toString() === item.id.toString()
+                                                )?.title ?? ""
+                                            );
+                                        }}
+                                        isOptionEqualToValue={(option, value) => {
+                                            return (
+                                                option.id.toString() === value.id?.toString() ||
+                                                option.id.toString() === value.toString()
+                                            );
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label={t("booking_transport.filter.subunit.label")}
+                                                placeholder={t(
+                                                    "booking_transport.filter.subunit.placeholder"
+                                                )}
+                                                margin="dense"
+                                                variant="outlined"
+                                                size="small"
+
+                                            />
+                                        )}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                control={control}
+                                name="transport"
+                                //defaultValue={null}
+                                render={({field}) => (
+                                    <Autocomplete
+                                        {...transportAutocompleteProps}
+                                        {...field}
+                                        onChange={(_, value) => {
+                                            field.onChange(value?.id ?? value);
+                                        }}
+                                        getOptionLabel={(item) => {
+                                            return (
+                                                transportAutocompleteProps?.options?.find(
+                                                    (p) => p.id.toString() === item.id.toString()
+                                                )?.title ?? ""
+                                            );
+                                        }}
+                                        isOptionEqualToValue={(option, value) => {
+                                            return (
+                                                option.id.toString() === value.id?.toString() ||
+                                                option.id.toString() === value.toString()
+                                            );
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                label={t("booking_transport.filter.transport.label")}
+                                                placeholder={t(
+                                                    "booking_transport.filter.transport.placeholder"
+                                                )}
+                                                margin="dense"
+                                                variant="outlined"
+                                                size="small"
+
+                                            />
+                                        )}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                control={control}
+                                name="is_active"
+                                render={({field}) => (
+                                    <FormControl margin="dense" size="small" >
+                                        <InputLabel id="isActive-select">
+                                            {t("booking_transport.filter.is_active.label")}
+                                        </InputLabel>
+                                        <Select
+                                            {...field}
+                                            labelId="isActive-select"
+                                            label={t("booking_transport.filter.is_active.label")}
+                                        >
+                                            <MenuItem value="">
+                                                <em>{t("booking_transport.filter.is_active.none")}</em>
+                                            </MenuItem>
+                                            <MenuItem value="true">
+                                                {t("booking_transport.filter.is_active.true")}
+                                            </MenuItem>
+                                            <MenuItem value="false">
+                                                {t("booking_transport.filter.is_active.false")}
+                                            </MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                )}
+                            />
+
+                            <br/>
+                            <Button type="submit" variant="contained">
+                                {t("subunits.filter.submit")}
+                            </Button>
+                        </Box>
+                    </CardContent>
                 </Card>
             </Grid>
-            {/*<Grid item xs={12} lg={5.5}>*/}
-            {/*    <Card sx={{paddingX: {xs: 2, md: 0}}}>*/}
-            {/*        <CalendarScheduler eventsCalendar={bookingList}/>*/}
-            {/*    </Card>*/}
-            {/*</Grid>*/}
-            <Grid item xs={12} lg={6.5}>
-                <Grid container  columnSpacing={{ xs: 1, sm: 1, md: 1 }} spacing={1}>
-                    <Grid item xs={12} lg={12} paddingY={1}>
-                        <Card sx={{paddingX: {xs: 2, md: 0}}}>
-                            <CardHeader title={t("filter.title")}/>
-                            <CardContent sx={{pt: 0}}>
-                                <Box
-                                    component="form"
-                                    sx={{display: "flex", flexDirection: "column"}}
-                                    autoComplete="off"
-                                    onSubmit={handleSubmit(search)}
-                                >
-                                    <Stack direction={{ xs: 'column', sm: 'row'}} spacing={{ xs: 1, sm: 1, md: 1 }}>
-                                        <TextField
-                                            {...register("q")}
-                                            label={t("booking_transport.filter.search.label")}
-                                            placeholder={t("booking_transport.filter.search.placeholder")}
-                                            margin="dense"
-                                            //fullWidth
-                                            autoFocus
-                                            size="small"
-                                            sx={{width: '40%', paddingX: 0.5}}
-                                        />
-
-                                        <Controller
-                                            control={control}
-                                            name="startDate"
-                                            render={({field: {onChange, name, value},}) => (
-                                                <>
-                                                    <DatePicker
-                                                        value={value}
-                                                        onChange={(startDate) => {
-                                                            onChange(startDate?.valueOf() ? startDate : ["", ""]);
-                                                        }}
-                                                        locale={locale_ru}
-                                                        format={"DD.MM.YYYY"}
-                                                        range
-                                                        render={
-                                                            <CustomRangeInput
-                                                                margin="dense"
-                                                                openCalendar
-                                                                value={value}
-                                                                handleValueChange
-                                                                label={t("booking_transport.filter.rangeDate")}
-
-                                                            />
-                                                        }
-                                                        numberOfMonths={2}
-                                                        plugins={[
-                                                            <Footer
-                                                                position="bottom"
-                                                                format={"DD.MM.YYYY"}
-                                                                names={{
-                                                                    selectedDates: "Период:",
-                                                                    from: "с:",
-                                                                    to: "по:",
-                                                                    selectDate: "Выберите период",
-                                                                    close: "Закрыть",
-                                                                    separator: "-",
-                                                                }}
-                                                            />,
-                                                            weekends([0, 6])
-                                                        ]}
-                                                    />
-                                                </>
-                                            )}
-                                            />
-
-                                        <Controller
-                                            control={control}
-                                            name="organization"
-
-                                            //defaultValue={null}
-                                            render={({field}) => (
-                                                <Autocomplete
-                                                    {...organizationAutocompleteProps}
-                                                    {...field}
-                                                    onChange={(_, value) => {
-                                                        field.onChange(value?.id ?? value);
-                                                    }}
-                                                    getOptionLabel={(item) => {
-                                                        return (
-                                                            organizationAutocompleteProps?.options?.find(
-                                                                (p) => p.id.toString() === item.id.toString()
-                                                            )?.title ?? ""
-                                                        );
-                                                    }}
-                                                    isOptionEqualToValue={(option, value) => {
-                                                        return (
-                                                            option.id.toString() === value.id?.toString() ||
-                                                            option.id.toString() === value.toString()
-                                                        );
-                                                    }}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            label={t("booking_transport.filter.organization.label")}
-                                                            placeholder={t(
-                                                                "booking_transport.filter.organization.placeholder"
-                                                            )}
-                                                            margin="dense"
-                                                            variant="outlined"
-                                                            size="small"
-
-                                                        />
-                                                    )}
-                                                    sx={{width: '40%', paddingX: 0.5}}
-                                                />
-                                            )}
-                                        />
-                                    </Stack>
-                                    <Stack direction={{ xs: 'column', sm: 'row'}}
-                                           justifyContent="flex-start"
-                                           alignItems="flex-start" >
-                                        <Controller
-                                            control={control}
-                                            name="subunit"
-                                            render={({field}) => (
-                                                <Autocomplete
-                                                    {...subunitAutocompleteProps}
-                                                    {...field}
-                                                    onChange={(_, value) => {
-                                                        field.onChange(value?.id ?? value);
-                                                    }}
-                                                    getOptionLabel={(item) => {
-                                                        return (
-                                                            subunitAutocompleteProps?.options?.find(
-                                                                (p) => p.id.toString() === item.id.toString()
-                                                            )?.title ?? ""
-                                                        );
-                                                    }}
-                                                    isOptionEqualToValue={(option, value) => {
-                                                        return (
-                                                            option.id.toString() === value.id?.toString() ||
-                                                            option.id.toString() === value.toString()
-                                                        );
-                                                    }}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            label={t("booking_transport.filter.subunit.label")}
-                                                            placeholder={t(
-                                                                "booking_transport.filter.subunit.placeholder"
-                                                            )}
-                                                            margin="dense"
-                                                            variant="outlined"
-                                                            size="small"
-
-                                                        />
-                                                    )}
-                                                    sx={{width: '40%', paddingX: 0.5}}
-                                                />
-                                            )}
-                                        />
-                                        <Controller
-                                            control={control}
-                                            name="transport"
-                                            //defaultValue={null}
-                                            render={({field}) => (
-                                                <Autocomplete
-                                                    {...transportAutocompleteProps}
-                                                    {...field}
-                                                    onChange={(_, value) => {
-                                                        field.onChange(value?.id ?? value);
-                                                    }}
-                                                    getOptionLabel={(item) => {
-                                                        return (
-                                                            transportAutocompleteProps?.options?.find(
-                                                                (p) => p.id.toString() === item.id.toString()
-                                                            )?.title ?? ""
-                                                        );
-                                                    }}
-                                                    isOptionEqualToValue={(option, value) => {
-                                                        return (
-                                                            option.id.toString() === value.id?.toString() ||
-                                                            option.id.toString() === value.toString()
-                                                        );
-                                                    }}
-                                                    renderInput={(params) => (
-                                                        <TextField
-                                                            {...params}
-                                                            label={t("booking_transport.filter.transport.label")}
-                                                            placeholder={t(
-                                                                "booking_transport.filter.transport.placeholder"
-                                                            )}
-                                                            margin="dense"
-                                                            variant="outlined"
-                                                            size="small"
-
-                                                        />
-                                                    )}
-                                                    sx={{width: '40%', paddingX: 0.5}}
-                                                />
-                                            )}
-                                        />
-                                        <Controller
-                                            control={control}
-                                            name="is_active"
-                                            render={({field}) => (
-                                                <FormControl margin="dense" size="small" sx={{width: '40%', paddingX: 0.5}}>
-                                                    <InputLabel id="isActive-select">
-                                                        {t("booking_transport.filter.is_active.label")}
-                                                    </InputLabel>
-                                                    <Select
-                                                        {...field}
-                                                        labelId="isActive-select"
-                                                        label={t("booking_transport.filter.is_active.label")}
-                                                    >
-                                                        <MenuItem value="">
-                                                            <em>{t("booking_transport.filter.is_active.none")}</em>
-                                                        </MenuItem>
-                                                        <MenuItem value="true">
-                                                            {t("booking_transport.filter.is_active.true")}
-                                                        </MenuItem>
-                                                        <MenuItem value="false">
-                                                            {t("booking_transport.filter.is_active.false")}
-                                                        </MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            )}
-                                        />
-                                    </Stack>
-                                    <br/>
-                                    <Button type="submit" variant="contained">
-                                        {t("subunits.filter.submit")}
-                                    </Button>
-                                </Box>
-                            </CardContent>
-                        </Card>
-
-                    </Grid>
-                </Grid>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} lg={12} >
-                        <List
-                            // createButtonProps={
-                            // { onClick: () => showCreateDrawer()}}
-                            headerButtons={()=>(
-                                <>
-                                    <Button
-                                        title={'Печать'}
-                                        startIcon={<LocalPrintshopOutlinedIcon/>}
-                                        onClick={() => {
-                                            setRecords(bookingList);
-                                            handleOpen();
-                                        }}
-                                    variant={"outlined"}
-                                    >
-                                        Печать
-                                    </Button>
-                                    <CreateButton onClick={() => showCreateDrawer()}/>
-                                </>
-                            )}
-                        >
-                            <DataGrid
-                                localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-                                {...dataGridProps}
-                                columns={columns}
-                                filterModel={undefined}
-                                autoHeight
-                                sx={{
-                                    "& .MuiDataGrid-cell:hover": {
-                                        cursor: "pointer",
-                                    },
+            <Grid item xs={12} lg={10}>
+                <List
+                    // createButtonProps={
+                    // { onClick: () => showCreateDrawer()}}
+                    headerButtons={()=>(
+                        <>
+                            <Button
+                                title={'Печать'}
+                                startIcon={<LocalPrintshopOutlinedIcon/>}
+                                onClick={() => {
+                                    setRecords(bookingList);
+                                    handleOpen();
                                 }}
-                                //components={{Toolbar: GridToolbar,}}
-                                rowsPerPageOptions={[5, 10, 20, 30, 100]}
-                                onRowClick={(row) => {
-                                    showEditDrawer(row.id)
-                                    //show("booking_transport", row.id);
-                                }}
-                            />
-                        </List>
-                        <Dialog fullWidth={true} maxWidth={false} open={open} onClose={handleClose} >
-                            <PdfLayoutListBookingTransport records={bookingList}/>
-                        </Dialog >
-                    </Grid>
-                </Grid>
+                            variant={"outlined"}
+                            >
+                                Печать
+                            </Button>
+                            <CreateButton onClick={() => showCreateDrawer()}/>
+                        </>
+                    )}
+                >
+                    <DataGrid
+                        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+                        {...dataGridProps}
+                        columns={columns}
+                        filterModel={undefined}
+                        disableColumnMenu={true}
+                        getRowHeight={() => 'auto'}
+                        autoHeight
+                        sx={{
+                            "& .MuiDataGrid-cell":{padding:'8px',},
+                            "& .MuiDataGrid-cell:hover": {
+                                cursor: "pointer",
+                            },
+                        }}
+                        //components={{Toolbar: GridToolbar,}}
+                        rowsPerPageOptions={[5, 10, 20, 30, 100]}
+                        onRowClick={(row) => {
+                            showEditDrawer(row.id)
+                            //show("booking_transport", row.id);
+                        }}
+                    />
+                </List>
+                <Dialog fullWidth={true} maxWidth={false} open={open} onClose={handleClose} >
+                    <PdfLayoutListBookingTransport records={bookingList}/>
+                </Dialog >
             </Grid>
         </Grid>
     );

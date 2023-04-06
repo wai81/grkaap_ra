@@ -203,7 +203,7 @@ export const UserList = () => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={2}>
         <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
           <CardHeader title={t("filter.title")} />
           <CardContent sx={{ pt: 0 }}>
@@ -217,7 +217,7 @@ export const UserList = () => {
                 {...register("q")}
                 label={t("subunits.filter.search.label")}
                 placeholder={t("subunits.filter.search.placeholder")}
-                margin="normal"
+                margin="dense"
                 fullWidth
                 autoFocus
                 size="small"
@@ -253,7 +253,7 @@ export const UserList = () => {
                         placeholder={t(
                           "subunits.filter.organization.placeholder"
                         )}
-                        margin="normal"
+                        margin="dense"
                         variant="outlined"
                         size="small"
                       />
@@ -270,7 +270,7 @@ export const UserList = () => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12} lg={9}>
+      <Grid item xs={12} lg={10}>
         <List>
           <DataGrid
             localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
@@ -278,6 +278,7 @@ export const UserList = () => {
             columns={columns}
             filterModel={undefined}
             autoHeight
+            disableColumnMenu={true}
             sx={{
               "& .MuiDataGrid-cell:hover": {
                 cursor: "pointer",
