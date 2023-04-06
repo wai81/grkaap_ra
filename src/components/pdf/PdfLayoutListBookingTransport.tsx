@@ -36,9 +36,9 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                             </Text>
                             <Text style={[
                                 styles.tableHeaderItem,
-                                { width: "5%" },
+                                { width: "15%" },
                             ]}>
-                                {t("booking_transport.fields.startTime")}
+                                {t("booking_transport.fields.subunit")}
                             </Text>
                             <Text style={[
                                 styles.tableHeaderItem,
@@ -51,15 +51,17 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                 styles.tableHeaderItem,
                                 { width: "5%" },
                             ]}>
+                                {t("booking_transport.fields.startTime")}
+                            </Text>
+
+                            <Text style={[
+                                styles.tableHeaderItem,
+                                { width: "5%" },
+                            ]}>
                                 Прод. (ч)
                                 {/*{t("booking_transport.fields.duration")}*/}
                             </Text>
-                            <Text style={[
-                                styles.tableHeaderItem,
-                                { width: "20%" },
-                            ]}>
-                                {t("booking_transport.fields.subunit")}
-                            </Text>
+
                             <Text style={[
                                 styles.tableHeaderItem,
                                 { width: "5%" },
@@ -69,16 +71,17 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                             </Text>
                             <Text style={[
                                 styles.tableHeaderItem,
-                                { width: "15%" },
-                            ]}>
-                                {t("booking_transport.fields.transport")}
-                            </Text>
-                            <Text style={[
-                                styles.tableHeaderItem,
                                 { width: "20%" },
                             ]}>
                                 {t("booking_transport.fields.description")}
                             </Text>
+                            <Text style={[
+                                styles.tableHeaderItem,
+                                { width: "15%" },
+                            ]}>
+                                {t("booking_transport.fields.transport")}
+                            </Text>
+
 
                         </View>
                         {records?.map((item)=>{
@@ -104,10 +107,10 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                         <Text
                                             style={[
                                                 styles.tableCol,
-                                                { width: "5%", textAlign: "center", },
+                                                { width: "15%" },
                                             ]}
                                         >
-                                            {moment(item.startDate).format("HH:mm")}
+                                            {item.subunit.title}
                                         </Text>
                                         <Text
                                             style={[
@@ -123,16 +126,19 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                                 { width: "5%", textAlign: "center", },
                                             ]}
                                         >
-                                            {item.duration}
+                                            {moment(item.startDate).format("HH:mm")}
                                         </Text>
+
+
                                         <Text
                                             style={[
                                                 styles.tableCol,
-                                                { width: "20%" },
+                                                { width: "5%", textAlign: "center", },
                                             ]}
                                         >
-                                            {item.subunit.title}
+                                            {item.duration}
                                         </Text>
+
                                         <Text
                                             style={[
                                                 styles.tableCol,
@@ -144,19 +150,20 @@ export const PdfLayoutListBookingTransport: React.FC<PdfProps> = ({ records }) =
                                         <Text
                                             style={[
                                                 styles.tableCol,
-                                                { width: "15%" },
-                                            ]}
-                                        >
-                                            {item.transport?.title}
-                                        </Text>
-                                        <Text
-                                            style={[
-                                                styles.tableCol,
                                                 { width: "20%" },
                                             ]}
                                         >
                                             {item.description}
                                         </Text>
+                                        <Text
+                                            style={[
+                                                styles.tableCol,
+                                                { width: "15%" },
+                                            ]}
+                                        >
+                                            {item.transport?.title}
+                                        </Text>
+
                                     </View>
                                 )
                         })}
