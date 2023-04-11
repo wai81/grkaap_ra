@@ -45,9 +45,9 @@ export const TransportEdit = () => {
           name="title"
         />
         <TextField
-          {...register("details")}
-          error={!!(errors as any)?.details}
-          helperText={(errors as any)?.details?.message}
+          {...register("description")}
+          error={!!(errors as any)?.description}
+          helperText={(errors as any)?.description?.message}
           margin="normal"
           fullWidth
           InputLabelProps={{ shrink: true }}

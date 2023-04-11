@@ -20,7 +20,7 @@ export const TransportShow = () => {
                 <Typography variant="body1" fontWeight="bold">
                     {t('transports.fields.details')}
                 </Typography>
-                <TextField value={record?.details} />
+                <TextField value={record?.description} />
                 <Typography variant="body1" fontWeight="bold">
                     {t('transports.fields.is_active')}
                 </Typography>

@@ -8,7 +8,7 @@ import {
     useTranslate,
 } from "@refinedev/core";
 
-import { CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid } from "@refinedev/mui";
+import {CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
 import {DataGrid, GridColumns, GridRowSpacingParams, ruRU} from "@mui/x-data-grid";
 
 import {
@@ -31,8 +31,8 @@ import {
     Typography, withStyles,
 } from "@mui/material";
 
-import { useForm, useModalForm } from "@refinedev/react-hook-form";
-import { Controller } from "react-hook-form";
+import {useForm, useModalForm} from "@refinedev/react-hook-form";
+import {Controller} from "react-hook-form";
 import {ItemStatus} from "components/itemStatus";
 import React, {useState} from "react";
 import {
@@ -62,8 +62,7 @@ export const Booking_transportList = () => {
     const [records, setRecords] = useState<IBookingTransport[] | undefined>(undefined);
 
 
-    const {dataGridProps, search, filters,} = useDataGrid<
-        IBookingTransport,
+    const {dataGridProps, search, filters,} = useDataGrid<IBookingTransport,
         HttpError,
         IBookingTransportFilterVariables>({
         onSearch: (params) => {
@@ -164,10 +163,10 @@ export const Booking_transportList = () => {
     });
 
 
-    const { data } = useList<IBookingTransport, HttpError>({
+    const {data} = useList<IBookingTransport, HttpError>({
         resource: "booking_transport",
 
-        pagination:{
+        pagination: {
             pageSize: 100,
         },
 
@@ -180,20 +179,20 @@ export const Booking_transportList = () => {
     })
     const bookingList = data?.data ?? [];
     const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
-        refineCoreProps: { action: "create" },
+        refineCoreProps: {action: "create"},
         modalProps: {
             autoResetForm: true,
         }
     });
     const {
-        modal: { show: showCreateDrawer },
+        modal: {show: showCreateDrawer},
     } = createDrawerFormProps;
 
     const editDrawerFormProps = useModalForm<IUpdateBookingTransport, HttpError>({
-        refineCoreProps: { action: "edit" },
+        refineCoreProps: {action: "edit"},
     });
     const {
-        modal: { show: showEditDrawer },
+        modal: {show: showEditDrawer},
     } = editDrawerFormProps;
 
     const apiUrl = useApiUrl();
@@ -257,29 +256,30 @@ export const Booking_transportList = () => {
                 flex: 3,
                 renderCell: function render({row}) {
                     return (<div>
-                        <Typography>
-                            {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
-                        </Typography>
-                        <Typography variant={"body2"}>
-                            <Chip
-                                //size="small"
-                                variant="outlined"
-                                //color={"primary"}
-                                sx={{
-                                    height: 'auto',
-                                    '& .MuiChip-label': {
-                                        display: 'block',
-                                        whiteSpace: 'normal',
-                                    },
-                                }}
-                                //avatar={<Avatar><GroupsIcon/></Avatar>}
-                                label={`${row.count_man} чел. ${row.subunit?.title}`}/>
-                        </Typography>
-                        <Typography color={'textSecondary'} noWrap={true} variant={"caption"} title={row.subunit?.title}>
-                            {row.description}
-                        </Typography>
-                    </div>
-                        );
+                            <Typography>
+                                {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
+                            </Typography>
+                            <Typography variant={"body2"}>
+                                <Chip
+                                    //size="small"
+                                    variant="outlined"
+                                    //color={"primary"}
+                                    sx={{
+                                        height: 'auto',
+                                        '& .MuiChip-label': {
+                                            display: 'block',
+                                            whiteSpace: 'normal',
+                                        },
+                                    }}
+                                    //avatar={<Avatar><GroupsIcon/></Avatar>}
+                                    label={`${row.count_man} чел. ${row.subunit?.title}`}/>
+                            </Typography>
+                            <Typography color={'textSecondary'} noWrap={true} variant={"caption"}
+                                        title={row.subunit?.title}>
+                                {row.description}
+                            </Typography>
+                        </div>
+                    );
                 },
 
             },
@@ -329,26 +329,29 @@ export const Booking_transportList = () => {
                 sortable: false,
                 renderCell: function render({row}) {
 
-                    return (row.transport !== null ? <Chip avatar={<Avatar
-                        src={`${apiUrl}/${row.transport?.image_url}`}
-                        sx={{
-                            cursor: "pointer",
-                            width: {
-                                xs: 40,
-                                md: 70,
-                            },
-                            height: {
-                                xs: 20,
-                                md: 50,
-                            },
-                            //borderRadius:1
-                        }}
-                        alt={row.transport?.title}
-                        />} label={<Typography variant={"caption"}>{row.transport?.title}</Typography>}
-                     title={row.transport?.title}
-                    />
-                        :'')
-                   ;
+                    return (row.transport !== null ? <div>
+                            <Chip avatar={<Avatar
+                            src={`${apiUrl}/${row.transport?.image_url}`}
+                            sx={{
+                                cursor: "pointer",
+                                width: {
+                                    xs: 40,
+                                    md: 70,
+                                },
+                                height: {
+                                    xs: 20,
+                                    md: 50,
+                                },
+                                //borderRadius:1
+                            }}
+                            alt={row.transport?.title}
+                        />} label={<Typography variant={"caption"}>{row.transport?.title} </Typography>
+                    }
+                                                           title={`${row.transport?.title} (${row.transport?.description})`}
+                        />
+                            <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description} </Typography>
+                        </div>
+                        : '');
                 },
             },
             {
@@ -358,18 +361,20 @@ export const Booking_transportList = () => {
                 align: "center",
                 flex: 0.8,
                 renderCell: function render({row}) {
-                    return (
-                      <Stack alignItems="center" direction="row" spacing={2}>
-                        <Avatar
-                          alt={`${row.creator?.last_name} ${row.creator?.first_name}`}
-                          src={`${apiUrl}/${row.creator?.avatar}`}
-                          title={`${row.creator?.last_name} ${row.creator?.first_name}`}
-                        />
-                        <Typography variant="body2">
-                          {row.creator?.last_name} {row.creator?.first_name} {row.creator?.patronymic}
-                        </Typography>
-                      </Stack>
-                    );
+                    if (row.creator?.id === undefined) {
+                        return " "
+                    } else {
+                        return (<Stack alignItems="center" direction="row" spacing={2}>
+                            <Avatar
+                                alt={`${row.creator?.last_name} ${row.creator?.first_name}`}
+                                src={`${apiUrl}/${row.creator?.avatar}`}
+                                title={`${row.creator?.last_name} ${row.creator?.first_name}`}
+                            />
+                            <Typography variant="body2">
+                                {row.creator?.last_name} {row.creator?.first_name} {row.creator?.patronymic}
+                            </Typography>
+                        </Stack>)
+                    }
                 },
             },
             {
@@ -381,7 +386,7 @@ export const Booking_transportList = () => {
                     return (
                         <>
                             <EditButton hideText
-                                        //recordItemId={row.id}
+                                //recordItemId={row.id}
                                         onClick={() => showEditDrawer(row.id)}
                             />
                             {/*<ShowButton hideText recordItemId={row.id}/>*/}
@@ -658,7 +663,7 @@ export const Booking_transportList = () => {
                                 control={control}
                                 name="is_active"
                                 render={({field}) => (
-                                    <FormControl margin="dense" size="small" >
+                                    <FormControl margin="dense" size="small">
                                         <InputLabel id="isActive-select">
                                             {t("booking_transport.filter.is_active.label")}
                                         </InputLabel>
@@ -693,7 +698,7 @@ export const Booking_transportList = () => {
                 <List
                     // createButtonProps={
                     // { onClick: () => showCreateDrawer()}}
-                    headerButtons={()=>(
+                    headerButtons={() => (
                         <>
                             <Button
                                 title={'Печать'}
@@ -702,7 +707,7 @@ export const Booking_transportList = () => {
                                     setRecords(bookingList);
                                     handleOpen();
                                 }}
-                            variant={"outlined"}
+                                variant={"outlined"}
                             >
                                 Печать
                             </Button>
@@ -719,7 +724,7 @@ export const Booking_transportList = () => {
                         getRowHeight={() => 'auto'}
                         autoHeight
                         sx={{
-                            "& .MuiDataGrid-cell":{padding:'8px',},
+                            "& .MuiDataGrid-cell": {padding: '8px',},
                             "& .MuiDataGrid-cell:hover": {
                                 cursor: "pointer",
                             },
@@ -732,9 +737,9 @@ export const Booking_transportList = () => {
                         }}
                     />
                 </List>
-                <Dialog fullWidth={true} maxWidth={false} open={open} onClose={handleClose} >
+                <Dialog fullWidth={true} maxWidth={false} open={open} onClose={handleClose}>
                     <PdfLayoutListBookingTransport records={bookingList}/>
-                </Dialog >
+                </Dialog>
             </Grid>
         </Grid>
     );

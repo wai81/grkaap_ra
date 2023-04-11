@@ -3,7 +3,7 @@ export interface ITransport {
     title: string;
     image_url?:string;
     image_url_type?:string;
-    details?: string;
+    description?: string;
     is_active: boolean;
     created_at: string;
 }
@@ -17,7 +17,7 @@ export interface ICreateTransport {
     title: string;
     image_url?:string
     image_url_type?:string;
-    details?: string;
+    description?: string;
     is_active: boolean;
 }
 
@@ -25,6 +25,6 @@ export interface IUpdateTransport {
     title: string;
     image_url?:string;
     image_url_type?:string;
-    details?: string;
+    description?: string;
     is_active: boolean;
 }
