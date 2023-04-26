@@ -57,6 +57,7 @@ import {AuthPage} from "pages/auth";
 import {DashboardBookingTransport} from "./pages/booking_transports/dasboard";
 import { RoleList } from "pages/roles";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
+import { CasbinObjectsList } from "pages/casbinobjects";
 
 const axiosInstance = axios.create();
 
@@ -108,105 +109,105 @@ function App() {
                                     //undoableTimeout: 3500
                                 }}
 
-                                resources={[
-                                    {
-                                        name: "booking-transport",
-                                        meta: {
-                                            icon: <AirportShuttleTwoToneIcon/>,
-                                        },
+                                resources={[{
+                                    name: "booking-transport",
+                                    meta: {
+                                        icon: <AirportShuttleTwoToneIcon/>,
                                     },
-                                    {
-                                        name: "dashboard_transport",
-                                        list: "/booking-transport/dashboard_transport",
-                                        //show: "/booking-transport/booking_transport/show/:id",
+                                }, {
+                                    name: "dashboard_transport",
+                                    list: "/booking-transport/dashboard_transport",
+                                    //show: "/booking-transport/booking_transport/show/:id",
 
-                                        meta: {
-                                            icon: <EmojiTransportationTwoToneIcon/>,
-                                            parent: "booking-transport",
-                                        },
+                                    meta: {
+                                        icon: <EmojiTransportationTwoToneIcon/>,
+                                        parent: "booking-transport",
                                     },
-                                    {
-                                        name: "booking_transport",
-                                        list: "/booking-transport/booking_transport",
-                                        show: "/booking-transport/booking_transport/show/:id",
+                                }, {
+                                    name: "booking_transport",
+                                    list: "/booking-transport/booking_transport",
+                                    show: "/booking-transport/booking_transport/show/:id",
 
-                                        meta: {
-                                            icon: <LibraryBooksTwoToneIcon/>,
-                                            parent: "booking-transport",
-                                        },
-
-                                    },
-                                    {
-                                        name: "transports",
-                                        list: "/booking-transport/transports",
-                                        show: "/booking-transport/transports/show/:id",
-
-                                        meta: {
-                                            icon: <DriveEtaTwoToneIcon/>,
-                                            parent: "booking-transport",
-                                        },
-
-                                    },
-                                    {
-                                        name: "reference",
-                                        meta: {
-                                            icon: <ClassTwoToneIcon/>,
-                                        },
-                                    },
-                                    {
-                                        name: "organizations",
-                                        list: "/reference/organizations",
-                                        create: "/reference/organizations/create",
-                                        edit: "/reference/organizations/edit/:id",
-                                        show: "/reference/organizations/show/:id",
-
-                                        meta: {
-                                            icon: <BusinessTwoToneIcon/>,
-                                            parent: "reference",
-                                        },
-                                    },
-                                    {
-                                        name: "subunits",
-                                        list: "/reference/subunits",
-                                        create: "/reference/subunits/create",
-                                        edit: "/reference/subunits/edit/:id",
-                                        show: "/reference/subunits/show/:id",
-
-                                        meta: {
-                                            icon: <PeopleTwoToneIcon/>,
-                                            parent: "reference",
-                                        },
+                                    meta: {
+                                        icon: <LibraryBooksTwoToneIcon/>,
+                                        parent: "booking-transport",
                                     },
 
-                                    {
-                                        name: "settings",
-                                        meta: {
-                                            icon: <SettingsTwoToneIcon/>,
-                                        },
+                                }, {
+                                    name: "transports",
+                                    list: "/booking-transport/transports",
+                                    show: "/booking-transport/transports/show/:id",
+
+                                    meta: {
+                                        icon: <DriveEtaTwoToneIcon/>,
+                                        parent: "booking-transport",
                                     },
-                                    {
-                                        name: "users",
-                                        list: "/settings/users",
-                                        create: "/settings/users/create",
-                                        edit: "/settings/users/edit/:id",
-                                        show: "/settings/users/show/:id",
-                                        meta: {
-                                            icon: <AccountCircleTwoToneIcon/>,
-                                            parent: "settings",
-                                        },
+
+                                }, {
+                                    name: "reference",
+                                    meta: {
+                                        icon: <ClassTwoToneIcon/>,
                                     },
-                                    {
-                                        name: "admin/roles",
-                                        list: "/settings/roles",
-                                        create: "/settings/roles/create",
-                                        edit: "/settings/roles/edit/:id",
-                                        show: "/settings/roles/show/:id",
-                                        meta: {
-                                            icon: <AccountCircleTwoToneIcon/>,
-                                            parent: "settings",
-                                        },
+                                }, {
+                                    name: "organizations",
+                                    list: "/reference/organizations",
+                                    create: "/reference/organizations/create",
+                                    edit: "/reference/organizations/edit/:id",
+                                    show: "/reference/organizations/show/:id",
+
+                                    meta: {
+                                        icon: <BusinessTwoToneIcon/>,
+                                        parent: "reference",
                                     },
-                                ]}
+                                }, {
+                                    name: "subunits",
+                                    list: "/reference/subunits",
+                                    create: "/reference/subunits/create",
+                                    edit: "/reference/subunits/edit/:id",
+                                    show: "/reference/subunits/show/:id",
+
+                                    meta: {
+                                        icon: <PeopleTwoToneIcon/>,
+                                        parent: "reference",
+                                    },
+                                }, {
+                                    name: "settings",
+                                    meta: {
+                                        icon: <SettingsTwoToneIcon/>,
+                                    },
+                                }, {
+                                    name: "users",
+                                    list: "/settings/users",
+                                    create: "/settings/users/create",
+                                    edit: "/settings/users/edit/:id",
+                                    show: "/settings/users/show/:id",
+                                    meta: {
+                                        icon: <AccountCircleTwoToneIcon/>,
+                                        parent: "settings",
+                                    },
+                                }, {
+                                    name: "admin/roles",
+                                    list: "/settings/roles",
+                                    create: "/settings/roles/create",
+                                    edit: "/settings/roles/edit/:id",
+                                    show: "/settings/roles/show/:id",
+                                    meta: {
+                                        icon: <AccountCircleTwoToneIcon/>,
+                                        parent: "settings",
+                                    },
+                                }, {
+                                    
+                                    name: "admin/objects",
+
+                                    list: "/settings/casbinObjects",
+                                    create: "/settings/casbinObjects/create",
+                                    edit: "/settings/casbinObjects/edit/:id",
+                                    show: "/settings/casbinObjects/show/:id",
+                                    meta: {
+                                        icon: <AccountCircleTwoToneIcon/>,
+                                        parent: "settings",
+                                    },
+                                }]}
                             >
                                 <Routes>
                                     <Route
@@ -243,6 +244,9 @@ function App() {
                                             </Route>
                                             <Route path="roles" >
                                                 <Route index element={<RoleList />}/>
+                                            </Route>
+                                            <Route path="casbinObjects" >
+                                                <Route index element={<CasbinObjectsList />}/>
                                             </Route>
                                         </Route>
 
