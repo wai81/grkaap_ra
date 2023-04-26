@@ -26,7 +26,7 @@ import {
     IBookingTransportFilterVariables,
     ICreateBookingTransport, IUpdateBookingTransport
 } from "../../interfaces/IBookingTransport";
-import {CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
+import {CreateButton, DateField, EditButton, List, MarkdownField, useAutocomplete, useDataGrid} from "@refinedev/mui";
 import {BaseRecord, CrudFilters, getDefaultFilter, HttpError, useApiUrl, useList} from "@refinedev/core";
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
 import {DataGrid, GridColumns, ruRU} from "@mui/x-data-grid";
@@ -316,8 +316,8 @@ export const DashboardBookingTransport: React.FC = () => {
                             }}
                             alt={row.transport?.title}
                         />}
-                          label={<Typography variant={"caption"}>{row.transport?.title} </Typography>}
-                                                           title={`${row.transport?.title} ${row.transport?.description}`}/>
+                              label={<MarkdownField value={row.transport?.title}/>}
+                                                           title={row.transport?.title} />
                           <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description}</Typography>
                         </div>
                         : '')
