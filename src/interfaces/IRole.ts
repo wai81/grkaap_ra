@@ -4,13 +4,14 @@ export interface IRole {
     role_key: string;
     description: string;
     created_at: string;
+    creator_id: string;
 }
 
 export interface ICreateRole {
     name: string;
     role_key: string;
     description: string;
-    creator: string;
+    creator_id: string;
 }
 
 export interface IUpdateRole {

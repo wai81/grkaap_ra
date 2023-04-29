@@ -42,11 +42,10 @@ import PeopleTwoToneIcon from "@mui/icons-material/PeopleTwoTone";
 import EmojiTransportationTwoToneIcon from "@mui/icons-material/EmojiTransportationTwoTone";
 import AirportShuttleTwoToneIcon from "@mui/icons-material/AirportShuttleTwoTone";
 import DriveEtaTwoToneIcon from "@mui/icons-material/DriveEtaTwoTone";
-import {TransportList, TransportShow} from "pages/transports";
+import {TransportList} from "pages/transports";
 
 import {
     Booking_transportList as BookingTransportList,
-    Booking_transportShow as BookingTransportShow,
 } from "pages/booking_transports";
 import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
 import {LocalizationProvider} from "@mui/x-date-pickers";
@@ -268,15 +267,12 @@ function App() {
                                         <Route path="booking-transport">
                                             <Route path="dashboard_transport">
                                                 <Route index element={<DashboardBookingTransport/>}/>
-                                                {/*<Route path="show/:id" element={<TransportShow />} />*/}
                                             </Route>
                                             <Route path="booking_transport">
                                                 <Route index element={<BookingTransportList/>}/>
-                                                <Route path="show/:id" element={<BookingTransportShow/>}/>
                                             </Route>
                                             <Route path="transports">
                                                 <Route index element={<TransportList/>}/>
-                                                <Route path="show/:id" element={<TransportShow/>}/>
                                             </Route>
                                         </Route>
 
@@ -285,7 +281,7 @@ function App() {
                                     <Route
                                         element={
                                             <Authenticated fallback={<Outlet/>}>
-                                                <NavigateToResource resource="booking_transport"/>
+                                                <NavigateToResource />
                                             </Authenticated>
                                         }
                                     >

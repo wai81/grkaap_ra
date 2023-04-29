@@ -43,7 +43,7 @@ export const CalendarShow = ({url}) => {
     const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
 
     useEffect(() => {
-        fetch(`${url}/?order_by=-startDate&page=1&size=100&startDate_gte=${startDayQuery}&startDate_lte=${endDayQuery}&is_active=true`)
+        fetch(`${url}?order_by=-startDate&page=1&size=100&startDate_gte=${startDayQuery}&startDate_lte=${endDayQuery}&is_active=true`)
             .then(res => res.json())
             .then(res => setEvents(res.items));
     }, [today]);

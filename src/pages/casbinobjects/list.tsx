@@ -1,13 +1,25 @@
 import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
-import { IResourceComponentsProps, GetListResponse, useTranslate } from "@refinedev/core";
+import {IResourceComponentsProps, GetListResponse, useTranslate, useMany, useApiUrl} from "@refinedev/core";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 import { EditButton, List, useDataGrid } from "@refinedev/mui";
 import { ICasbinObject } from "interfaces/ICasbinObjects";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
+import {Avatar, Card, CardContent, CardHeader, Grid, Stack, Typography} from "@mui/material";
+import {IUser} from "../../interfaces/IUser";
 
 export const CasbinObjectsList = () => {
     const t = useTranslate()
-    const { dataGridProps } = useDataGrid()
+    const { dataGridProps } = useDataGrid<ICasbinObject>()
+
+    const userIds = dataGridProps?.rows.map((item)=> item.creator_id);
+    const { data: usersData, isLoading } = useMany<IUser>({
+        resource: "users",
+        ids: userIds,
+        // queryOptions:{
+        //     enabled: userIds.length > 0,
+        // }
+    })
+    const apiUrl = useApiUrl();
     const columns = useMemo<GridColumns<ICasbinObject>>(
         ()=>[
             {
@@ -40,6 +52,25 @@ export const CasbinObjectsList = () => {
                 headerName: t("admin/objects.fields.creator_id"),
                 headerAlign: "center",
                 flex: 1,
+                renderCell: function render({row}){
+                    if (isLoading) {
+                        return "Загрузка...";
+                    }
+                    const user = usersData?.data.find(
+                        (item) => item.id === row.creator_id,
+                    );
+                    // return user?.username
+                    return (<Stack alignItems="center" direction="row" spacing={2}>
+                        <Avatar
+                            alt={`${user?.last_name} ${user?.first_name}`}
+                            src={`${apiUrl}/${user?.avatar}`}
+                            title={`${user?.last_name} ${user?.first_name}`}
+                        />
+                        <Typography variant="body2">
+                            {user?.last_name} {user?.first_name} {user?.patronymic}
+                        </Typography>
+                    </Stack>)
+                },
             },
             {
                 field: "actions",
@@ -63,20 +94,32 @@ export const CasbinObjectsList = () => {
         [t]
     )
     return (
-    <List>
-      <DataGrid
-        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
-        {...dataGridProps}
-        columns={columns}
-        filterModel={undefined}
-        autoHeight
-        disableColumnMenu={true}
-        sx={{
-          "& .MuiDataGrid-cell:hover": {
-            cursor: "pointer",
-          },
-        }}
-      />
-    </List>
+        <Grid container spacing={2}>
+            <Grid item xs={12} lg={2}>
+                <Card sx={{paddingX: {xs: 2, md: 0}}}>
+                    <CardHeader title={t("filter.title")}/>
+                    <CardContent sx={{pt: 0}}>
+
+                    </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs={12} lg={10}>
+                <List>
+                    <DataGrid
+                        localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
+                        {...dataGridProps}
+                        columns={columns}
+                        filterModel={undefined}
+                        autoHeight
+                        disableColumnMenu={true}
+                        sx={{
+                            "& .MuiDataGrid-cell:hover": {
+                                cursor: "pointer",
+                            },
+                        }}
+                    />
+                </List>
+            </Grid>
+        </Grid>
     )
 };

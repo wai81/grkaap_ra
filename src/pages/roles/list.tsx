@@ -1,15 +1,26 @@
 import {Card, CardContent, CardHeader, Grid} from "@mui/material";
 import React from "react";
-import {useNavigation, useTranslate} from "@refinedev/core";
+import {useMany, useNavigation, useTranslate} from "@refinedev/core";
 import {DateField, EditButton, List, useDataGrid} from "@refinedev/mui";
 
 import { DataGrid, ruRU, GridColumns } from "@mui/x-data-grid";
 import {IRole} from "../../interfaces/IRole";
+import {IUser} from "../../interfaces/IUser";
 
 export const RoleList = () => {
     const { show } = useNavigation();
     const t = useTranslate()
-    const { dataGridProps } = useDataGrid()
+    const { dataGridProps } = useDataGrid<IRole>()
+
+    const userIds = dataGridProps?.rows.map((item)=> item.creator_id);
+    const { data: usersData, isLoading } = useMany<IUser>({
+        resource: "users",
+        ids: userIds,
+        // queryOptions:{
+        //     enabled: userIds.length > 0,
+        // }
+    })
+
     const columns = React.useMemo<GridColumns<IRole>>(
         ()=>[
             {
@@ -45,6 +56,21 @@ export const RoleList = () => {
                 minWidth: 80,
                 renderCell: function render({ row }) {
                     return <DateField value={row.created_at} format={"DD.MM.YYYY"} />;
+                },
+            },
+            {
+                field: "creator_id",
+                headerName: t("admin/roles.fields.creator_id"),
+                headerAlign: "center",
+                flex: 1,
+                renderCell: function render({row}){
+                    if (isLoading) {
+                        return "Загрузка...";
+                    }
+                    const user = usersData?.data.find(
+                        (item) => item.id === row.creator_id,
+                    );
+                    return user?.username
                 },
             },
             {
