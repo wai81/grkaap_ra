@@ -142,12 +142,12 @@ export const Booking_transportList = () => {
                 {
                     field: "startDate_gte",
                     operator: "eq",
-                    value: moment().startOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.format('YYYY-MM-DD hh:mm:ss'),
+                    value: moment().startOf('month').format('YYYY-MM-DD hh:mm:ss'),
                 },
                 {
                     field: "startDate_lte",
                     operator: "eq",
-                    value: moment().endOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
+                    value: moment().endOf('month').format('YYYY-MM-DD hh:mm:ss'),
                 },
             ]
         },

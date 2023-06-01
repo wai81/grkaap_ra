@@ -56,7 +56,7 @@ import {AuthPage} from "pages/auth";
 import {DashboardBookingTransport} from "./pages/booking_transports/dasboard";
 import { RoleList } from "pages/roles";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
-import { CasbinObjectsList } from "pages/casbinobjects";
+import {CasbinObjectsList} from "pages/casbinobjects";
 
 const axiosInstance = axios.create();
 

@@ -1,11 +1,13 @@
 import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
-import {IResourceComponentsProps, GetListResponse, useTranslate, useMany, useApiUrl} from "@refinedev/core";
+import {IResourceComponentsProps, GetListResponse, useTranslate, useMany, useApiUrl, HttpError} from "@refinedev/core";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 import { EditButton, List, useDataGrid } from "@refinedev/mui";
-import { ICasbinObject } from "interfaces/ICasbinObjects";
+import {ICasbinObject, ICasbinObjectUpdate} from "interfaces/ICasbinObjects";
 import React, { useMemo } from "react";
 import {Avatar, Card, CardContent, CardHeader, Grid, Stack, Typography} from "@mui/material";
 import {IUser} from "../../interfaces/IUser";
+import {useModalForm} from "@refinedev/react-hook-form";
+import {EditResourcesAppDrawer} from "./components";
 
 export const CasbinObjectsList = () => {
     const t = useTranslate()
@@ -15,10 +17,16 @@ export const CasbinObjectsList = () => {
     const { data: usersData, isLoading } = useMany<IUser>({
         resource: "users",
         ids: userIds,
-        // queryOptions:{
-        //     enabled: userIds.length > 0,
-        // }
+
     })
+
+    const editDrawerFormProps = useModalForm<ICasbinObjectUpdate, HttpError>({
+        refineCoreProps: { action: "edit" },
+    });
+    const {
+        modal: { show: showEditDrawer },
+    } = editDrawerFormProps;
+
     const apiUrl = useApiUrl();
     const columns = useMemo<GridColumns<ICasbinObject>>(
         ()=>[
@@ -82,7 +90,9 @@ export const CasbinObjectsList = () => {
                 renderCell: function render({ row }) {
                     return (
                         <>
-                            <EditButton hideText recordItemId={row.id} />
+                            <EditButton hideText
+                            //recordItemId={row.id}
+                            onClick={()=>showEditDrawer(row.id)}/>
                             {/*<ShowButton hideText recordItemId={row.id}/>*/}
                         </>
                     );
@@ -95,6 +105,7 @@ export const CasbinObjectsList = () => {
     )
     return (
         <Grid container spacing={2}>
+            <EditResourcesAppDrawer {...editDrawerFormProps}/>
             <Grid item xs={12} lg={2}>
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
                     <CardHeader title={t("filter.title")}/>

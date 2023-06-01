@@ -394,6 +394,7 @@
       "name": "Наименование",
       "description": "Описание",
       "object_key": "object_key",
+      "object_key_item": "url арес объекта в API (object_key)",
       "created_at": "Cоздан",
       "creator_id": "Cоздал"
     },
