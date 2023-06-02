@@ -2,12 +2,13 @@ import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
 import {IResourceComponentsProps, GetListResponse, useTranslate, useMany, useApiUrl, HttpError} from "@refinedev/core";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 import { EditButton, List, useDataGrid } from "@refinedev/mui";
-import {ICasbinObject, ICasbinObjectUpdate} from "interfaces/ICasbinObjects";
+import {ICasbinObject, ICasbinObjectCreate, ICasbinObjectUpdate} from "interfaces/ICasbinObjects";
 import React, { useMemo } from "react";
 import {Avatar, Card, CardContent, CardHeader, Grid, Stack, Typography} from "@mui/material";
 import {IUser} from "../../interfaces/IUser";
 import {useModalForm} from "@refinedev/react-hook-form";
-import {EditResourcesAppDrawer} from "./components";
+import {CreateResourcesAppDrawer, EditResourcesAppDrawer} from "./components";
+
 
 export const CasbinObjectsList = () => {
     const t = useTranslate()
@@ -19,6 +20,14 @@ export const CasbinObjectsList = () => {
         ids: userIds,
 
     })
+
+    const createDrawerFormProps = useModalForm<ICasbinObjectCreate, HttpError>({
+        refineCoreProps: { action: "create" },
+    });
+    const {
+        modal: { show: showCreateDrawer },
+    } = createDrawerFormProps;
+
 
     const editDrawerFormProps = useModalForm<ICasbinObjectUpdate, HttpError>({
         refineCoreProps: { action: "edit" },
@@ -105,6 +114,7 @@ export const CasbinObjectsList = () => {
     )
     return (
         <Grid container spacing={2}>
+            <CreateResourcesAppDrawer {...createDrawerFormProps}/>
             <EditResourcesAppDrawer {...editDrawerFormProps}/>
             <Grid item xs={12} lg={2}>
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
@@ -115,7 +125,7 @@ export const CasbinObjectsList = () => {
                 </Card>
             </Grid>
             <Grid item xs={12} lg={10}>
-                <List>
+                <List createButtonProps={{ onClick: () => showCreateDrawer()}}>
                     <DataGrid
                         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                         {...dataGridProps}

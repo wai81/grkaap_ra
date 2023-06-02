@@ -39,31 +39,15 @@ export const EditResourcesAppDrawer: React.FC<
 
     const t = useTranslate();
 
-
-    const getEndDate = (startDate:Date, duration:number)=>{
-        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
-        return result
-    }
-
-    // const handleOnSubmit = (data: any) => {
-    //
-    //     const event: ICasbinObjectUpdate = {
-    //
-    //         title: data.title,
-    //         startDate: moment(data.startDate).toISOString(),
-    //         duration: data.duration,
-    //         endDate: getEndDate(data.startDate, data.duration),
-    //         allDay: false,
-    //         count_man: data.count_man,
-    //         description: data.description,
-    //         subunit_id: data.subunit.id,
-    //         transport_id: data.transport == null ? null : data.transport.id,
-    //         organization_id: data.subunit.organization.id,
-    //         is_active: data.is_active,
-    //     };
-    //     onFinish(event);
-    //     close();
-    // };
+    const handleOnSubmit = (data: any) => {
+         const event: ICasbinObjectUpdate = {
+            name: data.name,
+            object_key: data.object_key,
+            description: data.description,
+         };
+        onFinish(event);
+        close();
+    };
 
     return(
         <Drawer
@@ -72,13 +56,13 @@ export const EditResourcesAppDrawer: React.FC<
             anchor="right"
             PaperProps={{sx: {width: {sm: "100%", md: 500}}}}
         >
-            {/*<form  onSubmit={handleSubmit(handleOnSubmit)}>*/}
+            <form onSubmit={handleSubmit(handleOnSubmit)}>
                 <Edit
                     saveButtonProps={{
                         type: 'submit',
                     }}
                     headerProps={{
-                        action: (
+                        avatar: (
                             <IconButton
                                 onClick={() => close()}
                                 sx={{ width: "30px", height: "30px" }}
@@ -86,7 +70,7 @@ export const EditResourcesAppDrawer: React.FC<
                                 <CloseOutlined />
                             </IconButton>
                         ),
-                        avatar: null,
+                        action: null,
                     }}
                     wrapperProps={{ sx: { overflowY: "scroll", height: "100vh" } }}
                     breadcrumb={''}
@@ -143,56 +127,10 @@ export const EditResourcesAppDrawer: React.FC<
                             maxRows={2}
                             size={'small'}
                         />
-                        {/*<FormControl>*/}
-                        {/*    <FormLabel*/}
-                        {/*        sx={{*/}
-                        {/*            marginBottom: "5px",*/}
-                        {/*            fontWeight: "700",*/}
-                        {/*            // fontSize: "14px",*/}
-                        {/*            color: "text.primary",*/}
-                        {/*        }}*/}
-                        {/*        required*/}
-                        {/*    >*/}
-                        {/*        {t('booking_transport.fields.is_active')}*/}
-                        {/*    </FormLabel>*/}
-                        {/*    <Controller*/}
-                        {/*        control={control}*/}
-                        {/*        name="is_active"*/}
-                        {/*        // eslint-disable-next-line*/}
-                        {/*        defaultValue={true}*/}
-                        {/*        render={({field}) => (*/}
-                        {/*            <RadioGroup*/}
-                        {/*                {...field}*/}
-                        {/*                onChange={(event) => {*/}
-                        {/*                    const value =*/}
-                        {/*                        event.target.value ===*/}
-                        {/*                        "true";*/}
 
-                        {/*                    setValue("is_active", value, {*/}
-                        {/*                        shouldValidate: true,*/}
-                        {/*                    });*/}
-
-                        {/*                    return value;*/}
-                        {/*                }}*/}
-                        {/*                row*/}
-                        {/*            >*/}
-                        {/*                <FormControlLabel*/}
-                        {/*                    value={true}*/}
-                        {/*                    control={<Radio/>}*/}
-                        {/*                    label={t("booking_transport.fields.status.enable")}*/}
-                        {/*                />*/}
-                        {/*                <FormControlLabel*/}
-                        {/*                    value={false}*/}
-                        {/*                    control={<Radio/>}*/}
-                        {/*                    label={t("booking_transport.fields.status.disable")}*/}
-                        {/*                />*/}
-                        {/*            </RadioGroup>*/}
-                        {/*        )}*/}
-                        {/*    />*/}
-                        {/*</FormControl>*/}
                     </Box>
                 </Edit>
-            {/*</form>*/}
+            </form>
         </Drawer>
     )
 }
