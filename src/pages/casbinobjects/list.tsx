@@ -100,8 +100,8 @@ export const CasbinObjectsList = () => {
                     return (
                         <>
                             <EditButton hideText
-                            //recordItemId={row.id}
-                            onClick={()=>showEditDrawer(row.id)}/>
+                                //recordItemId={row.id}
+                                onClick={()=>showEditDrawer(row.id)}/>
                             {/*<ShowButton hideText recordItemId={row.id}/>*/}
                         </>
                     );

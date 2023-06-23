@@ -1,11 +1,15 @@
-import {Card, CardContent, CardHeader, Grid} from "@mui/material";
+import {Card, CardContent, CardHeader, Grid, IconButton} from "@mui/material";
 import React from "react";
-import {useMany, useNavigation, useTranslate} from "@refinedev/core";
+import {HttpError, useMany, useNavigation, useTranslate} from "@refinedev/core";
 import {DateField, EditButton, List, useDataGrid} from "@refinedev/mui";
-
 import { DataGrid, ruRU, GridColumns } from "@mui/x-data-grid";
-import {IRole} from "../../interfaces/IRole";
+import {ICreateRole, IRole, IUpdateRole} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
+import {useModalForm} from "@refinedev/react-hook-form";
+import {ICasbinObjectCreate, ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
+import {CreateRoleDrawer, EditRoleDrawer} from "./components";
+import GppMaybeIcon from '@mui/icons-material/GppMaybe';
+
 
 export const RoleList = () => {
     const { show } = useNavigation();
@@ -16,10 +20,32 @@ export const RoleList = () => {
     const { data: usersData, isLoading } = useMany<IUser>({
         resource: "users",
         ids: userIds,
-        // queryOptions:{
-        //     enabled: userIds.length > 0,
-        // }
+        queryOptions:{
+            enabled: userIds.length > 0,
+        }
     })
+
+    const createDrawerFormProps = useModalForm<ICreateRole, HttpError>({
+        refineCoreProps: { action: "create" },
+    });
+    const {
+        modal: { show: showCreateDrawer },
+    } = createDrawerFormProps;
+
+
+    const editDrawerFormProps = useModalForm<IRole, HttpError>({
+        refineCoreProps: { action: "edit" },
+    });
+    const {
+        modal: { show: showEditDrawer },
+    } = editDrawerFormProps;
+
+    // const updatePermissionsModalProps = useModalForm<I>({
+    //
+    // });
+    // const {
+    //     modal: { show: showEditModal },
+    // } = updatePermissionsModalProps;
 
     const columns = React.useMemo<GridColumns<IRole>>(
         ()=>[
@@ -83,8 +109,13 @@ export const RoleList = () => {
                 renderCell: function render({ row }) {
                     return (
                         <>
-                            <EditButton hideText recordItemId={row.id} />
+                            <EditButton hideText
+                                //recordItemId={row.id}
+                                onClick={()=>showEditDrawer(row.id)}/>
                             {/*<ShowButton hideText recordItemId={row.id}/>*/}
+                            {/*<IconButton onClick={()=>showEditDrawer(row.id)}>*/}
+                            {/*    <GppMaybeIcon/>*/}
+                            {/*</IconButton>*/}
                         </>
                     );
                 },
@@ -96,6 +127,8 @@ export const RoleList = () => {
     );
     return (
         <Grid container spacing={2}>
+            <CreateRoleDrawer {...createDrawerFormProps}/>
+            <EditRoleDrawer {...editDrawerFormProps}/>
             <Grid item xs={12} lg={2}>
                 <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
                     <CardHeader title={t("filter.title")} />
@@ -104,7 +137,7 @@ export const RoleList = () => {
                 </Card>
             </Grid>
             <Grid item xs={12} lg={10}>
-                <List>
+                <List createButtonProps={{ onClick: () => showCreateDrawer()}}>
                     <DataGrid
                         localeText={ruRU.components.MuiDataGrid.defaultProps.localeText}
                         {...dataGridProps}

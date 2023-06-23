@@ -365,6 +365,8 @@
       "name": "Наименование",
       "description": "Описание",
       "role_key": "role_key",
+      "roles_key_item": "Ключ роли в базе (role_key)",
+      "checkedPermissions": "Доступные разрешения",
       "created_at": "Cоздан",
       "creator_id": "Cоздал"
     },
@@ -394,7 +396,7 @@
       "name": "Наименование",
       "description": "Описание",
       "object_key": "object_key",
-      "object_key_item": "url арес объекта в API (object_key)",
+      "object_key_item": "url арес ресурса в API (object_key)",
       "created_at": "Cоздан",
       "creator_id": "Cоздал"
     },
