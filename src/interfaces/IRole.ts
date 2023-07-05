@@ -23,8 +23,8 @@ export interface IUpdateRole {
 }
 
 export interface IRolePermissions {
-    options?: Array<Array<string>>;
-    checkeds?: Array<Array<string>>;
+    options: Array<Array<string>>;
+    checkeds: Array<Array<string>>;
 }
 
 export interface IRolePermissionsUpdate {

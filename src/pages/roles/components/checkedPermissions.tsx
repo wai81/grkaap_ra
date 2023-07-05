@@ -17,7 +17,6 @@ export const CheckedPermissions: ICompareArrays = (options, checkeds) => {
             const subArr2 = checkeds?.find((subArr) => subArr[0] === subArr1[0]);
             const checkedValue = subArr2?.find((value1) => value1===value)
             const check = value === checkedValue;
-
             //console.log('checkedValue ' + checkedValue+ ' checked '+ checked)
             return (
                 <FormControlLabel
@@ -31,7 +30,7 @@ export const CheckedPermissions: ICompareArrays = (options, checkeds) => {
                                 :{marginLeft: 2}}
                         />
                     }
-                    label={index1 === 0 ?
+                    label={index === 0 ?
                         <Typography sx={{fontSize: 13, fontWeight: "600"}}>{value}</Typography> :
                         <Typography sx={{fontSize: 12,}}>{value}</Typography>
                     }

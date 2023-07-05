@@ -1,18 +1,25 @@
 import {Card, CardContent, CardHeader, Grid, IconButton} from "@mui/material";
 import React from "react";
-import {HttpError, useMany, useNavigation, useTranslate} from "@refinedev/core";
+import {HttpError, useMany, useModal, useNavigation, useShow, useTranslate} from "@refinedev/core";
 import {DateField, EditButton, List, useDataGrid} from "@refinedev/mui";
-import { DataGrid, ruRU, GridColumns } from "@mui/x-data-grid";
+import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
 import {ICreateRole, IRole, IUpdateRole} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
 import {useModalForm} from "@refinedev/react-hook-form";
 import {ICasbinObjectCreate, ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
 import {CreateRoleDrawer, EditRoleDrawer} from "./components";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
+import {EditOutlined} from "@mui/icons-material";
+import {RolePermissions} from "./components/rolePermissions";
 
 
 export const RoleList = () => {
-    const { show } = useNavigation();
+    //const { show } = useNavigation();
+    const { show, visible, close } = useModal();
+    const { queryResult, setShowId } = useShow<IRole>();
+    const { data: showQueryResult } = queryResult;
+    const record = showQueryResult?.data;
+
     const t = useTranslate()
     const { dataGridProps } = useDataGrid<IRole>()
 
@@ -106,19 +113,38 @@ export const RoleList = () => {
                 headerName: t("table.actions"), //'Actions',
                 flex: 0.5,
                 minWidth: 100,
-                renderCell: function render({ row }) {
-                    return (
-                        <>
-                            <EditButton hideText
-                                //recordItemId={row.id}
-                                onClick={()=>showEditDrawer(row.id)}/>
-                            {/*<ShowButton hideText recordItemId={row.id}/>*/}
-                            {/*<IconButton onClick={()=>showEditDrawer(row.id)}>*/}
-                            {/*    <GppMaybeIcon/>*/}
-                            {/*</IconButton>*/}
-                        </>
-                    );
-                },
+                getActions: ({ row }) =>[
+                     <GridActionsCellItem
+                         key={1}
+                         label={"Edit"}
+                         icon={<EditOutlined />}
+                         showInMenu
+                         onClick={()=>showEditDrawer(row.id)}
+                     />,
+                    <GridActionsCellItem
+                        key={1}
+                        label={"Edit Permission"}
+                        icon={<EditOutlined />}
+                        showInMenu
+                        onClick={()=>{
+                            show();
+                            setShowId(row.id);
+                        }}
+                    />
+                ],
+                // renderCell: function render({ row }) {
+                //     return (
+                //         <>
+                //             <EditButton hideText
+                //                 //recordItemId={row.id}
+                //                 onClick={()=>showEditDrawer(row.id)}/>
+                //             {/*<ShowButton hideText recordItemId={row.id}/>*/}
+                //             {/*<IconButton onClick={()=>showEditDrawer(row.id)}>*/}
+                //             {/*    <GppMaybeIcon/>*/}
+                //             {/*</IconButton>*/}
+                //         </>
+                //     );
+                // },
                 align: "center",
                 headerAlign: "center",
             },
@@ -152,6 +178,11 @@ export const RoleList = () => {
                         }}
                     />
                 </List>
+                {record && (<RolePermissions
+                    record={record}
+                    close={close}
+                    visible={visible}
+                />)}
             </Grid>
         </Grid>
     )
