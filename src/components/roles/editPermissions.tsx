@@ -1,19 +1,16 @@
 import {IRole, IRolePermissions, IRolePermissionsUpdate} from "../../interfaces/IRole";
 import {HttpError, useApiUrl, useOne, useTranslate} from "@refinedev/core";
 import {
-    Box,
     Button,
     Checkbox,
     Dialog, DialogActions,
     DialogContent, DialogTitle,
     Fade,
     FormControlLabel,
-    Grid, IconButton,
-    Modal,
+    Grid,
     Typography
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
-import CloseIcon from '@mui/icons-material/Close';
 import {TOKEN_KEY} from "../../constants";
 import axios from "axios";
 
@@ -29,7 +26,7 @@ type RoleProps = {
     visible: boolean;
 };
 
-export const RolePermissions: React.FC<RoleProps> = ({
+export const EditPermissions: React.FC<RoleProps> = ({
     record,
     close : modalClose,
     visible: modalVisible
@@ -72,7 +69,7 @@ export const RolePermissions: React.FC<RoleProps> = ({
             };
 
             setFormData(newFormData);
-            console.log(formData?.checkeds)
+            //console.log(formData?.checkeds)
         } else {
             console.log("'formData' is undefined");
         }
@@ -80,7 +77,7 @@ export const RolePermissions: React.FC<RoleProps> = ({
 
     const handleSubmit = async () => {
         // отправляем данные на сервер
-        console.log(formData?.checkeds)
+        //console.log(formData?.checkeds)
         const request: IRolePermissionsUpdate = {
             checkeds:formData?.checkeds
         }
@@ -99,21 +96,6 @@ export const RolePermissions: React.FC<RoleProps> = ({
     };
 
 
-    const style = {
-        width: "100%",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        maxWidth: { xs: 380, sm: 480, md: 780, lg: 880 },
-        heigth: 650,
-        bgcolor: "background.paper",
-        p: 2,
-        my: 2,
-        borderRadius: "5px",
-
-    };
-
 
 
     return (
@@ -125,8 +107,6 @@ export const RolePermissions: React.FC<RoleProps> = ({
             </DialogTitle>
             <DialogContent>
             <Fade in={modalVisible}>
-                {/*<Box sx={style}>*/}
-
                         <Grid container>
                             <Grid item xs={16} sm={12}>
 
@@ -194,8 +174,6 @@ export const RolePermissions: React.FC<RoleProps> = ({
                             )}
                             </Grid>
                         </Grid>
-
-                {/*</Box>*/}
             </Fade>
             </DialogContent>
             <DialogActions>

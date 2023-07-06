@@ -6,7 +6,7 @@ import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid
 import {ICreateRole, IRole, IUpdateRole} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
 import {useModalForm} from "@refinedev/react-hook-form";
-import {CreateRoleDrawer, EditRoleDrawer, RolePermissions} from "../../components/roles";
+import {CreateRoleDrawer, EditRoleDrawer, EditPermissions} from "../../components/roles";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import {EditOutlined} from "@mui/icons-material";
 
@@ -177,7 +177,7 @@ export const RoleList = () => {
                         }}
                     />
                 </List>
-                {record && (<RolePermissions
+                {record && (<EditPermissions
                     record={record}
                     close={close}
                     visible={visible}
