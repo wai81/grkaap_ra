@@ -1,63 +1,67 @@
-import React from "react";
+import Reactfrom, {useEffect, useMemo, useState} from "react";
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
-import {useGetIdentity, useTranslate} from "@refinedev/core";
-import { Create } from "@refinedev/mui";
-import { Box, Drawer, IconButton, TextField } from "@mui/material";
+
+import {HttpError, useList, useOne, useShow, useTranslate} from "@refinedev/core";
+import { Edit, useAutocomplete } from "@refinedev/mui";
+import {
+    Box, Checkbox,
+    Drawer, FormControlLabel, FormGroup, FormLabel,
+    IconButton,
+    TextField, Typography,
+} from "@mui/material";
+
 import {CloseOutlined} from "@mui/icons-material";
-import {IUser} from "../../../interfaces/IUser";
-import {ICreateRole} from "../../../interfaces/IRole";
+import {ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
+import {IRole, IRolePermissions, IUpdateRole} from "../../interfaces/IRole";
+import {CheckedPermissions} from "./checkedPermissions";
 
 
+type ArrayType = Array<Array<string>>;
 
-export const CreateRoleDrawer: React.FC<
-    UseModalFormReturnType<ICreateRole>
-    > = ({
-         modal: {
-              visible,
-              close,
-          },
-          handleSubmit,
-          register,
-          saveButtonProps,
-          control,
-          formState: {errors},
-          refineCore:{onFinish, formLoading},
-          reset,
-      }) => {
+export const EditRoleDrawer: React.FC<
+    UseModalFormReturnType<IRole>
+>=({
+    setValue,
+    register,
+    formState: { errors },
+    control,
+    refineCore: { onFinish, formLoading, id  },
+    handleSubmit,
+    modal: { visible, close },
+    saveButtonProps,
+    })=>{
+
     const t = useTranslate();
 
-
-   const { data: user } = useGetIdentity<IUser>();
-
     const handleOnSubmitForm = (data: any) => {
-
-        const event: ICreateRole = {
+         const event: IUpdateRole = {
             name: data.name,
             role_key: data.role_key,
             description: data.description,
-            creator_id: user?.id,
-        };
+         };
         onFinish(event);
-        reset((formValues) => {
-            formValues.name = '';
-            formValues.role_key = '';
-            formValues.description = '';
-            close();
-        });
+        close();
+    };
 
-    }
 
-    return (
 
+     const { data } = useOne<IRolePermissions,HttpError>({
+         resource: 'admin/roles/get_permissions',
+         id,
+     })
+
+    const perm_checked: ArrayType =  data?.data.checkeds!
+    const perm_options: ArrayType =  data?.data.options!
+
+    return(
         <Drawer
             open={visible}
-            onClose={() => close()}
+            onClose={close}
             anchor="right"
             PaperProps={{sx: {width: {sm: "100%", md: 500}}}}
-
         >
 
-                <Create
+                <Edit
                     saveButtonProps={{
                         ...saveButtonProps,
                         onClick: handleSubmit(handleOnSubmitForm)
@@ -78,8 +82,8 @@ export const CreateRoleDrawer: React.FC<
                 >
                     <Box
                         component="form"
+                        sx={{display: 'flex', flexDirection: 'column'}}
                         autoComplete="off"
-                        sx={{ display: "flex", flexDirection: "column" }}
                     >
                         <TextField
                             {...register("name", {
@@ -91,11 +95,12 @@ export const CreateRoleDrawer: React.FC<
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/roles.fields.name')}
+                            label={t('admin/objects.fields.name')}
                             name="name"
                             variant="outlined"
                             size={'small'}
-                            />
+                        />
+
                         <TextField
                             {...register("role_key", {
                                 required: "This field is required",
@@ -106,10 +111,12 @@ export const CreateRoleDrawer: React.FC<
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/roles.fields.roles_key_item')}
+                            label={t('admin/roles.fields.role_key_item')}
                             name="role_key"
                             size={'small'}
                         />
+
+
                         <TextField
                             {...register("description")}
                             error={!!(errors as any)?.description}
@@ -125,10 +132,23 @@ export const CreateRoleDrawer: React.FC<
                             maxRows={2}
                             size={'small'}
                         />
+                        <FormLabel
+                            sx={{
+                                //marginBottom: "5px",
+                                fontWeight: "500",
+                                // fontSize: "14px",
+                                color: "text.primary",
+                            }}
+                            //required
+                        >
+                            {t("admin/roles.fields.checkedPermissions")}
+                        </FormLabel>
+                        <FormGroup>
+                            {CheckedPermissions(perm_options, perm_checked)}
+                        </FormGroup>
                     </Box>
-                </Create>
+                </Edit>
 
         </Drawer>
-
-    );
-};
+    )
+}

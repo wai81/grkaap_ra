@@ -6,11 +6,10 @@ import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid
 import {ICreateRole, IRole, IUpdateRole} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
 import {useModalForm} from "@refinedev/react-hook-form";
-import {ICasbinObjectCreate, ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
-import {CreateRoleDrawer, EditRoleDrawer} from "./components";
+import {CreateRoleDrawer, EditRoleDrawer, RolePermissions} from "../../components/roles";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import {EditOutlined} from "@mui/icons-material";
-import {RolePermissions} from "./components/rolePermissions";
+
 
 
 export const RoleList = () => {

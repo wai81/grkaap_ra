@@ -28,7 +28,9 @@ export interface IRolePermissions {
 }
 
 export interface IRolePermissionsUpdate {
-    id: number;
-    checkeds: [string];
+    checkeds?: Array<Array<string>>;
 }
 
+export type Nullable<T> = {
+    [P in keyof T]: T[P] | null;
+};
