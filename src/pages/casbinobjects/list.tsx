@@ -110,7 +110,7 @@ export const CasbinObjectsList = () => {
                 headerAlign: "center",
             },
         ],
-        [t]
+        [t,isLoading,usersData?.data,showEditDrawer]
     )
     return (
         <Grid container spacing={2}>

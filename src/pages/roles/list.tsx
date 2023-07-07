@@ -1,9 +1,9 @@
-import {Card, CardContent, CardHeader, Grid, IconButton} from "@mui/material";
+import {Card, CardContent, CardHeader, Grid} from "@mui/material";
 import React from "react";
-import {HttpError, useMany, useModal, useNavigation, useShow, useTranslate} from "@refinedev/core";
-import {DateField, EditButton, List, useDataGrid} from "@refinedev/mui";
+import {HttpError, useMany, useModal, useShow, useTranslate} from "@refinedev/core";
+import {DateField, List, useDataGrid} from "@refinedev/mui";
 import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
-import {ICreateRole, IRole, IUpdateRole} from "../../interfaces/IRole";
+import {ICreateRole, IRole} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
 import {useModalForm} from "@refinedev/react-hook-form";
 import {CreateRoleDrawer, EditRoleDrawer, EditPermissions} from "../../components/roles";
@@ -13,7 +13,7 @@ import {EditOutlined} from "@mui/icons-material";
 
 
 export const RoleList = () => {
-    //const { show } = useNavigation();
+
     const { show, visible, close } = useModal();
     const { queryResult, setShowId } = useShow<IRole>();
     const { data: showQueryResult } = queryResult;
@@ -115,15 +115,15 @@ export const RoleList = () => {
                 getActions: ({ row }) =>[
                      <GridActionsCellItem
                          key={1}
-                         label={"Edit"}
+                         label={t('buttons.edit')}
                          icon={<EditOutlined />}
                          showInMenu
                          onClick={()=>showEditDrawer(row.id)}
                      />,
                     <GridActionsCellItem
                         key={1}
-                        label={"Edit Permission"}
-                        icon={<EditOutlined />}
+                        label={t('buttons.permission')}
+                        icon={<GppMaybeIcon />}
                         showInMenu
                         onClick={()=>{
                             show();
@@ -131,24 +131,11 @@ export const RoleList = () => {
                         }}
                     />
                 ],
-                // renderCell: function render({ row }) {
-                //     return (
-                //         <>
-                //             <EditButton hideText
-                //                 //recordItemId={row.id}
-                //                 onClick={()=>showEditDrawer(row.id)}/>
-                //             {/*<ShowButton hideText recordItemId={row.id}/>*/}
-                //             {/*<IconButton onClick={()=>showEditDrawer(row.id)}>*/}
-                //             {/*    <GppMaybeIcon/>*/}
-                //             {/*</IconButton>*/}
-                //         </>
-                //     );
-                // },
                 align: "center",
                 headerAlign: "center",
             },
         ],
-        [t],
+        [t,isLoading,show, setShowId, usersData?.data, showEditDrawer],
     );
     return (
         <Grid container spacing={2}>
