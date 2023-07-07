@@ -1,6 +1,5 @@
 import React from "react";
-import { useDataGrid, EditButton, List, DateField, useAutocomplete } from "@refinedev/mui";
-
+import { useDataGrid, List, DateField, useAutocomplete } from "@refinedev/mui";
 import {
   Checkbox,
   Grid,
@@ -33,8 +32,6 @@ import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 import { ItemStatus } from "components/itemStatus";
 import {EditOutlined} from "@mui/icons-material";
-import {IRole} from "../../interfaces/IRole";
-import {EditModalPermissions} from "../../components/roles";
 import {EditModalUserRole} from "../../components/users/editModalUserRole";
 
 
@@ -180,7 +177,7 @@ export const UserList = () => {
               icon={<EditOutlined color={"warning"}/>}
               showInMenu
               onClick={()=>{
-                //show();
+                show();
                 setShowId(row.id);
               }}
           />,
@@ -189,7 +186,7 @@ export const UserList = () => {
         headerAlign: "center",
       },
     ],
-    [t]
+    [t, apiUrl, edit, show, setShowId]
   );
 
   const { register, handleSubmit, control } = useForm<

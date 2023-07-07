@@ -9,7 +9,7 @@ import {
 } from "@refinedev/core";
 
 import {CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
-import {DataGrid, GridColumns, GridRowSpacingParams, ruRU} from "@mui/x-data-grid";
+import {DataGrid, GridColumns, ruRU} from "@mui/x-data-grid";
 
 import {
     Autocomplete,
@@ -28,7 +28,7 @@ import {
     Select,
     Stack,
     TextField,
-    Typography, withStyles,
+    Typography,
 } from "@mui/material";
 
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
@@ -47,13 +47,9 @@ import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 import moment from "moment/moment";
 import locale_ru from "../../components/multiDatePicer/locale_ru";
 import CustomRangeInput from "../../components/multiDatePicer/customRangeInput";
-import CalendarShow from "../../components/calendar/CalendarShow";
-import {API_URL} from "../../constants";
 import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../components/booking_transports";
-import GroupsIcon from "@mui/icons-material/Groups";
 import LocalPrintshopOutlinedIcon from '@mui/icons-material/LocalPrintshopOutlined';
 import {PdfLayoutListBookingTransport} from "../../components/pdf";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export const Booking_transportList = () => {
 
@@ -399,7 +395,7 @@ export const Booking_transportList = () => {
                 flex: 0.5,
             },
         ],
-        [t]
+        [t, apiUrl, showEditDrawer]
     );
 
 

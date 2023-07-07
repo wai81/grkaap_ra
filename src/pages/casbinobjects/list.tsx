@@ -1,14 +1,11 @@
 import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
 import {
-    IResourceComponentsProps,
-    GetListResponse,
     useTranslate,
     useMany,
     useApiUrl,
     HttpError,
     CrudFilters, BaseRecord, getDefaultFilter
 } from "@refinedev/core";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
 import { EditButton, List, useDataGrid } from "@refinedev/mui";
 import {
     ICasbinObject,
@@ -149,10 +146,10 @@ export const CasbinObjectsList = () => {
                 headerAlign: "center",
             },
         ],
-        [t,isLoading,usersData?.data,showEditDrawer]
+        [t, isLoading, usersData?.data, showEditDrawer, apiUrl]
     )
 
-    const {register, handleSubmit, control} =useForm<
+    const {register, handleSubmit} =useForm<
         BaseRecord,
         HttpError,
         ICasbinObjectFilterVariables

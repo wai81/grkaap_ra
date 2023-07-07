@@ -1,37 +1,22 @@
 import React from "react";
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
-import { Controller } from "react-hook-form";
-import {CrudFilters, HttpError, useTranslate} from "@refinedev/core";
-import { Edit, useAutocomplete } from "@refinedev/mui";
+import { useTranslate} from "@refinedev/core";
+import { Edit } from "@refinedev/mui";
 import {
-    Autocomplete,
     Box,
     Drawer,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
     IconButton,
-    InputAdornment,
-    Radio,
-    RadioGroup,
     TextField,
 } from "@mui/material";
-
-import moment from "moment/moment";
 import {CloseOutlined} from "@mui/icons-material";
-import {DateTimePicker} from "@mui/x-date-pickers";
-import AvTimerTwoToneIcon from "@mui/icons-material/AvTimerTwoTone";
-import GroupsIcon from "@mui/icons-material/Groups";
 import {ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
 
 
 export const EditResourcesAppDrawer: React.FC<
     UseModalFormReturnType<ICasbinObjectUpdate>
 >=({
-    setValue,
     register,
     formState: { errors },
-    control,
     refineCore: { onFinish, formLoading },
     handleSubmit,
     modal: { visible, close },

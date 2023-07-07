@@ -167,7 +167,7 @@ export const RoleList = () => {
         [t,isLoading,show, setShowId, usersData?.data, showEditDrawer],
     );
 
-    const {register, handleSubmit, control} =useForm<
+    const {register, handleSubmit} =useForm<
         BaseRecord,
         HttpError,
         IRoleFilterVariables

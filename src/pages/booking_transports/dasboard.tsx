@@ -363,7 +363,7 @@ export const DashboardBookingTransport: React.FC = () => {
                 flex: 0.5,
             },
         ],
-        [t]
+        [t, apiUrl, showEditDrawer]
     );
 
 
