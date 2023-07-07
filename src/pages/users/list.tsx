@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { DataGrid, ruRU, GridColumns } from "@mui/x-data-grid";
+import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
 
 import {
   useTranslate,
@@ -25,17 +25,25 @@ import {
   CrudFilters,
   BaseRecord,
   getDefaultFilter,
-  useApiUrl,
+  useApiUrl, useShow, useModal,
 } from "@refinedev/core";
 
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 import { ItemStatus } from "components/itemStatus";
+import {EditOutlined} from "@mui/icons-material";
+import {IRole} from "../../interfaces/IRole";
+import {EditModalPermissions} from "../../components/roles";
+import {EditModalUserRole} from "../../components/users/editModalUserRole";
 
 
 export const UserList = () => {
-  const { show } = useNavigation();
+  const { edit } = useNavigation();
+  const { show, visible, close } = useModal();
+  const { queryResult, setShowId } = useShow<IUser>();
+  const { data: showQueryResult } = queryResult;
+  const record = showQueryResult?.data;
   const t = useTranslate();
   const { dataGridProps, search, filters } = useDataGrid<
     IUser,
@@ -158,14 +166,25 @@ export const UserList = () => {
         headerName: t("table.actions"), //'Actions',
         flex: 0.5,
         minWidth: 100,
-        renderCell: function render({ row }) {
-          return (
-            <>
-              <EditButton hideText recordItemId={row.id} />
-              {/*<ShowButton hideText recordItemId={row.id}/>*/}
-            </>
-          );
-        },
+        getActions:({row})=>[
+          <GridActionsCellItem
+              key={1}
+              label={t('buttons.edit')}
+              icon={<EditOutlined color={'success'}/>}
+              showInMenu
+              onClick={()=>edit("users", row.id)}
+          />,
+          <GridActionsCellItem
+              key={1}
+              label={t('buttons.edit')}
+              icon={<EditOutlined color={"warning"}/>}
+              showInMenu
+              onClick={()=>{
+                //show();
+                setShowId(row.id);
+              }}
+          />,
+        ],
         align: "center",
         headerAlign: "center",
       },
@@ -284,11 +303,16 @@ export const UserList = () => {
                 cursor: "pointer",
               },
             }}
-            onRowClick={(row) => {
-              show("users", row.id);
-            }}
+            // onRowClick={(row) => {
+            //   show("users", row.id);
+            // }}
           />
         </List>
+        {record && (<EditModalUserRole
+            record={record}
+            close={close}
+            visible={visible}
+        />)}
       </Grid>
     </Grid>
   );

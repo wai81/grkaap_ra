@@ -729,7 +729,6 @@ export const Booking_transportList = () => {
                                 cursor: "pointer",
                             },
                         }}
-                        //components={{Toolbar: GridToolbar,}}
                         rowsPerPageOptions={[5, 10, 20, 30, 100]}
                         onRowClick={(row) => {
                             showEditDrawer(row.id)

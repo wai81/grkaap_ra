@@ -15,7 +15,7 @@ import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid
 import {ICreateRole, IRole, IRoleFilterVariables} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
-import {CreateRoleDrawer, EditRoleDrawer, EditPermissions} from "../../components/roles";
+import {CreateRoleDrawer, EditRoleDrawer, EditModalPermissions} from "../../components/roles";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import {EditOutlined} from "@mui/icons-material";
 
@@ -82,13 +82,6 @@ export const RoleList = () => {
         modal: { show: showEditDrawer },
     } = editDrawerFormProps;
 
-    // const updatePermissionsModalProps = useModalForm<I>({
-    //
-    // });
-    // const {
-    //     modal: { show: showEditModal },
-    // } = updatePermissionsModalProps;
-
     const columns = React.useMemo<GridColumns<IRole>>(
         ()=>[
             {
@@ -152,14 +145,14 @@ export const RoleList = () => {
                      <GridActionsCellItem
                          key={1}
                          label={t('buttons.edit')}
-                         icon={<EditOutlined />}
+                         icon={<EditOutlined color={'success'}/>}
                          showInMenu
                          onClick={()=>showEditDrawer(row.id)}
                      />,
                     <GridActionsCellItem
                         key={1}
                         label={t('buttons.permission')}
-                        icon={<GppMaybeIcon />}
+                        icon={<GppMaybeIcon color={"warning"}/>}
                         showInMenu
                         onClick={()=>{
                             show();
@@ -231,7 +224,7 @@ export const RoleList = () => {
                         }}
                     />
                 </List>
-                {record && (<EditPermissions
+                {record && (<EditModalPermissions
                     record={record}
                     close={close}
                     visible={visible}

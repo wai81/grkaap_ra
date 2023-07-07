@@ -20,7 +20,7 @@ import React, { useMemo } from "react";
 import {Avatar, Box, Button, Card, CardContent, CardHeader, Grid, Stack, TextField, Typography} from "@mui/material";
 import {IUser} from "../../interfaces/IUser";
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
-import {CreateResourcesAppDrawer, EditResourcesAppDrawer} from "./components";
+import {CreateResourcesAppDrawer, EditResourcesAppDrawer} from "../../components/casbinobjects";
 
 
 export const CasbinObjectsList = () => {

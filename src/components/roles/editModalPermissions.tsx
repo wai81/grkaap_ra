@@ -26,7 +26,7 @@ type RoleProps = {
     visible: boolean;
 };
 
-export const EditPermissions: React.FC<RoleProps> = ({
+export const EditModalPermissions: React.FC<RoleProps> = ({
     record,
     close : modalClose,
     visible: modalVisible
@@ -109,7 +109,6 @@ export const EditPermissions: React.FC<RoleProps> = ({
             <Fade in={modalVisible}>
                         <Grid container>
                             <Grid item xs={16} sm={12}>
-
                                 <Typography sx={{fontSize: 13}}>{record.description}</Typography>
                                 <Typography sx={{fontSize: 14, fontWeight: "800", marginTop: 2, marginBottom: -1}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
                             {formData && formData.options.length > 0 ? (
