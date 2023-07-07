@@ -20,3 +20,7 @@ export interface ICasbinObjectUpdate {
     object_key: string;
     description: string;
 }
+
+export interface ICasbinObjectFilterVariables{
+    q?: string
+ }
