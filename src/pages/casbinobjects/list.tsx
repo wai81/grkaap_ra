@@ -190,7 +190,6 @@ export const CasbinObjectsList = () => {
                                 {t("admin/objects.filter.submit")}
                             </Button>
                         </Box>
-
                     </CardContent>
                 </Card>
             </Grid>

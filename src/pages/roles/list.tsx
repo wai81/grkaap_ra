@@ -1,14 +1,24 @@
-import {Card, CardContent, CardHeader, Grid} from "@mui/material";
+import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from "@mui/material";
 import React from "react";
-import {HttpError, useMany, useModal, useShow, useTranslate} from "@refinedev/core";
+import {
+    BaseRecord,
+    CrudFilters,
+    getDefaultFilter,
+    HttpError,
+    useMany,
+    useModal,
+    useShow,
+    useTranslate
+} from "@refinedev/core";
 import {DateField, List, useDataGrid} from "@refinedev/mui";
 import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
-import {ICreateRole, IRole} from "../../interfaces/IRole";
+import {ICreateRole, IRole, IRoleFilterVariables} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
-import {useModalForm} from "@refinedev/react-hook-form";
+import {useForm, useModalForm} from "@refinedev/react-hook-form";
 import {CreateRoleDrawer, EditRoleDrawer, EditPermissions} from "../../components/roles";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import {EditOutlined} from "@mui/icons-material";
+
 
 
 
@@ -20,7 +30,33 @@ export const RoleList = () => {
     const record = showQueryResult?.data;
 
     const t = useTranslate()
-    const { dataGridProps } = useDataGrid<IRole>()
+    const { dataGridProps, search, filters } = useDataGrid<
+        IRole,
+        HttpError,
+        IRoleFilterVariables
+        >({
+        onSearch: (params) => {
+            const filters: CrudFilters = [];
+            const { q } = params;
+
+            filters.push({
+                field: "q",
+                operator: "eq",
+                value: q !== "" ? q : undefined,
+            });
+
+            return filters;
+        },
+
+        sorters: {
+            initial: [
+                {
+                    field: "name",
+                    order: "asc",
+                },
+            ]
+        }
+    });
 
     const userIds = dataGridProps?.rows.map((item)=> item.creator_id);
     const { data: usersData, isLoading } = useMany<IUser>({
@@ -137,6 +173,17 @@ export const RoleList = () => {
         ],
         [t,isLoading,show, setShowId, usersData?.data, showEditDrawer],
     );
+
+    const {register, handleSubmit, control} =useForm<
+        BaseRecord,
+        HttpError,
+        IRoleFilterVariables
+        >({
+        defaultValues:{
+            q: getDefaultFilter("q", filters, "eq")
+        }
+    })
+
     return (
         <Grid container spacing={2}>
             <CreateRoleDrawer {...createDrawerFormProps}/>
@@ -145,6 +192,26 @@ export const RoleList = () => {
                 <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
                     <CardHeader title={t("filter.title")} />
                     <CardContent sx={{ pt: 0 }}>
+                        <Box
+                            component="form"
+                            sx={{ display: "flex", flexDirection: "column" }}
+                            autoComplete="off"
+                            onSubmit={handleSubmit(search)}
+                        >
+                            <TextField
+                                {...register("q")}
+                                label={t("admin/roles.filter.search.label")}
+                                placeholder={t("admin/roles.filter.search.placeholder")}
+                                margin="normal"
+                                fullWidth
+                                autoFocus
+                                size="small"
+                            />
+                            <br />
+                            <Button type="submit" variant="contained">
+                                {t("admin/roles.filter.submit")}
+                            </Button>
+                        </Box>
                     </CardContent>
                 </Card>
             </Grid>

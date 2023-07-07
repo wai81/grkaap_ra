@@ -22,6 +22,11 @@ export interface IUpdateRole {
     description: string;
 }
 
+
+export interface IRoleFilterVariables{
+    q?: string
+}
+
 export interface IRolePermissions {
     options: Array<Array<string>>;
     checkeds: Array<Array<string>>;
