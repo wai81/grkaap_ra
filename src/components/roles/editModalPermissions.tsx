@@ -95,11 +95,7 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
         );
     };
 
-
-
-
     return (
-
         <Dialog closeAfterTransition open={modalVisible} onClose={modalClose}>
             <form onSubmit={handleSubmit}>
             <DialogTitle>
@@ -110,19 +106,19 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
                         <Grid container>
                             <Grid item xs={16} sm={12}>
                                 <Typography sx={{fontSize: 13}}>{record.description}</Typography>
-                                <Typography sx={{fontSize: 14, fontWeight: "800", marginTop: 2, marginBottom: -1}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
+                                <Typography sx={{fontWeight: "800", marginTop: 1, marginBottom: -1}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
                             {formData && formData.options.length > 0 ? (
                                 formData?.options?.map((row, rowIndex)=>
                                     (row.map((permission,permissionIndex)=>{
 
                                             if (permissionIndex === 0) {
                                                 return(
-                                                    <Grid item xs={12}>
+                                                    <Grid key={permissionIndex} item xs={12}>
                                                         <FormControlLabel
                                                         key={permissionIndex}
                                                         control={
                                                             <Checkbox
-                                                                size="small"
+                                                                //size="small"
                                                                 checked={formData && formData.checkeds
                                                                     ? formData.checkeds[rowIndex].includes(permission):
                                                                     false}
@@ -130,30 +126,32 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
                                                                 onChange={handleCheckboxChange(rowIndex,permissionIndex)}
                                                             />
                                                         }
-                                                        label={<Typography
-                                                            sx={{fontSize: 14, fontWeight: "700"}}>{permission}</Typography>}
-                                                            sx={{marginTop: 1, marginBottom: -1}}
+                                                        //label={permission}
+                                                         label={<Typography
+                                                             sx={{fontWeight: "700"}}
+                                                         >{permission}</Typography>}
+                                                             sx={{marginTop: 1, marginBottom: -1}}
                                                         />
                                                     </Grid>
                                             )} else {
                                                return (
-                                                   <Grid item xs={12}>
+                                                   <Grid key={permissionIndex} item xs={12}>
                                                        <FormControlLabel
                                                            key={permissionIndex}
                                                            control={
                                                                <Checkbox
-                                                                   size="small"
+                                                                   // size="small"
                                                                    checked={formData && formData.checkeds
                                                                        ? formData.checkeds[rowIndex].includes(permission):
                                                                        false}
-                                                                   sx={{marginLeft:3}}
+                                                                   sx={{marginLeft:3, marginTop: -1, marginBottom:-1}}
                                                                        // sx={ permissionIndex === 1 ?
                                                                    //     {marginLeft: 2}: {marginLeft: -1}}
                                                                    onChange={handleCheckboxChange(rowIndex,permissionIndex)}
                                                                />
                                                            }
-                                                           label={<Typography sx={{fontSize: 12,}}>{permission}</Typography>}
-                                                           sx={{marginTop: 0, marginBottom: 0,}}
+                                                           label={permission}
+                                                           //sx={{marginTop: 0, marginBottom: 0,}}
                                                        />
                                                    </Grid>
                                                )

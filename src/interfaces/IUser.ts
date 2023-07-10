@@ -41,3 +41,12 @@ export interface IUserFilterVariables{
   organization?: string;
   //is_active?: boolean;
 }
+
+export interface IUserRole {
+  options: Array<string>;
+  checkeds: Array<string>;
+}
+
+export interface IUserRoleUpdate {
+  checkeds?: Array<string>;
+}
