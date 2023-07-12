@@ -170,6 +170,8 @@
       "first_name": "Имя",
       "patronymic": "Отчество",
       "is_active": "Статус",
+      "checkedRole": "Роли/Пава доступа",
+      "noRoles": "Нет ролей",
       "status": {
         "enable": "Активен",
         "disable": "Не активен"

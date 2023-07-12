@@ -96,7 +96,7 @@ export const EditModalUserRole: React.FC<UserProps> = ({
             <form onSubmit={handleSubmit}>
                 <DialogTitle>
                     <Typography sx={{fontSize: 16, fontWeight: "800"}}>{record.last_name} {record.first_name} {record.patronymic}</Typography>
-                    <Typography sx={{fontSize: 14, fontWeight: "800", marginTop: 2, marginBottom: -1}}>{t("user.fields.checkedRole")}</Typography>
+                    <Typography sx={{fontSize: 14, fontWeight: "800", marginTop: 2, marginBottom: -1}}>{t("users.fields.checkedRole")}</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <Fade in={modalVisible}>
@@ -130,7 +130,7 @@ export const EditModalUserRole: React.FC<UserProps> = ({
                                     padding={3}
                                 >
                                     <Typography variant="body2">
-                                        {t("products.noProducts")}
+                                        {t("users.fields.noRules")}
                                     </Typography>
                                 </Grid>
                             )}
