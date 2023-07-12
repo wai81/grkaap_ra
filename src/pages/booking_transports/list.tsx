@@ -329,11 +329,20 @@ export const Booking_transportList = () => {
                 sortable: false,
                 renderCell: function render({row}) {
 
-                    return (row.transport !== null ? <div>
-                            <Chip avatar={<Avatar
+                    return (row.transport !== null ? <div >
+                            <Chip
+                                sx={{
+                                    display:'flex',
+                                    flexDirection:'row',
+                                    wordWrap:'break-word',
+                                    width:180,
+                                    height:70,
+                                    cursor: "pointer",
+
+                                }}
+                                avatar={<Avatar
                             src={`${apiUrl}/${row.transport?.image_url}`}
                             sx={{
-                                cursor: "pointer",
                                 width: {
                                     xs: 40,
                                     md: 70,
@@ -345,7 +354,9 @@ export const Booking_transportList = () => {
                                 //borderRadius:1
                             }}
                             alt={row.transport?.title}
-                        />} label={<Typography variant={"caption"}>{row.transport?.title} </Typography>
+                        />} label={<Typography
+                                sx={{whiteSpace:'pre-wrap'}}
+                                variant={"caption"}>{row.transport?.title} </Typography>
                     }
                                                            title={`${row.transport?.title} (${row.transport?.description})`}
                         />
