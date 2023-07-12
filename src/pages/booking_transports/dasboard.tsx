@@ -211,13 +211,13 @@ export const DashboardBookingTransport: React.FC = () => {
                 headerAlign: "center",
                 headerName: t("booking_transport.fields.startDate"),
                 align: "center",
-                minWidth: 150,
+                minWidth: 100,
                 flex: 0.7,
                 renderCell: function render({row}) {
                     return (
                         !row.is_active ?
-                            <s><DateField value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/></s> :
-                            <DateField value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/>
+                            <s><DateField sx={{whiteSpace:'pre-wrap', textAlign: 'center'}} value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/></s> :
+                            <DateField sx={{whiteSpace:'pre-wrap', textAlign: 'center'}} value={row.startDate} format={"DD.MM.YYYY (HH:mm)"}/>
                     );
                 },
             },
@@ -300,23 +300,19 @@ export const DashboardBookingTransport: React.FC = () => {
                 renderCell: function render({row}) {
 
                     return (row.transport !== null ?<div>
-                        <Chip avatar={<Avatar
-                            src={`${apiUrl}/${row.transport?.image_url}`}
+                        <Chip
                             sx={{
+                                width:130,
+                                height:64,
                                 cursor: "pointer",
-                                width: {
-                                    xs: 40,
-                                    md: 70,
-                                },
-                                height: {
-                                    xs: 20,
-                                    md: 50,
-                                },
-                                //borderRadius:1
                             }}
+                            avatar={<Avatar
+                            src={`${apiUrl}/${row.transport?.image_url}`}
                             alt={row.transport?.title}
                         />}
-                              label={<MarkdownField value={row.transport?.title}/>}
+                              label={<Typography
+                                  sx={{whiteSpace:'pre-wrap'}}
+                                  variant={"caption"}>{row.transport?.title} </Typography>}
                                                            title={row.transport?.title} />
                           <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description}</Typography>
                         </div>

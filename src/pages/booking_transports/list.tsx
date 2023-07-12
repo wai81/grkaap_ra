@@ -328,27 +328,12 @@ export const Booking_transportList = () => {
                     return (row.transport !== null ? <div >
                             <Chip
                                 sx={{
-                                    display:'flex',
-                                    flexDirection:'row',
-                                    wordWrap:'break-word',
                                     width:180,
-                                    height:70,
+                                    height:50,
                                     cursor: "pointer",
-
                                 }}
                                 avatar={<Avatar
                             src={`${apiUrl}/${row.transport?.image_url}`}
-                            sx={{
-                                width: {
-                                    xs: 40,
-                                    md: 70,
-                                },
-                                height: {
-                                    xs: 20,
-                                    md: 50,
-                                },
-                                //borderRadius:1
-                            }}
                             alt={row.transport?.title}
                         />} label={<Typography
                                 sx={{whiteSpace:'pre-wrap'}}
