@@ -31,7 +31,7 @@ import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
 import { ItemStatus } from "components/itemStatus";
-import {EditOutlined} from "@mui/icons-material";
+import {EditOutlined, AdminPanelSettingsOutlined} from "@mui/icons-material";
 import {EditModalUserRole} from "../../components/users/editModalUserRole";
 
 
@@ -173,8 +173,8 @@ export const UserList = () => {
           />,
           <GridActionsCellItem
               key={1}
-              label={t('buttons.edit')}
-              icon={<EditOutlined color={"warning"}/>}
+              label={t('buttons.role')}
+              icon={<AdminPanelSettingsOutlined color={"warning"}/>}
               showInMenu
               onClick={()=>{
                 show();

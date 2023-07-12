@@ -232,7 +232,6 @@ function App() {
                                             index
                                             element={<NavigateToResource resource="dashboard_transport"/>}
                                         />
-
                                         {/* маршрутизация для страниц в меню */}
                                         <Route path="settings">
                                             <Route path="users">
@@ -287,12 +286,7 @@ function App() {
                                     >
                                         <Route
                                             path="/login"
-                                            element={
-                                                //<Login />
-                                                <AuthPage
-                                                    type="login"
-                                                />
-                                            }
+                                            element={<AuthPage type="login" />}
                                         />
                                     </Route>
                                     {/* маршрутизация для страницы 404  */}

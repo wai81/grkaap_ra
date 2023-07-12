@@ -1,10 +1,10 @@
 import React from "react";
-import { UseModalFormReturnType } from "@refinedev/react-hook-form";
-import { Controller } from "react-hook-form";
+import {UseModalFormReturnType} from "@refinedev/react-hook-form";
+import {Controller} from "react-hook-form";
 import {ICreateBookingTransport} from "../../interfaces/IBookingTransport";
 import {CrudFilters, useGetIdentity, useTranslate} from "@refinedev/core";
-import { Create, useAutocomplete } from "@refinedev/mui";
-import { Autocomplete, Box, Drawer, IconButton, InputAdornment, TextField } from "@mui/material";
+import {Create, useAutocomplete} from "@refinedev/mui";
+import {Autocomplete, Box, Drawer, IconButton, InputAdornment, TextField} from "@mui/material";
 import moment from "moment/moment";
 import {CloseOutlined} from "@mui/icons-material";
 import {DateTimePicker} from "@mui/x-date-pickers";
@@ -62,14 +62,12 @@ export const CreateBookingTransportDrawer: React.FC<
         });
 
     const getEndDate = (startDate: Date, duration: number) => {
-        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
-        return result
+        return moment(startDate, 'YYYY-MM-DD HH:mm').add(duration, 'h').toISOString()
     }
 
    const { data: user } = useGetIdentity<IUser>();
 
    const handleOnSubmit = (data: any) => {
-       console.log('creator ' + user?.id + user?.username)
         const event: ICreateBookingTransport = {
             title: `${data.number_order} ${data.address_object}`,
             startDate: moment(data.startDate).toISOString(),//data.startDate,

@@ -67,9 +67,7 @@ export const EditModalUserRole: React.FC<UserProps> = ({
                 ...formData,
                 checkeds: newCheckeds
             };
-            console.log(newFormData)
             setFormData(newFormData);
-
         } else {
             console.log("'formData' is undefined");
         }
@@ -103,7 +101,6 @@ export const EditModalUserRole: React.FC<UserProps> = ({
                 <DialogContent>
                     <Fade in={modalVisible}>
                         <Grid container>
-
                             {formData && formData.options.length > 0 ? (
                                 <Grid item xs={16} sm={12}>{
                                 formData?.options?.map((role, roleIndex)=>{
