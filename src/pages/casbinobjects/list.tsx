@@ -1,18 +1,54 @@
 import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
-import {IResourceComponentsProps, GetListResponse, useTranslate, useMany, useApiUrl, HttpError} from "@refinedev/core";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
+import {
+    useTranslate,
+    useMany,
+    useApiUrl,
+    HttpError,
+    CrudFilters, BaseRecord, getDefaultFilter
+} from "@refinedev/core";
 import { EditButton, List, useDataGrid } from "@refinedev/mui";
-import {ICasbinObject, ICasbinObjectCreate, ICasbinObjectUpdate} from "interfaces/ICasbinObjects";
+import {
+    ICasbinObject,
+    ICasbinObjectCreate,
+    ICasbinObjectFilterVariables,
+    ICasbinObjectUpdate
+} from "interfaces/ICasbinObjects";
 import React, { useMemo } from "react";
-import {Avatar, Card, CardContent, CardHeader, Grid, Stack, Typography} from "@mui/material";
+import {Avatar, Box, Button, Card, CardContent, CardHeader, Grid, Stack, TextField, Typography} from "@mui/material";
 import {IUser} from "../../interfaces/IUser";
-import {useModalForm} from "@refinedev/react-hook-form";
-import {CreateResourcesAppDrawer, EditResourcesAppDrawer} from "./components";
+import {useForm, useModalForm} from "@refinedev/react-hook-form";
+import {CreateResourcesAppDrawer, EditResourcesAppDrawer} from "../../components/casbinobjects";
 
 
 export const CasbinObjectsList = () => {
     const t = useTranslate()
-    const { dataGridProps } = useDataGrid<ICasbinObject>()
+    const { dataGridProps, search, filters } = useDataGrid<
+        ICasbinObject,
+        HttpError,
+        ICasbinObjectFilterVariables
+        >({
+        onSearch: (params) => {
+            const filters: CrudFilters = [];
+            const { q } = params;
+
+            filters.push({
+                field: "q",
+                operator: "eq",
+                value: q !== "" ? q : undefined,
+            });
+
+            return filters;
+        },
+
+        sorters: {
+            initial: [
+                {
+                    field: "name",
+                    order: "asc",
+                },
+            ]
+        }
+    });
 
     const userIds = dataGridProps?.rows.map((item)=> item.creator_id);
     const { data: usersData, isLoading } = useMany<IUser>({
@@ -110,8 +146,19 @@ export const CasbinObjectsList = () => {
                 headerAlign: "center",
             },
         ],
-        [t]
+        [t, isLoading, usersData?.data, showEditDrawer, apiUrl]
     )
+
+    const {register, handleSubmit} =useForm<
+        BaseRecord,
+        HttpError,
+        ICasbinObjectFilterVariables
+        >({
+        defaultValues:{
+            q: getDefaultFilter("q", filters, "eq")
+        }
+    })
+
     return (
         <Grid container spacing={2}>
             <CreateResourcesAppDrawer {...createDrawerFormProps}/>
@@ -120,7 +167,26 @@ export const CasbinObjectsList = () => {
                 <Card sx={{paddingX: {xs: 2, md: 0}}}>
                     <CardHeader title={t("filter.title")}/>
                     <CardContent sx={{pt: 0}}>
-
+                        <Box
+                            component="form"
+                            sx={{ display: "flex", flexDirection: "column" }}
+                            autoComplete="off"
+                            onSubmit={handleSubmit(search)}
+                        >
+                            <TextField
+                                {...register("q")}
+                                label={t("admin/objects.filter.search.label")}
+                                placeholder={t("admin/objects.filter.search.placeholder")}
+                                margin="normal"
+                                fullWidth
+                                autoFocus
+                                size="small"
+                            />
+                            <br />
+                            <Button type="submit" variant="contained">
+                                {t("admin/objects.filter.submit")}
+                            </Button>
+                        </Box>
                     </CardContent>
                 </Card>
             </Grid>

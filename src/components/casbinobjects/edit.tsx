@@ -1,66 +1,50 @@
 import React from "react";
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
-import {useGetIdentity, useTranslate} from "@refinedev/core";
-import { Create } from "@refinedev/mui";
-import { Box, Drawer, IconButton, TextField } from "@mui/material";
+import { useTranslate} from "@refinedev/core";
+import { Edit } from "@refinedev/mui";
+import {
+    Box,
+    Drawer,
+    IconButton,
+    TextField,
+} from "@mui/material";
 import {CloseOutlined} from "@mui/icons-material";
-import {IUser} from "../../../interfaces/IUser";
-import {ICreateRole} from "../../../interfaces/IRole";
+import {ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
 
 
+export const EditResourcesAppDrawer: React.FC<
+    UseModalFormReturnType<ICasbinObjectUpdate>
+>=({
+    register,
+    formState: { errors },
+    refineCore: { onFinish, formLoading },
+    handleSubmit,
+    modal: { visible, close },
+    })=>{
 
-export const CreateRoleDrawer: React.FC<
-    UseModalFormReturnType<ICreateRole>
-    > = ({
-         modal: {
-              visible,
-              close,
-          },
-          handleSubmit,
-          register,
-          saveButtonProps,
-          control,
-          formState: {errors},
-          refineCore:{onFinish, formLoading},
-          reset,
-      }) => {
     const t = useTranslate();
 
-
-   const { data: user } = useGetIdentity<IUser>();
-
-    const handleOnSubmitForm = (data: any) => {
-
-        const event: ICreateRole = {
+    const handleOnSubmit = (data: any) => {
+         const event: ICasbinObjectUpdate = {
             name: data.name,
-            role_key: data.role_key,
+            object_key: data.object_key,
             description: data.description,
-            creator_id: user?.id,
-        };
+         };
         onFinish(event);
-        reset((formValues) => {
-            formValues.name = '';
-            formValues.role_key = '';
-            formValues.description = '';
-            close();
-        });
+        close();
+    };
 
-    }
-
-    return (
-
+    return(
         <Drawer
             open={visible}
-            onClose={() => close()}
+            onClose={close}
             anchor="right"
             PaperProps={{sx: {width: {sm: "100%", md: 500}}}}
-
         >
-
-                <Create
+            <form onSubmit={handleSubmit(handleOnSubmit)}>
+                <Edit
                     saveButtonProps={{
-                        ...saveButtonProps,
-                        onClick: handleSubmit(handleOnSubmitForm)
+                        type: 'submit',
                     }}
                     headerProps={{
                         avatar: (
@@ -78,8 +62,8 @@ export const CreateRoleDrawer: React.FC<
                 >
                     <Box
                         component="form"
+                        sx={{display: 'flex', flexDirection: 'column'}}
                         autoComplete="off"
-                        sx={{ display: "flex", flexDirection: "column" }}
                     >
                         <TextField
                             {...register("name", {
@@ -91,25 +75,28 @@ export const CreateRoleDrawer: React.FC<
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/roles.fields.name')}
+                            label={t('admin/objects.fields.name')}
                             name="name"
                             variant="outlined"
                             size={'small'}
-                            />
+                        />
+
                         <TextField
-                            {...register("role_key", {
+                            {...register("object_key", {
                                 required: "This field is required",
                             })}
-                            error={!!(errors as any)?.role_key}
-                            helperText={(errors as any)?.role_key?.message}
+                            error={!!(errors as any)?.object_key}
+                            helperText={(errors as any)?.object_key?.message}
                             margin="normal"
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/roles.fields.roles_key_item')}
-                            name="role_key"
+                            label={t('admin/objects.fields.object_key_item')}
+                            name="object_key"
                             size={'small'}
                         />
+
+
                         <TextField
                             {...register("description")}
                             error={!!(errors as any)?.description}
@@ -118,17 +105,17 @@ export const CreateRoleDrawer: React.FC<
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/roles.fields.description')}
+                            label={t('admin/objects.fields.description')}
                             name="description"
                             multiline
                             minRows={2}
                             maxRows={2}
                             size={'small'}
                         />
+
                     </Box>
-                </Create>
-
+                </Edit>
+            </form>
         </Drawer>
-
-    );
-};
+    )
+}

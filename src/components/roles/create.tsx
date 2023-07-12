@@ -4,13 +4,13 @@ import {useGetIdentity, useTranslate} from "@refinedev/core";
 import { Create } from "@refinedev/mui";
 import { Box, Drawer, IconButton, TextField } from "@mui/material";
 import {CloseOutlined} from "@mui/icons-material";
-import {ICasbinObjectCreate} from "../../../interfaces/ICasbinObjects";
-import {IUser} from "../../../interfaces/IUser";
+import {IUser} from "../../interfaces/IUser";
+import {ICreateRole} from "../../interfaces/IRole";
 
 
 
-export const CreateResourcesAppDrawer: React.FC<
-    UseModalFormReturnType<ICasbinObjectCreate>
+export const CreateRoleDrawer: React.FC<
+    UseModalFormReturnType<ICreateRole>
     > = ({
          modal: {
               visible,
@@ -18,29 +18,29 @@ export const CreateResourcesAppDrawer: React.FC<
           },
           handleSubmit,
           register,
+          saveButtonProps,
           control,
           formState: {errors},
           refineCore:{onFinish, formLoading},
           reset,
-          saveButtonProps,
       }) => {
     const t = useTranslate();
 
 
    const { data: user } = useGetIdentity<IUser>();
 
-    const handleOnSubmit = (data: any) => {
+    const handleOnSubmitForm = (data: any) => {
 
-        const event: ICasbinObjectCreate = {
+        const event: ICreateRole = {
             name: data.name,
-            object_key: data.object_key,
+            role_key: data.role_key,
             description: data.description,
             creator_id: user?.id,
         };
         onFinish(event);
         reset((formValues) => {
             formValues.name = '';
-            formValues.object_key = '';
+            formValues.role_key = '';
             formValues.description = '';
             close();
         });
@@ -56,11 +56,11 @@ export const CreateResourcesAppDrawer: React.FC<
             PaperProps={{sx: {width: {sm: "100%", md: 500}}}}
 
         >
-            <form  onSubmit={handleSubmit(handleOnSubmit)}>
+
                 <Create
                     saveButtonProps={{
-                        //saveButtonProps
-                        type: 'submit',
+                        ...saveButtonProps,
+                        onClick: handleSubmit(handleOnSubmitForm)
                     }}
                     headerProps={{
                         avatar: (
@@ -91,23 +91,23 @@ export const CreateResourcesAppDrawer: React.FC<
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/objects.fields.name')}
+                            label={t('admin/roles.fields.name')}
                             name="name"
                             variant="outlined"
                             size={'small'}
                             />
                         <TextField
-                            {...register("object_key", {
+                            {...register("role_key", {
                                 required: "This field is required",
                             })}
-                            error={!!(errors as any)?.object_key}
-                            helperText={(errors as any)?.object_key?.message}
+                            error={!!(errors as any)?.role_key}
+                            helperText={(errors as any)?.role_key?.message}
                             margin="normal"
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/objects.fields.object_key_item')}
-                            name="object_key"
+                            label={t('admin/roles.fields.roles_key_item')}
+                            name="role_key"
                             size={'small'}
                         />
                         <TextField
@@ -118,7 +118,7 @@ export const CreateResourcesAppDrawer: React.FC<
                             fullWidth
                             InputLabelProps={{shrink: true}}
                             type="text"
-                            label={t('admin/objects.fields.description')}
+                            label={t('admin/roles.fields.description')}
                             name="description"
                             multiline
                             minRows={2}
@@ -127,7 +127,7 @@ export const CreateResourcesAppDrawer: React.FC<
                         />
                     </Box>
                 </Create>
-            </form>
+
         </Drawer>
 
     );

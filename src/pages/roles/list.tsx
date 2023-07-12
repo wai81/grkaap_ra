@@ -1,27 +1,62 @@
-import {Card, CardContent, CardHeader, Grid, IconButton} from "@mui/material";
+import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from "@mui/material";
 import React from "react";
-import {HttpError, useMany, useModal, useNavigation, useShow, useTranslate} from "@refinedev/core";
-import {DateField, EditButton, List, useDataGrid} from "@refinedev/mui";
+import {
+    BaseRecord,
+    CrudFilters,
+    getDefaultFilter,
+    HttpError,
+    useMany,
+    useModal,
+    useShow,
+    useTranslate
+} from "@refinedev/core";
+import {DateField, List, useDataGrid} from "@refinedev/mui";
 import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
-import {ICreateRole, IRole, IUpdateRole} from "../../interfaces/IRole";
+import {ICreateRole, IRole, IRoleFilterVariables} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
-import {useModalForm} from "@refinedev/react-hook-form";
-import {ICasbinObjectCreate, ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
-import {CreateRoleDrawer, EditRoleDrawer} from "./components";
+import {useForm, useModalForm} from "@refinedev/react-hook-form";
+import {CreateRoleDrawer, EditRoleDrawer, EditModalPermissions} from "../../components/roles";
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import {EditOutlined} from "@mui/icons-material";
-import {RolePermissions} from "./components/rolePermissions";
+
+
 
 
 export const RoleList = () => {
-    //const { show } = useNavigation();
+
     const { show, visible, close } = useModal();
     const { queryResult, setShowId } = useShow<IRole>();
     const { data: showQueryResult } = queryResult;
     const record = showQueryResult?.data;
 
     const t = useTranslate()
-    const { dataGridProps } = useDataGrid<IRole>()
+    const { dataGridProps, search, filters } = useDataGrid<
+        IRole,
+        HttpError,
+        IRoleFilterVariables
+        >({
+        onSearch: (params) => {
+            const filters: CrudFilters = [];
+            const { q } = params;
+
+            filters.push({
+                field: "q",
+                operator: "eq",
+                value: q !== "" ? q : undefined,
+            });
+
+            return filters;
+        },
+
+        sorters: {
+            initial: [
+                {
+                    field: "name",
+                    order: "asc",
+                },
+            ]
+        }
+    });
 
     const userIds = dataGridProps?.rows.map((item)=> item.creator_id);
     const { data: usersData, isLoading } = useMany<IUser>({
@@ -46,13 +81,6 @@ export const RoleList = () => {
     const {
         modal: { show: showEditDrawer },
     } = editDrawerFormProps;
-
-    // const updatePermissionsModalProps = useModalForm<I>({
-    //
-    // });
-    // const {
-    //     modal: { show: showEditModal },
-    // } = updatePermissionsModalProps;
 
     const columns = React.useMemo<GridColumns<IRole>>(
         ()=>[
@@ -116,15 +144,15 @@ export const RoleList = () => {
                 getActions: ({ row }) =>[
                      <GridActionsCellItem
                          key={1}
-                         label={"Edit"}
-                         icon={<EditOutlined />}
+                         label={t('buttons.edit')}
+                         icon={<EditOutlined color={'success'}/>}
                          showInMenu
                          onClick={()=>showEditDrawer(row.id)}
                      />,
                     <GridActionsCellItem
                         key={1}
-                        label={"Edit Permission"}
-                        icon={<EditOutlined />}
+                        label={t('buttons.permission')}
+                        icon={<GppMaybeIcon color={"warning"}/>}
                         showInMenu
                         onClick={()=>{
                             show();
@@ -132,25 +160,23 @@ export const RoleList = () => {
                         }}
                     />
                 ],
-                // renderCell: function render({ row }) {
-                //     return (
-                //         <>
-                //             <EditButton hideText
-                //                 //recordItemId={row.id}
-                //                 onClick={()=>showEditDrawer(row.id)}/>
-                //             {/*<ShowButton hideText recordItemId={row.id}/>*/}
-                //             {/*<IconButton onClick={()=>showEditDrawer(row.id)}>*/}
-                //             {/*    <GppMaybeIcon/>*/}
-                //             {/*</IconButton>*/}
-                //         </>
-                //     );
-                // },
                 align: "center",
                 headerAlign: "center",
             },
         ],
-        [t],
+        [t,isLoading,show, setShowId, usersData?.data, showEditDrawer],
     );
+
+    const {register, handleSubmit} =useForm<
+        BaseRecord,
+        HttpError,
+        IRoleFilterVariables
+        >({
+        defaultValues:{
+            q: getDefaultFilter("q", filters, "eq")
+        }
+    })
+
     return (
         <Grid container spacing={2}>
             <CreateRoleDrawer {...createDrawerFormProps}/>
@@ -159,6 +185,26 @@ export const RoleList = () => {
                 <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
                     <CardHeader title={t("filter.title")} />
                     <CardContent sx={{ pt: 0 }}>
+                        <Box
+                            component="form"
+                            sx={{ display: "flex", flexDirection: "column" }}
+                            autoComplete="off"
+                            onSubmit={handleSubmit(search)}
+                        >
+                            <TextField
+                                {...register("q")}
+                                label={t("admin/roles.filter.search.label")}
+                                placeholder={t("admin/roles.filter.search.placeholder")}
+                                margin="normal"
+                                fullWidth
+                                autoFocus
+                                size="small"
+                            />
+                            <br />
+                            <Button type="submit" variant="contained">
+                                {t("admin/roles.filter.submit")}
+                            </Button>
+                        </Box>
                     </CardContent>
                 </Card>
             </Grid>
@@ -178,7 +224,7 @@ export const RoleList = () => {
                         }}
                     />
                 </List>
-                {record && (<RolePermissions
+                {record && (<EditModalPermissions
                     record={record}
                     close={close}
                     visible={visible}

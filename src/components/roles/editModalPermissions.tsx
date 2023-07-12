@@ -1,9 +1,18 @@
-import {IRole, IRolePermissions} from "../../../interfaces/IRole";
-import {HttpError, useOne, useTranslate} from "@refinedev/core";
-import {Accordion, Box, Button, Checkbox, Fade, FormControlLabel, Grid, Modal, Typography} from "@mui/material";
-
+import {IRole, IRolePermissions, IRolePermissionsUpdate} from "../../interfaces/IRole";
+import {HttpError, useApiUrl, useOne, useTranslate} from "@refinedev/core";
+import {
+    Button,
+    Checkbox,
+    Dialog, DialogActions,
+    DialogContent, DialogTitle,
+    Fade,
+    FormControlLabel,
+    Grid,
+    Typography
+} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import {A} from "@fullcalendar/core/internal-common";
+import {TOKEN_KEY} from "../../constants";
+import axios from "axios";
 
 
 interface FormData {
@@ -17,13 +26,14 @@ type RoleProps = {
     visible: boolean;
 };
 
-export const RolePermissions: React.FC<RoleProps> = ({
+export const EditModalPermissions: React.FC<RoleProps> = ({
     record,
     close : modalClose,
     visible: modalVisible
                                                      }) =>{
     const t =useTranslate();
 
+    const apiUrl = useApiUrl();
 
     const { data } = useOne<IRolePermissions ,HttpError>({
         resource: 'admin/roles/get_permissions',
@@ -59,90 +69,94 @@ export const RolePermissions: React.FC<RoleProps> = ({
             };
 
             setFormData(newFormData);
-            console.log(formData?.checkeds)
+            //console.log(formData?.checkeds)
         } else {
             console.log("'formData' is undefined");
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         // отправляем данные на сервер
-        console.log(formData?.checkeds)
+        //console.log(formData?.checkeds)
+        const request: IRolePermissionsUpdate = {
+            checkeds:formData?.checkeds
+        }
+        const token = localStorage.getItem(TOKEN_KEY);
+        const res = await axios.post<{ url: string }>(
+            `${apiUrl}/admin/roles/update_permissions/${record.id}`,
+            request,
+            {
+                withCredentials: false,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Authorization": `Bearer ${token}`,
+                },
+            }
+        );
     };
-
-
-    const style = {
-        width: "100%",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        maxWidth: { xs: 380, sm: 480, md: 680, lg: 780 },
-        heigth: 650,
-        bgcolor: "background.paper",
-        p: 2,
-        my: 2,
-        borderRadius: "5px",
-    };
-
-
 
     return (
-        <Modal closeAfterTransition open={modalVisible} onClose={modalClose}>
+        <Dialog closeAfterTransition open={modalVisible} onClose={modalClose}>
+            <form onSubmit={handleSubmit}>
+            <DialogTitle>
+                <Typography sx={{fontSize: 16, fontWeight: "800"}}>{record.name} ({record.role_key})</Typography>
+            </DialogTitle>
+            <DialogContent>
             <Fade in={modalVisible}>
-                <Box sx={style}>
-                    <form onSubmit={handleSubmit}>
                         <Grid container>
                             <Grid item xs={16} sm={12}>
-                                <Typography sx={{fontSize: 25, fontWeight: "800"}}>{record.name} ({record.role_key})</Typography>
                                 <Typography sx={{fontSize: 13}}>{record.description}</Typography>
-                                <Typography sx={{fontSize: 18, fontWeight: "800", marginTop: 2, marginBottom: -1}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
+                                <Typography sx={{fontWeight: "800", marginTop: 1, marginBottom: -1}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
                             {formData && formData.options.length > 0 ? (
                                 formData?.options?.map((row, rowIndex)=>
                                     (row.map((permission,permissionIndex)=>{
 
                                             if (permissionIndex === 0) {
                                                 return(
-                                                    <Grid item xs={12}>
+                                                    <Grid key={permissionIndex} item xs={12}>
                                                         <FormControlLabel
                                                         key={permissionIndex}
                                                         control={
                                                             <Checkbox
-                                                                size="small"
+                                                                //size="small"
                                                                 checked={formData && formData.checkeds
                                                                     ? formData.checkeds[rowIndex].includes(permission):
                                                                     false}
-                                                                sx={{marginLeft:1}}
+                                                                sx={{marginLeft:0}}
                                                                 onChange={handleCheckboxChange(rowIndex,permissionIndex)}
                                                             />
                                                         }
-                                                        label={<Typography
-                                                            sx={{fontSize: 14, fontWeight: "700"}}>{permission}</Typography>}
-                                                            sx={{marginTop: 1, marginBottom: -1}}
+                                                        //label={permission}
+                                                         label={<Typography
+                                                             sx={{fontWeight: "700"}}
+                                                         >{permission}</Typography>}
+                                                             sx={{marginTop: 1, marginBottom: -1}}
                                                         />
                                                     </Grid>
                                             )} else {
                                                return (
+                                                   <Grid key={permissionIndex} item xs={12}>
                                                        <FormControlLabel
                                                            key={permissionIndex}
                                                            control={
                                                                <Checkbox
-                                                                   size="small"
+                                                                   // size="small"
                                                                    checked={formData && formData.checkeds
                                                                        ? formData.checkeds[rowIndex].includes(permission):
                                                                        false}
-                                                                   sx={{marginLeft: 4}}
+                                                                   sx={{marginLeft:3, marginTop: -1, marginBottom:-1}}
+                                                                       // sx={ permissionIndex === 1 ?
+                                                                   //     {marginLeft: 2}: {marginLeft: -1}}
                                                                    onChange={handleCheckboxChange(rowIndex,permissionIndex)}
                                                                />
                                                            }
-                                                           label={<Typography sx={{fontSize: 12,}}>{permission}</Typography>}
-                                                           sx={{marginTop: 0, marginBottom: 0,}}
+                                                           label={permission}
+                                                           //sx={{marginTop: 0, marginBottom: 0,}}
                                                        />
-
+                                                   </Grid>
                                                )
                                             }
                                         })
-
                                     ))
                             ): (
                                 <Grid
@@ -157,12 +171,13 @@ export const RolePermissions: React.FC<RoleProps> = ({
                             )}
                             </Grid>
                         </Grid>
-                        <Button type="submit">Submit</Button>
-                    </form>
-                </Box>
-
             </Fade>
-        </Modal>
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={modalClose}>{t("buttons.cancel")}</Button> <Button type="submit">{t("buttons.save")}</Button>
+            </DialogActions>
+            </form>
+        </Dialog>
     )
 
 }
