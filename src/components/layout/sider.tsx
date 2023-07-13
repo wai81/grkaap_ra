@@ -49,7 +49,7 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
 
   const drawerWidth = () => {
     if (collapsed) return 64;
-    return 200;
+    return 250;
   };
 
   const t = useTranslate();
@@ -350,7 +350,7 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
   };
 
   const drawer = (
-    <List disablePadding sx={{ mt: 1, color: "secondary.contrastText" }}>
+    <List disablePadding sx={{ mt: 1, color: "secondary.contrastText",  }}>
       {renderSider()}
     </List>
   );
@@ -359,12 +359,14 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
     <>
       <Box
         sx={{
+
           width: { xs: drawerWidth() },
           display: {
             xs: "none",
             md: "block",
           },
           transition: "width 0.3s ease",
+
         }}
       />
       <Box
@@ -374,6 +376,7 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
           zIndex: 1101,
           width: { sm: drawerWidth() },
           display: "flex",
+
         }}
       >
         <Drawer
@@ -386,9 +389,10 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
           sx={{
             display: { sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
-              width: 256,
+              width: 250,
               bgcolor: "secondary.main",
             },
+
           }}
         >
           <Box
@@ -441,7 +445,7 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
               background: "rgba(0,0,0,.5)",
               color: "secondary.contrastText",
               textAlign: "center",
-              borderRadius: 0,
+              borderRadius: 2,
               borderTop: "1px solid #ffffff1a",
             }}
             fullWidth

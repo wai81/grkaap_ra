@@ -31,7 +31,7 @@ export const CurrentDay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #67be23;
+  background: #6384f1;
   border-radius: 50%;
   color: #ffffff;
 `;
@@ -57,7 +57,7 @@ export const EventItemWrapper = styled('button')`
   white-space: nowrap;
   width: 100%;
   border: unset;
-  background: ${props => props.isMore ? 'rgba(144,148,148,0.56)' : 'rgba(103,190,35,0.45)'};
+  background: ${props => props.isMore ? 'rgba(144,148,148,0.56)' : 'rgba(99,132,241,0.7)'};
   border-radius: 3px;
   color: #fff;
   cursor: pointer;

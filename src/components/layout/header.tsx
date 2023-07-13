@@ -25,7 +25,19 @@ export const Header: React.FC = () => {
   const currentLocale = locale();
   const { data: user } = useGetIdentity<IUser>();
   return  (
-    <AppBar color="default" position="sticky" elevation={1}>
+    <AppBar color="default"
+            position="sticky"
+            elevation={1}
+            sx={{
+              borderRadius: 2,
+              boxShadow: 1,
+              left: "220px",
+              width: "calc(100% - 35px)",
+              //marginTop: 0.2,
+              margin: 1,
+              // padding: 1
+            }}
+    >
       <Toolbar>
         <Stack
           direction="row"

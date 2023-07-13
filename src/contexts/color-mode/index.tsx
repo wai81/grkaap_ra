@@ -4,8 +4,11 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { ThemeProvider } from "@mui/material/styles";
+import {alpha, ThemeProvider} from "@mui/material/styles";
 import { DarkTheme, LightTheme } from "@refinedev/mui";
+import {indigo, neutral} from "./colors";
+import {common} from "@mui/material/colors";
+import {overridedLightTheme} from "./myLightTheme";
 
 type ColorModeContextType = {
   mode: string;
@@ -15,6 +18,59 @@ type ColorModeContextType = {
 export const ColorModeContext = createContext<ColorModeContextType>(
   {} as ColorModeContextType
 );
+
+export const overridedDarkTheme = {
+  ...DarkTheme,
+  palette: {
+    ...DarkTheme.palette,
+    // primary: {
+    //   main: "#1976d2",
+    //   contrastText: "#fff",
+    // },
+    primary: indigo,
+    secondary: {
+      main: "#1C2536",
+      contrastText: "#fff",
+    },
+    background: {
+      default: '#000',
+      paper: '#000'
+    },
+    // background: {
+    //   default: "#545457",
+    //   paper: "#1C2536",
+    // },
+    success: {
+      main: "#67be23",
+      contrastText: "#fff",
+    },
+    error: {
+      main: "#ee2a1e",
+      contrastText: "#fff",
+    },
+    warning: {
+      main: "#fa8c16",
+      contrastText: "#fff",
+    },
+    info: {
+      main: "#1890ff",
+      contrastText: "#fff",
+    },
+    divider: "rgba(72,72,72,0)",
+    text: {
+      primary: neutral[100],
+      secondary: neutral[400],
+      disabled: alpha(neutral[100], 0.38)
+    },
+    // text: {
+    //   primary: "#fff",
+    //   secondary: "rgba(255,255,255,0.7)",
+    //   disabled: "#d1d1d1",
+    // },
+  }
+}
+
+
 
 export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
   children,
@@ -41,6 +97,8 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
     }
   };
 
+
+
   return (
     <ColorModeContext.Provider
       value={{
@@ -48,7 +106,7 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
         mode,
       }}
     >
-      <ThemeProvider theme={mode === "light" ? LightTheme : DarkTheme}>
+      <ThemeProvider theme={mode === "light" ? overridedLightTheme : overridedDarkTheme}>
         {children}
       </ThemeProvider>
     </ColorModeContext.Provider>
