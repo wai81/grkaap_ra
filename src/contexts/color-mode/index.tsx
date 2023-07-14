@@ -7,7 +7,6 @@ import React, {
 import {alpha, ThemeProvider} from "@mui/material/styles";
 import { DarkTheme, LightTheme } from "@refinedev/mui";
 import {indigo, neutral} from "./colors";
-import {common} from "@mui/material/colors";
 import {overridedLightTheme} from "./myLightTheme";
 
 type ColorModeContextType = {
