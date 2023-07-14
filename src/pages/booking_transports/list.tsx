@@ -197,6 +197,7 @@ export const Booking_transportList = () => {
         () => [
             {
                 field: "is_active",
+                type: "boolean",
                 headerName: t("booking_transport.fields.is_active"),
                 align: "center",
                 headerAlign: "center",
@@ -208,7 +209,7 @@ export const Booking_transportList = () => {
                             svgIconProps={{
                                 sx: {width: "16px", height: "16px"},
                             }}
-                            value={row.is_active}
+                            value={row?.is_active}
                         />
                     );
                 },

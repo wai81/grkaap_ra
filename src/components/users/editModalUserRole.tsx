@@ -78,17 +78,23 @@ export const EditModalUserRole: React.FC<UserProps> = ({
             checkeds:formData?.checkeds
         }
         const token = localStorage.getItem(TOKEN_KEY);
-        const res = await axios.put<{ url: string }>(
-            `${apiUrl}/users/change_user_role/${record.id}`,
-            request,
-            {
-                withCredentials: false,
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Authorization": `Bearer ${token}`,
-                },
-            }
-        );
+        try {
+            const res = await axios.put<{ url: string }>(
+                `${apiUrl}/users/change_user_role/${record.id}`,
+                request,
+                {
+                    withCredentials: false,
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                }
+            );
+            console.log(res)
+        } catch (error){
+            console.error(error)
+        }
+
     }
 
     return(

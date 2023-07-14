@@ -51,6 +51,7 @@
     "@types/node": "^12.20.10",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "casbin": "^5.26.1",
     "typescript": "^4.7.4"
   },
   "scripts": {

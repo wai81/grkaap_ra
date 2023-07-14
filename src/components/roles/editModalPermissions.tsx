@@ -82,7 +82,8 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
             checkeds:formData?.checkeds
         }
         const token = localStorage.getItem(TOKEN_KEY);
-        const res = await axios.post<{ url: string }>(
+        try {
+            const res = await axios.post<{ url: string }>(
             `${apiUrl}/admin/roles/update_permissions/${record.id}`,
             request,
             {
@@ -93,6 +94,10 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
                 },
             }
         );
+            console.log(res)
+        } catch (error) {
+            console.error(error)
+        }
     };
 
     return (
