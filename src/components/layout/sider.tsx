@@ -98,7 +98,6 @@ export const Sider: React.FC<RefineLayoutSiderProps> = ({
         pickNotDeprecated(meta?.parent, options?.parent, parentName) ===
         undefined
       );
-
       if (children.length > 0) {
         return (
           <CanAccess

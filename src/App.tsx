@@ -1,5 +1,5 @@
 import React from "react";
-import {Authenticated, Refine} from "@refinedev/core";
+import {Authenticated, CanAccess, Refine} from "@refinedev/core";
 import {
     notificationProvider,
     RefineSnackbarProvider,
@@ -57,9 +57,9 @@ import {DashboardBookingTransport} from "./pages/booking_transports/dasboard";
 import { RoleList } from "pages/roles";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {CasbinObjectsList} from "pages/casbinobjects";
+import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
 
 const axiosInstance = axios.create();
-
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
@@ -97,6 +97,24 @@ function App() {
                                 routerProvider={routerBindings}
                                 i18nProvider={i18nProvider}
                                 authProvider={authProvider(axiosInstance)}
+                                accessControlProvider={{
+                                    can: async ({ action, params, resource }) => {
+                                        const token = localStorage.getItem(TOKEN_KEY);
+                                        const result: any = await axios.get<{ url: string }>(
+                                            `${API_URL}/users/can/?resource=${resource}&action=${action}`,
+                                            {
+                                                withCredentials: false,
+                                                headers: {
+                                                    "Access-Control-Allow-Origin": "*",
+                                                    "Authorization": `Bearer ${token}`,
+                                                },
+                                            }
+                                        );
+                                        return {
+                                            can: result.data
+                                        }
+                                    }
+                                }}
                                 options={{
                                     syncWithLocation: true,
                                     //warnWhenUnsavedChanges: true,
@@ -209,12 +227,22 @@ function App() {
                                 }]}
                             >
                                 <Routes>
+                                    {/* маршрутизация для страницы логина   */}
                                     <Route
                                         element={
-                                            <Authenticated
-                                                fallback={
-                                                    <CatchAllNavigate to="/login"/>
-                                                }
+                                            <Authenticated fallback={<Outlet/>}>
+                                                <NavigateToResource />
+                                            </Authenticated>
+                                        }
+                                    >
+                                        <Route
+                                            path="/login"
+                                            element={<AuthPage type="login" />}
+                                        />
+                                    </Route>
+                                    <Route
+                                        element={
+                                            <Authenticated redirectOnFail={"/login"}
                                             >
                                                 <Layout
                                                     Header={Header}
@@ -222,7 +250,10 @@ function App() {
                                                     Sider={Sider}
                                                     OffLayoutArea={OffLayoutArea}
                                                 >
-                                                    <Outlet/>
+                                                    <CanAccess
+                                                        fallback={<div>Unauthorized!</div>}>
+                                                        <Outlet/>
+                                                    </CanAccess>
                                                 </Layout>
                                             </Authenticated>
                                         }
@@ -276,19 +307,7 @@ function App() {
                                         </Route>
 
                                     </Route>
-                                    {/* маршрутизация для страницы логина   */}
-                                    <Route
-                                        element={
-                                            <Authenticated fallback={<Outlet/>}>
-                                                <NavigateToResource />
-                                            </Authenticated>
-                                        }
-                                    >
-                                        <Route
-                                            path="/login"
-                                            element={<AuthPage type="login" />}
-                                        />
-                                    </Route>
+
                                     {/* маршрутизация для страницы 404  */}
                                     <Route
                                         element={
