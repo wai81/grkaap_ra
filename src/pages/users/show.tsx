@@ -1,7 +1,6 @@
 import { useApiUrl, useOne, useShow, useTranslate } from "@refinedev/core";
 import {
   Show,
-  TextFieldComponent as TextField,
   BooleanField,
   DateField,
 } from "@refinedev/mui";

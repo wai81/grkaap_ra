@@ -7,7 +7,7 @@ import {
   useTranslate,
 } from "@refinedev/core";
 
-import { EditButton, List, useDataGrid } from "@refinedev/mui";
+import {DeleteButton, EditButton, List, useDataGrid} from "@refinedev/mui";
 import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
 
 import {
@@ -171,6 +171,9 @@ export const TransportList = () => {
               //recordItemId={row.id}
               onClick={() => showEditDrawer(row.id)} />
               {/*<ShowButton hideText recordItemId={row.id}/>*/}
+              <DeleteButton
+                 hideText
+              />
             </>
           );
         },
@@ -180,7 +183,7 @@ export const TransportList = () => {
         flex: 0.5,
       },
     ],
-    [t]
+    [t, apiUrl, showEditDrawer]
   );
 
   const { register, handleSubmit, control } = useForm<

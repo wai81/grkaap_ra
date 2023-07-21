@@ -99,6 +99,7 @@ function App() {
                                 authProvider={authProvider(axiosInstance)}
                                 accessControlProvider={{
                                     can: async ({ action, params, resource }) => {
+
                                         const token = localStorage.getItem(TOKEN_KEY);
                                         const result: any = await axios.get<{ url: string }>(
                                             `${API_URL}/users/can/?resource=${resource}&action=${action}`,
@@ -110,6 +111,7 @@ function App() {
                                                 },
                                             }
                                         );
+                                        console.log(`${resource} ${action} => ${result.data}`)
                                         return {
                                             can: result.data
                                         }
@@ -158,6 +160,7 @@ function App() {
                                     meta: {
                                         icon: <DriveEtaTwoToneIcon/>,
                                         parent: "booking-transport",
+                                        canDelete: true
                                     },
 
                                 }, {

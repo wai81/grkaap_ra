@@ -1,17 +1,13 @@
-import Reactfrom, {useEffect, useMemo, useState} from "react";
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
 
-import {HttpError, useList, useOne, useShow, useTranslate} from "@refinedev/core";
+import {HttpError, useOne, useTranslate} from "@refinedev/core";
 import { Edit, useAutocomplete } from "@refinedev/mui";
 import {
-    Box, Checkbox,
-    Drawer, FormControlLabel, FormGroup, FormLabel,
-    IconButton,
-    TextField, Typography,
+    Box, Drawer, FormGroup, FormLabel,
+    IconButton, TextField,
 } from "@mui/material";
 
 import {CloseOutlined} from "@mui/icons-material";
-import {ICasbinObjectUpdate} from "../../interfaces/ICasbinObjects";
 import {IRole, IRolePermissions, IUpdateRole} from "../../interfaces/IRole";
 import {CheckedPermissions} from "./checkedPermissions";
 

@@ -2,7 +2,6 @@ import { Edit, useAutocomplete } from "@refinedev/mui";
 
 import {
   Autocomplete,
-  Box,
   Checkbox,
   FormControl,
   FormControlLabel,

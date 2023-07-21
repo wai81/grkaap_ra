@@ -24,7 +24,7 @@ import {
   CrudFilters,
   BaseRecord,
   getDefaultFilter,
-  useApiUrl, useShow, useModal, CanAccess, useCan,
+  useApiUrl, useShow, useModal, useCan,
 } from "@refinedev/core";
 
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
@@ -197,7 +197,7 @@ export const UserList = () => {
         headerAlign: "center",
       },
     ],
-    [t, apiUrl, edit, showRole, setShowId]
+    [t, apiUrl, edit, showRole, setShowId, canEditRole,canEditUser]
   );
 
   const { register, handleSubmit, control } = useForm<

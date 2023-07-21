@@ -1,7 +1,7 @@
 import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from "@mui/material";
 import React from "react";
 import {
-    BaseRecord, CanAccess,
+    BaseRecord,
     CrudFilters,
     getDefaultFilter,
     HttpError, useCan,
@@ -170,7 +170,7 @@ export const RoleList = () => {
                 headerAlign: "center",
             },
         ],
-        [t,isLoading,showModal, setShowId, usersData?.data, showEditDrawer],
+        [t,isLoading,showModal, setShowId, usersData?.data, showEditDrawer, canEditRole],
     );
 
     const {register, handleSubmit} =useForm<

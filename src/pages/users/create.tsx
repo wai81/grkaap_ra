@@ -2,7 +2,6 @@ import { Create, useAutocomplete } from "@refinedev/mui";
 import {
   Autocomplete,
   Avatar,
-  Box,
   Grid,
   Input,
   Stack,
@@ -11,7 +10,7 @@ import {
 } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
-import { ICreateUser, IUser } from "interfaces/IUser";
+import { ICreateUser } from "interfaces/IUser";
 import { CrudFilters, useApiUrl, useTranslate } from "@refinedev/core";
 import axios from "axios";
 import { TOKEN_KEY } from "../../constants";
