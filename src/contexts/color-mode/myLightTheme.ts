@@ -16,10 +16,10 @@ export const overridedLightTheme = {
             main: "#1C2536",
             contrastText: "#fff",
         },
-        background: {
-            default: common.white,
-            paper: common.white
-        },
+        // background: {
+        //     default: common.white,
+        //     paper: common.white
+        // },
         success: {
             main: '#10B981', //"#67be23",
             contrastText: '#FFFFFF'

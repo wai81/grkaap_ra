@@ -33,7 +33,7 @@ export const overridedDarkTheme = {
     },
     background: {
       default: '#000',
-      paper: '#000'
+      paper: '#1C2536'
     },
     // background: {
     //   default: "#545457",

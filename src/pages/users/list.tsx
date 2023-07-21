@@ -24,7 +24,7 @@ import {
   CrudFilters,
   BaseRecord,
   getDefaultFilter,
-  useApiUrl, useShow, useModal,
+  useApiUrl, useShow, useModal, CanAccess, useCan,
 } from "@refinedev/core";
 
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
@@ -36,8 +36,8 @@ import {EditModalUserRole} from "../../components/users/editModalUserRole";
 
 
 export const UserList = () => {
-  const { edit } = useNavigation();
-  const { show, visible, close } = useModal();
+  const { show, edit } = useNavigation();
+  const { show: showRole, visible, close } = useModal();
   const { queryResult, setShowId } = useShow<IUser>();
   const { data: showQueryResult } = queryResult;
   const record = showQueryResult?.data;
@@ -84,6 +84,15 @@ export const UserList = () => {
 
   const apiUrl = useApiUrl();
 
+  const {data : canEditRole } = useCan({
+    resource: "admin/roles",
+    action: "edit"
+  })
+
+  const {data : canEditUser } = useCan({
+    resource: "users",
+    action: "edit"
+  })
   const columns = React.useMemo<GridColumns<IUser>>(
     () => [
       {
@@ -164,29 +173,31 @@ export const UserList = () => {
         flex: 0.5,
         minWidth: 100,
         getActions:({row})=>[
-          <GridActionsCellItem
-              key={1}
-              label={t('buttons.edit')}
-              icon={<EditOutlined color={'success'}/>}
-              showInMenu
-              onClick={()=>edit("users", row.id)}
-          />,
-          <GridActionsCellItem
-              key={1}
-              label={t('buttons.role')}
-              icon={<AdminPanelSettingsOutlined color={"warning"}/>}
-              showInMenu
-              onClick={()=>{
-                show();
-                setShowId(row.id);
-              }}
-          />,
+            <GridActionsCellItem
+                key={1}
+                label={t('buttons.edit')}
+                icon={<EditOutlined color={'success'}/>}
+                showInMenu
+                onClick={()=>edit("users", row.id)}
+                disabled={canEditUser?.can===true? false: true}
+            />,
+            <GridActionsCellItem
+                key={2}
+                label={t('buttons.role')}
+                icon={<AdminPanelSettingsOutlined color={"warning"}/>}
+                showInMenu
+                onClick={()=>{
+                  showRole();
+                  setShowId(row.id);
+                }}
+                disabled={canEditRole?.can===true? false: true}
+            />,
         ],
         align: "center",
         headerAlign: "center",
       },
     ],
-    [t, apiUrl, edit, show, setShowId]
+    [t, apiUrl, edit, showRole, setShowId]
   );
 
   const { register, handleSubmit, control } = useForm<
@@ -300,9 +311,9 @@ export const UserList = () => {
                 cursor: "pointer",
               },
             }}
-            // onRowClick={(row) => {
-            //   show("users", row.id);
-            // }}
+            onRowClick={(row) => {
+              show("users", row.id);
+            }}
           />
         </List>
         {record && (<EditModalUserRole

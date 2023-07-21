@@ -116,7 +116,7 @@ function App() {
                                     }
                                 }}
                                 options={{
-                                    syncWithLocation: true,
+                                    //syncWithLocation: true,
                                     //warnWhenUnsavedChanges: true,
                                     liveMode: "auto",
                                     // reactQuery:{

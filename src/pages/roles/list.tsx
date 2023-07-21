@@ -1,10 +1,10 @@
 import {Box, Button, Card, CardContent, CardHeader, Grid, TextField} from "@mui/material";
 import React from "react";
 import {
-    BaseRecord,
+    BaseRecord, CanAccess,
     CrudFilters,
     getDefaultFilter,
-    HttpError,
+    HttpError, useCan,
     useMany,
     useModal,
     useShow,
@@ -19,12 +19,9 @@ import {CreateRoleDrawer, EditRoleDrawer, EditModalPermissions} from "../../comp
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import {EditOutlined} from "@mui/icons-material";
 
-
-
-
 export const RoleList = () => {
 
-    const { show, visible, close } = useModal();
+    const { show : showModal, visible, close } = useModal();
     const { queryResult, setShowId } = useShow<IRole>();
     const { data: showQueryResult } = queryResult;
     const record = showQueryResult?.data;
@@ -81,6 +78,11 @@ export const RoleList = () => {
     const {
         modal: { show: showEditDrawer },
     } = editDrawerFormProps;
+
+    const {data : canEditRole } = useCan({
+        resource: "admin/roles",
+        action: "edit"
+    })
 
     const columns = React.useMemo<GridColumns<IRole>>(
         ()=>[
@@ -142,29 +144,33 @@ export const RoleList = () => {
                 flex: 0.5,
                 minWidth: 100,
                 getActions: ({ row }) =>[
-                     <GridActionsCellItem
-                         key={1}
-                         label={t('buttons.edit')}
-                         icon={<EditOutlined color={'success'}/>}
-                         showInMenu
-                         onClick={()=>showEditDrawer(row.id)}
-                     />,
-                    <GridActionsCellItem
-                        key={1}
-                        label={t('buttons.permission')}
-                        icon={<GppMaybeIcon color={"warning"}/>}
-                        showInMenu
-                        onClick={()=>{
-                            show();
-                            setShowId(row.id);
-                        }}
-                    />
+                    // <CanAccess resource={"admin/roles"} action={"edit"}>
+                         <GridActionsCellItem
+                             key={1}
+                             label={t('buttons.edit')}
+                             icon={<EditOutlined color={'success'}/>}
+                             showInMenu
+                             onClick={()=>showEditDrawer(row.id)}
+                             disabled={canEditRole?.can===true? false: true}
+                         />,
+                        <GridActionsCellItem
+                            key={2}
+                            label={t('buttons.permission')}
+                            icon={<GppMaybeIcon color={"warning"}/>}
+                            showInMenu
+                            onClick={()=>{
+                                showModal();
+                                setShowId(row.id);
+                            }}
+                            disabled={canEditRole?.can===true? false: true}
+                        />
+                   // </CanAccess>
                 ],
                 align: "center",
                 headerAlign: "center",
             },
         ],
-        [t,isLoading,show, setShowId, usersData?.data, showEditDrawer],
+        [t,isLoading,showModal, setShowId, usersData?.data, showEditDrawer],
     );
 
     const {register, handleSubmit} =useForm<
