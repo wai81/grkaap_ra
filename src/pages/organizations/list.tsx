@@ -17,7 +17,8 @@ export const OrganizationList = () => {
         headerName: t("organizations.fields.is_active"),
         align: "center",
         headerAlign: "center",
-        flex: 0.5,
+        flex: 0.2,
+        minWidth: 100,
         renderCell: function render({ row }) {
           return (
             <ItemStatus
@@ -35,7 +36,8 @@ export const OrganizationList = () => {
         type: "number",
         align: "center",
         headerAlign: "center",
-        flex: 1,
+        flex: 0.2,
+        minWidth: 100,
       },
       {
         field: "title",
@@ -52,7 +54,7 @@ export const OrganizationList = () => {
         field: "fullname",
         headerName: t("organizations.fields.fullname"),
         minWidth: 500,
-        flex: 1,
+        flex: 2,
       },
       {
         field: "created_at",

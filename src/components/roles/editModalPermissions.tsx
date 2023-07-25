@@ -1,5 +1,5 @@
 import {IRole, IRolePermissions, IRolePermissionsUpdate} from "../../interfaces/IRole";
-import {HttpError, useApiUrl, useOne, useTranslate} from "@refinedev/core";
+import {HttpError, useApiUrl, useOne, useTranslate, useUpdate} from "@refinedev/core";
 import {
     Button,
     Checkbox,
@@ -34,6 +34,8 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
     const t =useTranslate();
 
     const apiUrl = useApiUrl();
+
+    const {mutate: updatePermissions} = useUpdate();
 
     const { data } = useOne<IRolePermissions ,HttpError>({
         resource: 'admin/roles/get_permissions',
@@ -75,29 +77,37 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         // отправляем данные на сервер
-        //console.log(formData?.checkeds)
-        const request: IRolePermissionsUpdate = {
-            checkeds:formData?.checkeds
-        }
-        const token = localStorage.getItem(TOKEN_KEY);
-        try {
-            const res = await axios.post<{ url: string }>(
-            `${apiUrl}/admin/roles/update_permissions/${record.id}`,
-            request,
+        updatePermissions(
             {
-                withCredentials: false,
-                headers: {
-                    "Access-Control-Allow-Origin": "*",
-                    "Authorization": `Bearer ${token}`,
+                resource: 'admin/roles/update_permissions',
+                id: record.id,
+                values: {
+                    checkeds: formData?.checkeds
                 },
-            }
-        );
-    //        console.log(res)
-        } catch (error) {
-            console.error(error)
-        }
+            },
+        )
+    // const request: IRolePermissionsUpdate = {
+    //     checkeds:formData?.checkeds
+    // }
+    //     const token = localStorage.getItem(TOKEN_KEY);
+    //     try {
+    //         const res = await axios.post<{ url: string }>(
+    //         `${apiUrl}/admin/roles/update_permissions/${record.id}`,
+    //         request,
+    //         {
+    //             withCredentials: false,
+    //             headers: {
+    //                 "Access-Control-Allow-Origin": "*",
+    //                 "Authorization": `Bearer ${token}`,
+    //             },
+    //         }
+    //     );
+    // //        console.log(res)
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
     };
 
     const style = {
