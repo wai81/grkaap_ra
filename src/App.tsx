@@ -111,7 +111,7 @@ function App() {
                                                 },
                                             }
                                         );
-                                        console.log(`${resource} ${action} => ${result.data}`)
+                                        // console.log(`${resource} ${action} => ${result.data}`)
                                         return {
                                             can: result.data
                                         }
