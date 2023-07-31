@@ -1,18 +1,15 @@
-import {IRole, IRolePermissions, IRolePermissionsUpdate} from "../../interfaces/IRole";
+import {IRole, IRolePermissions} from "../../interfaces/IRole";
 import {HttpError, useApiUrl, useOne, useTranslate, useUpdate} from "@refinedev/core";
 import {
     Button,
     Checkbox,
     Dialog, DialogActions,
     DialogContent, DialogTitle,
-    Fade,
     FormControlLabel,
-    Grid, List,
+    Grid,
     Typography
 } from "@mui/material";
 import React, {useEffect, useState} from "react";
-import {TOKEN_KEY} from "../../constants";
-import axios from "axios";
 
 
 interface FormData {
@@ -110,21 +107,7 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
     //     }
     };
 
-    const style = {
-        width: "100%",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        maxWidth: { xs: 380, sm: 580, md: 880, lg: 1000 },
-        heigth: 650,
-        bgcolor: "background.paper",
-        p: 2,
-        my: 2,
-        borderRadius: "8px",
-    };
-
-    return (
+     return (
         <Dialog
             closeAfterTransition
             open={modalVisible}
@@ -136,73 +119,66 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
                 <Typography sx={{fontSize: 16, fontWeight: "800"}}>{record.name} ({record.role_key})</Typography>
             </DialogTitle>
             <DialogContent>
-            {/*<Fade in={modalVisible}>*/}
-                        {/*<Grid container>*/}
-                            {/*<Grid item xs={16} sm={12}>*/}
-                                <Typography sx={{fontSize: 13}}>{record.description}</Typography>
-                                <Typography sx={{fontWeight: "700", marginTop: 1, marginBottom: 2}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
-                            {formData && formData.options.length > 0 ? (
-                                <Grid container
-                                      spacing={{ xs: 1, md: 0.5 }}
-                                      columns={{ xs: 4, sm: 8, md: 12 }}
-                                >
+                <Typography sx={{fontSize: 13}}>{record.description}</Typography>
+                <Typography sx={{fontWeight: "700", marginTop: 1, marginBottom: 2}}>{t("admin/roles.fields.checkedPermissions")}</Typography>
+                    {formData && formData.options.length > 0 ? (
+                        <Grid container
+                              spacing={{ xs: 1, md: 0.5 }}
+                              columns={{ xs: 4, sm: 8, md: 12 }}
+                        >
+                            {(formData?.options?.map((row, rowIndex) =>
+                                (row.map((permission, permissionIndex) =>
+                                    <Grid key={permissionIndex}
+                                      // item
+                                       //xs={6}
+                                      xs={6} sm={6} md={2}
+                                      sx={permissionIndex === 0 ?
+                                          {
+                                              border: '1px solid #ccc!important' ,
+                                              backgroundColor: 'background.default' ,
+                                              borderRadius:1,
+                                              marginTop: 1,
+                                          }
+                                          :{marginTop: 1}}
+                                    >
+                                        <FormControlLabel
+                                            key={permissionIndex}
+                                            control={
+                                                <Checkbox
+                                                    //size="small"
+                                                    checked={formData && formData.checkeds
+                                                        ? formData.checkeds[rowIndex].includes(permission) :
+                                                        false}
+                                                    sx={{ marginLeft: 0.5 }}
+                                                    onChange={handleCheckboxChange(rowIndex, permissionIndex)}
 
-                                        {(formData?.options?.map((row, rowIndex) =>
-                                            (row.map((permission, permissionIndex) =>
-                                                <Grid key={permissionIndex}
-                                                      // item
-                                                       //xs={6}
-                                                      xs={6} sm={6} md={2}
-                                                      sx={permissionIndex === 0 ?
-                                                          {
-                                                              border: '1px solid #ccc!important' ,
-                                                              backgroundColor: 'background.default' ,
-                                                              borderRadius:1,
-                                                              marginTop: 1,
-                                                          }
-                                                          :{marginTop: 1}}
-                                                >
-                                                    <FormControlLabel
-                                                        key={permissionIndex}
-                                                        control={
-                                                            <Checkbox
-                                                                //size="small"
-                                                                checked={formData && formData.checkeds
-                                                                    ? formData.checkeds[rowIndex].includes(permission) :
-                                                                    false}
-                                                                sx={{ marginLeft: 0.5 }}
-                                                                onChange={handleCheckboxChange(rowIndex, permissionIndex)}
+                                                />
+                                            }
+                                            //label={permission}
+                                            label={<Typography
+                                                sx={permissionIndex === 0 ? {fontSize:13,
+                                                        fontWeight: "700",
+                                                        marginLeft: -1}
+                                                    : {fontSize:14}}
+                                            >{permission}</Typography>}
 
-                                                            />
-                                                        }
-                                                        //label={permission}
-                                                        label={<Typography
-                                                            sx={permissionIndex === 0 ? {fontSize:13,
-                                                                    fontWeight: "700",
-                                                                    marginLeft: -1}
-                                                                : {fontSize:14}}
-                                                        >{permission}</Typography>}
-
-                                                    />
-                                                </Grid>
-                                                )
-                                            ))
-                                        )}
+                                        />
                                     </Grid>
-                            ): (
-                                <Grid
-                                container
-                                justifyContent="center"
-                                padding={3}
-                                >
-                                <Typography variant="body2">
-                                    {t("products.noProducts")}
-                                </Typography>
-                            </Grid>
+                                    )
+                                ))
                             )}
-                            {/*</Grid>*/}
-                        {/*</Grid>*/}
-            {/*</Fade>*/}
+                        </Grid>
+                    ): (
+                        <Grid
+                            container
+                            justifyContent="center"
+                            padding={3}
+                        >
+                        <Typography variant="body2">
+                            {t("products.noProducts")}
+                        </Typography>
+                    </Grid>
+                    )}
             </DialogContent>
             <DialogActions>
                 <Button variant={"contained"} autoFocus onClick={modalClose}>{t("buttons.cancel")}</Button> <Button type="submit">{t("buttons.save")}</Button>

@@ -14,11 +14,8 @@ export const dataProvider = (
     > => ({
   getList: async ({ resource, pagination, filters, sorters }) => {
     const url = `${apiUrl}/${resource}`;
-
     const { current = 1, pageSize = 10, mode = "server" } = pagination ?? {};
-
     const queryFilters = generateFilter(filters);
-
     const query: {
       page?: number;
       size?: number;
@@ -28,14 +25,12 @@ export const dataProvider = (
       // _sort?: string;
       // _order?: string;
     } = {};
-
     if (mode === "server") {
       query.page= current;
       query.size= pageSize;
       // query._start = (current - 1) * pageSize;
       // query._end = current * pageSize;
     }
-
     const generatedSort = generateSort(sorters);
     if (generatedSort) {
       const { _sort, _order } = generatedSort;
@@ -43,14 +38,11 @@ export const dataProvider = (
       // query._order = _order.join(",");
       query.order_by = `${_order}${_sort}`;
     }
-
     //const { data, headers } = await httpClient.get(
       const { data } = await httpClient.get(
         `${url}?${stringify(query)}&${stringify(queryFilters)}`
     );
-
     //const total = +headers["x-total-count"];
-
     return {
       data: data.items,
       total: data.total,
@@ -61,7 +53,6 @@ export const dataProvider = (
     const { data } = await httpClient.get(
         `${apiUrl}/${resource}?${stringify({ id: ids })}`
     );
-
     return {
       data: data.items,
     };
@@ -69,9 +60,7 @@ export const dataProvider = (
 
   create: async ({ resource, variables }) => {
     const url = `${apiUrl}/${resource}`;
-
     const { data } = await httpClient.post(url, variables);
-
     return {
       data,
     };
@@ -79,9 +68,7 @@ export const dataProvider = (
 
   update: async ({ resource, id, variables }) => {
     const url = `${apiUrl}/${resource}/${id}`;
-
     const { data } = await httpClient.put(url, variables);
-
     return {
       data,
     };
@@ -89,9 +76,7 @@ export const dataProvider = (
 
   getOne: async ({ resource, id }) => {
     const url = `${apiUrl}/${resource}/${id}`;
-
     const { data } = await httpClient.get(url);
-
     return {
       data,
     };
@@ -99,11 +84,9 @@ export const dataProvider = (
 
   deleteOne: async ({ resource, id, variables }) => {
     const url = `${apiUrl}/${resource}/${id}`;
-
     const { data } = await httpClient.delete(url, {
       data: variables,
     });
-
     return {
       data,
     };
@@ -168,9 +151,7 @@ export const dataProvider = (
         axiosResponse = await httpClient.get(requestUrl);
         break;
     }
-
     const { data } = axiosResponse;
-
     return Promise.resolve({ data });
   },
 });

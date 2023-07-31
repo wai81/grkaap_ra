@@ -1,7 +1,7 @@
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";
 
 import {HttpError, useOne, useTranslate} from "@refinedev/core";
-import { Edit, useAutocomplete } from "@refinedev/mui";
+import { Edit} from "@refinedev/mui";
 import {
     Box, Drawer, FormGroup, FormLabel,
     IconButton, TextField,

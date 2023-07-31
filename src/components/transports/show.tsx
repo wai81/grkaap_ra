@@ -1,6 +1,6 @@
 import {CloseOutlined} from "@mui/icons-material";
 import {DateTimePicker} from "@mui/x-date-pickers";
-import { HttpError, useApiUrl, useTranslate } from "@refinedev/core";
+import { useApiUrl, useTranslate } from "@refinedev/core";
 import { Show } from "@refinedev/mui";
 
 import {
@@ -15,7 +15,7 @@ import {
     Radio,
     RadioGroup,
     Stack,
-    TextField, Typography,
+    TextField,
 } from "@mui/material";
 
 import { UseModalFormReturnType } from "@refinedev/react-hook-form";

@@ -1,7 +1,7 @@
 // noinspection JSUnusedLocalSymbols
 
 import { CloseOutlined } from "@mui/icons-material";
-import { HttpError, useApiUrl, useTranslate } from "@refinedev/core";
+import { useApiUrl, useTranslate } from "@refinedev/core";
 import { Create } from "@refinedev/mui";
 
 import {

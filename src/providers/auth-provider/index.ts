@@ -1,6 +1,8 @@
 import type { AuthBindings } from "@refinedev/core";
 import { TOKEN_KEY, API_URL } from '../../constants';
 import axios, { AxiosInstance } from "axios";
+import {checkTokenExpiration} from "./checkToken";
+
 
 export const authProvider = (axiosInstance: AxiosInstance): AuthBindings => {
   //    export const authProvider4 : AuthBindings = {
@@ -50,11 +52,23 @@ export const authProvider = (axiosInstance: AxiosInstance): AuthBindings => {
     },
     check: async () => {
       const token = localStorage.getItem(TOKEN_KEY);
-      if (token) {
-        return {
-          authenticated: true,
-        };
-      } else {
+      if (token !==null){
+        // const isTokenExpired : any = checkTokenExpiration(token);
+        // if (isTokenExpired === false) {
+            return {
+              authenticated: true,
+           }
+        // }
+        // else{
+        //   localStorage.removeItem(TOKEN_KEY);
+        //   return {
+        //     authenticated: false,
+        //     logout: true,
+        //     redirectTo: "/login",
+        //     error: new Error("User is not authenticated"),
+        //   };
+        // }
+      }else {
         return {
           authenticated: false,
           logout: true,
@@ -67,6 +81,7 @@ export const authProvider = (axiosInstance: AxiosInstance): AuthBindings => {
       if (error.status === 401 || error.status === 403) {
         localStorage.removeItem(TOKEN_KEY);
         return {
+          authenticated: false,
           logout: true,
           redirectTo: "/login",
           error: new Error("User is not authenticated"),
@@ -78,9 +93,25 @@ export const authProvider = (axiosInstance: AxiosInstance): AuthBindings => {
       const token = localStorage.getItem(TOKEN_KEY);
       if (token) {
         const userInfo = await axiosInstance.get(`${API_URL}/auth/user`);
-        return userInfo.data;
+        if (userInfo.status === 401 || userInfo.status === 403){
+          localStorage.removeItem(TOKEN_KEY);
+          return {
+            authenticated: false,
+            logout: true,
+            redirectTo: "/login",
+            error: new Error("User is not authenticated"),
+          };
+        } else {
+          return userInfo.data;
+        };
       }
-      return null;
+      // return null;
+      return {
+        authenticated: false,
+        logout: true,
+        redirectTo: "/login",
+        error: new Error("User is not authenticated"),
+      };
     },
     getPermissions: async () => {
       const token = localStorage.getItem("TOKEN_KEY");

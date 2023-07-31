@@ -59,6 +59,8 @@ import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {CasbinObjectsList} from "pages/casbinobjects";
 import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
 
+
+
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
     const token = localStorage.getItem(TOKEN_KEY);
@@ -74,9 +76,10 @@ axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
     return request;
 });
 
+
 function App() {
     const {t, i18n} = useTranslation();
-
+    const token = localStorage.getItem(TOKEN_KEY);
     const i18nProvider = {
         translate: (key: string, params: object) => t(key, params),
         changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -99,8 +102,6 @@ function App() {
                                 authProvider={authProvider(axiosInstance)}
                                 accessControlProvider={{
                                     can: async ({ action, params, resource }) => {
-
-                                        const token = localStorage.getItem(TOKEN_KEY);
                                         const result: any = await axios.get<{ url: string }>(
                                             `${API_URL}/users/can/?resource=${resource}&action=${action}`,
                                             {

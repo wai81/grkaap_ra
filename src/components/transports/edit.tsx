@@ -1,5 +1,5 @@
 import { CloseOutlined } from "@mui/icons-material";
-import { HttpError, useApiUrl, useTranslate } from "@refinedev/core";
+import { useApiUrl, useTranslate } from "@refinedev/core";
 import { Edit } from "@refinedev/mui";
 
 import {
