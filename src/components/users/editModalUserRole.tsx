@@ -1,6 +1,6 @@
 import {IUser, IUserRole, IUserRoleUpdate} from "../../interfaces/IUser";
 import React, {useEffect, useState} from "react";
-import {HttpError, useApiUrl, useOne, useTranslate} from "@refinedev/core";
+import {HttpError, useApiUrl, useOne, useTranslate, useUpdate} from "@refinedev/core";
 import {
     Button, Checkbox,
     Dialog,
@@ -32,6 +32,7 @@ export const EditModalUserRole: React.FC<UserProps> = ({
                                                          visible: modalVisible
                                                      }) =>{
     const t =useTranslate();
+    const {mutate: updateUserRole} = useUpdate();
 
     const apiUrl = useApiUrl();
 
@@ -74,26 +75,36 @@ export const EditModalUserRole: React.FC<UserProps> = ({
     };
 
     const handleSubmit = async () => {
-        const request: IUserRoleUpdate ={
-            checkeds:formData?.checkeds
-        }
-        const token = localStorage.getItem(TOKEN_KEY);
-        try {
-            const res = await axios.put<{ url: string }>(
-                `${apiUrl}/users/change_user_role/${record.id}`,
-                request,
-                {
-                    withCredentials: false,
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Authorization": `Bearer ${token}`,
-                    },
+        updateUserRole(
+            {
+                resource:'users/change_user_role',
+                id: record.id,
+                values:{
+                    checkeds: formData?.checkeds
                 }
-            );
-            console.log(res)
-        } catch (error){
-            console.error(error)
-        }
+            }
+        )
+
+        // const request: IUserRoleUpdate ={
+        //     checkeds:formData?.checkeds
+        // }
+        // const token = localStorage.getItem(TOKEN_KEY);
+        // try {
+        //     const res = await axios.put<{ url: string }>(
+        //         `${apiUrl}/users/change_user_role/${record.id}`,
+        //         request,
+        //         {
+        //             withCredentials: false,
+        //             headers: {
+        //                 "Access-Control-Allow-Origin": "*",
+        //                 "Authorization": `Bearer ${token}`,
+        //             },
+        //         }
+        //     );
+        //     //console.log(res)
+        // } catch (error){
+        //     console.error(error)
+        // }
 
     }
 
@@ -145,7 +156,7 @@ export const EditModalUserRole: React.FC<UserProps> = ({
                     </Fade>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={modalClose}>{t("buttons.cancel")}</Button> <Button type="submit">{t("buttons.save")}</Button>
+                    <Button variant={"contained"} autoFocus onClick={modalClose}>{t("buttons.cancel")}</Button> <Button type="submit">{t("buttons.save")}</Button>
                 </DialogActions>
             </form>
         </Dialog>

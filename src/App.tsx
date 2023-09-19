@@ -17,7 +17,7 @@ import {RefineKbarProvider} from "@refinedev/kbar";
 import {ColorModeContextProvider} from "./contexts/color-mode";
 import {OffLayoutArea} from "components/offLayoutArea";
 import LibraryBooksTwoToneIcon from '@mui/icons-material/LibraryBooksTwoTone';
-
+import DnsTwoToneIcon from '@mui/icons-material/DnsTwoTone';
 import {API_URL, TOKEN_KEY} from "./constants";
 import {UserList, UserCreate, UserEdit, UserShow} from "pages/users";
 import {
@@ -58,6 +58,7 @@ import { RoleList } from "pages/roles";
 import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {CasbinObjectsList} from "pages/casbinobjects";
 import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
+import {AdminPanelSettingsTwoTone} from "@mui/icons-material";
 
 
 
@@ -213,7 +214,7 @@ function App() {
                                     edit: "/settings/roles/edit/:id",
                                     show: "/settings/roles/show/:id",
                                     meta: {
-                                        icon: <AccountCircleTwoToneIcon/>,
+                                        icon: <AdminPanelSettingsTwoTone/>,
                                         parent: "settings",
                                     },
                                 }, {
@@ -225,7 +226,7 @@ function App() {
                                     edit: "/settings/casbinObjects/edit/:id",
                                     show: "/settings/casbinObjects/show/:id",
                                     meta: {
-                                        icon: <AccountCircleTwoToneIcon/>,
+                                        icon: <DnsTwoToneIcon/>,
                                         parent: "settings",
                                     },
                                 }]}

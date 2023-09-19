@@ -151,6 +151,10 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
                                                         false}
                                                     sx={{ marginLeft: 0.5 }}
                                                     onChange={handleCheckboxChange(rowIndex, permissionIndex)}
+                                                    color={permissionIndex===0? 'primary':
+                                                        permissionIndex===1 || permissionIndex===2?'info':
+                                                            permissionIndex===3?'success':
+                                                                permissionIndex===4?'warning':'error'}
 
                                                 />
                                             }
