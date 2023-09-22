@@ -1,5 +1,5 @@
 import React from "react";
-import { useDataGrid, List, DateField, useAutocomplete } from "@refinedev/mui";
+import {useDataGrid, List, DateField, useAutocomplete, BooleanField} from "@refinedev/mui";
 import {
   Checkbox,
   Grid,
@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
+import {DataGrid, ruRU, GridActionsCellItem, GridColDef} from "@mui/x-data-grid";
 
 import {
   useTranslate,
@@ -30,8 +30,8 @@ import {
 import { IUser, IUserFilterVariables } from "../../interfaces/IUser";
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
-import { ItemStatus } from "components/itemStatus";
-import {EditOutlined, AdminPanelSettingsOutlined} from "@mui/icons-material";
+// import { ItemStatus } from "components/itemStatus";
+import {EditOutlined, AdminPanelSettingsOutlined, Check, Close} from "@mui/icons-material";
 import {EditModalUserRole} from "../../components/users/editModalUserRole";
 
 
@@ -93,7 +93,7 @@ export const UserList = () => {
     resource: "users",
     action: "edit"
   })
-  const columns = React.useMemo<GridColumns<IUser>>(
+  const columns = React.useMemo<GridColDef<IUser>[]>(
     () => [
       {
         field: "is_active",
@@ -101,16 +101,17 @@ export const UserList = () => {
         align: "center",
         headerAlign: "center",
         flex: 0.5,
-        renderCell: function render({ row }) {
+        renderCell:  function render({ row }){
           return (
-            <ItemStatus
-              svgIconProps={{
-                sx: { width: "16px", height: "16px" },
-              }}
-              value={row.is_active}
-            />
+              <BooleanField
+                  value={row.is_active === true}
+                  trueIcon={<Check color={"success"}/>}
+                  falseIcon={<Close color={"error"}/>}
+                  valueLabelTrue='true'
+                  valueLabelFalse='false'
+              />
           );
-        },
+        }
       },
       {
         field: "last_name",

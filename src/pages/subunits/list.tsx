@@ -1,6 +1,6 @@
 import React from "react";
-import { EditButton, ExportButton, List, useAutocomplete, useDataGrid } from "@refinedev/mui";
-import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+import {BooleanField, EditButton, ExportButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
+import {DataGrid, GridColDef, ruRU} from "@mui/x-data-grid";
 
 import {
   Autocomplete,
@@ -31,7 +31,8 @@ import {
 
 import { useForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
-import { ItemStatus } from "components/itemStatus";
+import {Check, Close} from "@mui/icons-material";
+//import { ItemStatus } from "components/itemStatus";
 
 export const SubunitsList = () => {
   const { show } = useNavigation();
@@ -76,7 +77,7 @@ export const SubunitsList = () => {
     }
   });
 
-  const columns = React.useMemo<GridColumns<ISubunit>>(
+  const columns = React.useMemo<GridColDef<ISubunit>[]>(
     () => [
       {
         field: "is_active",
@@ -84,16 +85,17 @@ export const SubunitsList = () => {
         align: "center",
         headerAlign: "center",
         flex: 0.5,
-        renderCell: function render({ row }) {
+        renderCell:  function render({ row }){
           return (
-            <ItemStatus
-              svgIconProps={{
-                sx: { width: "16px", height: "16px" },
-              }}
-              value={row.is_active}
-            />
+              <BooleanField
+                  value={row.is_active === true}
+                  trueIcon={<Check color={"success"}/>}
+                  falseIcon={<Close color={"error"}/>}
+                  valueLabelTrue='true'
+                  valueLabelFalse='false'
+              />
           );
-        },
+        }
       },
       {
         field: "title",

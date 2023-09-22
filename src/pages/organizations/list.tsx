@@ -1,16 +1,17 @@
 import React from "react";
-import { DateField, EditButton, List, useDataGrid } from "@refinedev/mui";
-import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+import {BooleanField, DateField, EditButton, List, useDataGrid} from "@refinedev/mui";
+import {DataGrid, GridColDef, ruRU} from "@mui/x-data-grid";
 import { useNavigation, useTranslate } from "@refinedev/core";
 import { IOrganization } from "../../interfaces/IOrganization";
-import { ItemStatus } from "components/itemStatus";
+import {Check, Close} from "@mui/icons-material";
+//import { ItemStatus } from "components/itemStatus";
 
 export const OrganizationList = () => {
   const { show } = useNavigation();
   const t = useTranslate();
   const { dataGridProps } = useDataGrid();
 
-  const columns = React.useMemo<GridColumns<IOrganization>>(
+  const columns = React.useMemo<GridColDef<IOrganization>[]>(
     () => [
       {
         field: "is_active",
@@ -19,16 +20,17 @@ export const OrganizationList = () => {
         headerAlign: "center",
         flex: 0.2,
         minWidth: 100,
-        renderCell: function render({ row }) {
-          return (
-            <ItemStatus
-              svgIconProps={{
-                sx: { width: "16px", height: "16px" },
-              }}
-              value={row.is_active}
-            />
-          );
-        },
+          renderCell:  function render({ row }){
+              return (
+                  <BooleanField
+                      value={row.is_active === true}
+                      trueIcon={<Check color={"success"}/>}
+                      falseIcon={<Close color={"error"}/>}
+                      valueLabelTrue='true'
+                      valueLabelFalse='false'
+                  />
+              );
+          }
       },
       {
         field: "id",

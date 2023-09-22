@@ -7,8 +7,8 @@ import {
   useTranslate,
 } from "@refinedev/core";
 
-import {DeleteButton, EditButton, List, useDataGrid} from "@refinedev/mui";
-import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+import {BooleanField, DeleteButton, EditButton, List, useDataGrid} from "@refinedev/mui";
+import {DataGrid, GridColDef, ruRU} from "@mui/x-data-grid";
 
 import {
   Avatar,
@@ -37,9 +37,10 @@ import {
 import { IBookingTransportFilterVariables } from "../../interfaces/IBookingTransport";
 import { useForm, useModalForm } from "@refinedev/react-hook-form";
 import { Controller } from "react-hook-form";
-import { ItemStatus } from "components/itemStatus";
+//import { ItemStatus } from "components/itemStatus";
 import { CreateTransportDrawer, EditTransportDrawer } from "components/transports";
 import { ShowTransportDrawer } from "components/transports/show";
+import {Check, Close} from "@mui/icons-material";
 
 export const TransportList = () => {
   const t = useTranslate();
@@ -99,7 +100,7 @@ export const TransportList = () => {
     modal: { show: showShowDrawer },
   } = showDrawerFormProps;
 
-  const columns = React.useMemo<GridColumns<ITransport>>(
+  const columns = React.useMemo<GridColDef<ITransport>[]>(
     () => [
       {
         field: "is_active",
@@ -107,16 +108,17 @@ export const TransportList = () => {
         align: "center",
         headerAlign: "center",
         flex: 0.2,
-        renderCell: function render({ row }) {
+        renderCell:  function render({ row }){
           return (
-            <ItemStatus
-              svgIconProps={{
-                sx: { width: "16px", height: "16px" },
-              }}
-              value={row.is_active}
-            />
+              <BooleanField
+                  value={row.is_active === true}
+                  trueIcon={<Check color={"success"}/>}
+                  falseIcon={<Close color={"error"}/>}
+                  valueLabelTrue='true'
+                  valueLabelFalse='false'
+              />
           );
-        },
+        }
       },
       {
         field: "image_url",

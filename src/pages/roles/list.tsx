@@ -11,7 +11,7 @@ import {
     useTranslate
 } from "@refinedev/core";
 import {DateField, List, useDataGrid} from "@refinedev/mui";
-import {DataGrid, ruRU, GridColumns, GridActionsCellItem} from "@mui/x-data-grid";
+import {DataGrid, ruRU, GridActionsCellItem, GridColDef} from "@mui/x-data-grid";
 import {ICreateRole, IRole, IRoleFilterVariables} from "../../interfaces/IRole";
 import {IUser} from "../../interfaces/IUser";
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
@@ -84,7 +84,7 @@ export const RoleList = () => {
         action: "edit"
     })
 
-    const columns = React.useMemo<GridColumns<IRole>>(
+    const columns = React.useMemo<GridColDef<IRole>[]>(
         ()=>[
             {
                 field: "id",

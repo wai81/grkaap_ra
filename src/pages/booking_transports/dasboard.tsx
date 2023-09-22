@@ -26,14 +26,15 @@ import {
     IBookingTransportFilterVariables,
     ICreateBookingTransport, IUpdateBookingTransport
 } from "../../interfaces/IBookingTransport";
-import {CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
+import {BooleanField, CreateButton, DateField, EditButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
 import {BaseRecord, CrudFilters, getDefaultFilter, HttpError, useApiUrl, useList} from "@refinedev/core";
 import {useForm, useModalForm} from "@refinedev/react-hook-form";
-import {DataGrid, GridColumns, ruRU} from "@mui/x-data-grid";
-import {ItemStatus} from "../../components/itemStatus";
+import {DataGrid, GridColDef, ruRU} from "@mui/x-data-grid";
+//import {ItemStatus} from "../../components/itemStatus";
 import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
 import {PdfLayoutListBookingTransport} from "../../components/pdf";
 import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../components/booking_transports";
+import {Check, Close} from "@mui/icons-material";
 
 export const DashboardBookingTransport: React.FC = () => {
     const {t} = useTranslation();
@@ -187,7 +188,7 @@ export const DashboardBookingTransport: React.FC = () => {
 
     const apiUrl = useApiUrl();
 
-    const columns = React.useMemo<GridColumns<IBookingTransport>>(
+    const columns = React.useMemo<GridColDef<IBookingTransport>[]>(
         () => [
             {
                 field: "is_active",
@@ -195,16 +196,17 @@ export const DashboardBookingTransport: React.FC = () => {
                 align: "center",
                 headerAlign: "center",
                 flex: 0.3,
-                renderCell: function render({row}) {
+                renderCell:  function render({ row }){
                     return (
-                        <ItemStatus
-                            svgIconProps={{
-                                sx: {width: "16px", height: "16px"},
-                            }}
-                            value={row.is_active}
+                        <BooleanField
+                            value={row.is_active === true}
+                            trueIcon={<Check color={"success"}/>}
+                            falseIcon={<Close color={"error"}/>}
+                            valueLabelTrue='true'
+                            valueLabelFalse='false'
                         />
                     );
-                },
+                }
             },
             {
                 field: "startDate",
@@ -710,7 +712,7 @@ export const DashboardBookingTransport: React.FC = () => {
                                         cursor: "pointer",
                                     },
                                 }}
-                                rowsPerPageOptions={[5, 10, 20, 30, 100]}
+                                pageSizeOptions={[5, 10, 20, 30, 100]}
                                 onRowClick={(row) => {
                                     showEditDrawer(row.id)
                                     //show("booking_transport", row.id);

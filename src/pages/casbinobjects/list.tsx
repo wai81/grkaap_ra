@@ -1,4 +1,4 @@
-import { DataGrid, GridColumns, ruRU } from "@mui/x-data-grid";
+import {DataGrid, GridColDef, ruRU} from "@mui/x-data-grid";
 import {
     useTranslate,
     useMany,
@@ -73,7 +73,7 @@ export const CasbinObjectsList = () => {
     } = editDrawerFormProps;
 
     const apiUrl = useApiUrl();
-    const columns = useMemo<GridColumns<ICasbinObject>>(
+    const columns = useMemo<GridColDef<ICasbinObject>[]>(
         ()=>[
             {
                 field: "id",
