@@ -234,15 +234,10 @@ export const DashboardBookingTransport: React.FC = () => {
                 //     )
                 // }
                 renderCell: function render({row}) {
-                    return (<div>
-                            <Typography>
+                    return (<Stack>
                                 {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
-                            </Typography>
-                            <Typography variant={"body2"}>
                                 <Chip
-                                    //size="small"
                                     variant="outlined"
-                                    color={"primary"}
                                     sx={{
                                         height: 'auto',
                                         '& .MuiChip-label': {
@@ -250,13 +245,11 @@ export const DashboardBookingTransport: React.FC = () => {
                                             whiteSpace: 'normal',
                                         },
                                     }}
-                                    //avatar={<Avatar><GroupsIcon/></Avatar>}
                                     label={`${row.count_man} чел. ${row.subunit?.title}`}/>
-                            </Typography>
                             <Typography color={'textSecondary'} variant={"caption"} title={row.subunit?.title}>
                                 {row.description}
                             </Typography>
-                        </div>
+                        </Stack>
                     );
                 }
             },
@@ -271,28 +264,7 @@ export const DashboardBookingTransport: React.FC = () => {
                     return (`${row.duration} ч.`)
                 }
             },
-            // {
-            //     field: "subunit",
-            //     headerName: t("booking_transport.fields.subunit"),
-            //     headerAlign: "center",
-            //     align: "left",
-            //     flex: 2,
-            //     renderCell: function render({row}) {
-            //         return <Typography noWrap variant={"body2"} title={row.subunit?.title}>
-            //             {row.subunit?.title}
-            //         </Typography>;
-            //     },
-            // },
-            // {
-            //     field: "count_man",
-            //     headerName: t("booking_transport.fields.count_man"),
-            //     headerAlign: "center",
-            //     align: "center",
-            //     flex: 1,
-            //     renderCell: function render({row}) {
-            //         return <Chip avatar={<Avatar><GroupsIcon/></Avatar>} label={row.count_man}  />
-            //     },
-            // },
+
             {
                 field: "transport",
                 headerName: t("booking_transport.fields.transport"),
@@ -301,7 +273,7 @@ export const DashboardBookingTransport: React.FC = () => {
                 flex: 1,
                 renderCell: function render({row}) {
 
-                    return (row.transport !== null ?<div>
+                    return (row.transport !== null ?<Stack>
                         <Chip
                             sx={{
                                 width:130,
@@ -317,7 +289,7 @@ export const DashboardBookingTransport: React.FC = () => {
                                   variant={"caption"}>{row.transport?.title} </Typography>}
                                                            title={row.transport?.title} />
                           <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description}</Typography>
-                        </div>
+                        </Stack>
                         : '')
                         ;
                 },

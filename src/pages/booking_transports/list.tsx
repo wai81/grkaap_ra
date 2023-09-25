@@ -254,30 +254,24 @@ export const Booking_transportList = () => {
                 minWidth: 150,
                 flex: 3,
                 renderCell: function render({row}) {
-                    return (<div>
-                            <Typography>
+                    return (
+                            <Stack direction={'column'}>
                                 {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
-                            </Typography>
-                            <Typography variant={"body2"}>
-                                <Chip
-                                    //size="small"
-                                    variant="outlined"
-                                    //color={"primary"}
-                                    sx={{
-                                        height: 'auto',
-                                        '& .MuiChip-label': {
-                                            display: 'block',
-                                            whiteSpace: 'normal',
-                                        },
-                                    }}
-                                    //avatar={<Avatar><GroupsIcon/></Avatar>}
-                                    label={`${row.count_man} чел. ${row.subunit?.title}`}/>
-                            </Typography>
-                            <Typography color={'textSecondary'} noWrap={true} variant={"caption"}
-                                        title={row.subunit?.title}>
-                                {row.description}
-                            </Typography>
-                        </div>
+                                     <Chip
+                                         variant="outlined"
+                                         sx={{
+                                             height: 'auto',
+                                             '& .MuiChip-label': {
+                                                 display: 'block',
+                                                 whiteSpace: 'normal',
+                                             },
+                                         }}
+                                        label={`${row.count_man} чел. ${row.subunit?.title}`}/>
+                                <Typography color={'textSecondary'} noWrap={true} variant={"caption"}
+                                            title={row.subunit?.title}>
+                                    {row.description}
+                                </Typography>
+                            </Stack>
                     );
                 },
 
@@ -293,32 +287,6 @@ export const Booking_transportList = () => {
                     return (`${row.duration} ч.`)
                 }
             },
-            // {
-            //     field: "subunit",
-            //     headerName: t("booking_transport.fields.subunit"),
-            //     headerAlign: "center",
-            //     align: "left",
-            //     minWidth: 150,
-            //     flex: 1.5,
-            //     sortable: false,
-            //     renderCell: function render({row}) {
-            //         return <Typography noWrap={false} variant={"body2"} title={row.subunit?.title}>
-            //             {row.subunit?.title}
-            //         </Typography>;
-            //     },
-            // },
-            // {
-            //     field: "count_man",
-            //     headerName: t("booking_transport.fields.count_man"),
-            //     headerAlign: "center",
-            //     align: "center",
-            //     flex: 0.2,
-            //     renderCell: function render({row}) {
-            //         //return <Chip avatar={<Avatar><GroupsIcon/></Avatar>} label={row.count_man}  />
-            //         return `${row.count_man} чел.`
-            //     },
-            // },
-
             {
                 field: "transport",
                 headerName: t("booking_transport.fields.transport"),
@@ -328,7 +296,7 @@ export const Booking_transportList = () => {
                 sortable: false,
                 renderCell: function render({row}) {
 
-                    return (row.transport !== null ? <div >
+                    return (row.transport !== null ? <Stack>
                             <Chip
                                 sx={{
                                     width:180,
@@ -345,7 +313,7 @@ export const Booking_transportList = () => {
                                                            title={`${row.transport?.title} (${row.transport?.description})`}
                         />
                             <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description} </Typography>
-                        </div>
+                        </Stack>
                         : '');
                 },
             },
@@ -394,7 +362,7 @@ export const Booking_transportList = () => {
                 flex: 0.5,
             },
         ],
-        [t, apiUrl, showEditDrawer]
+        [ t, apiUrl, showEditDrawer]
     );
 
 
