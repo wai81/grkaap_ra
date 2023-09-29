@@ -42,6 +42,8 @@ import PeopleTwoToneIcon from "@mui/icons-material/PeopleTwoTone";
 import EmojiTransportationTwoToneIcon from "@mui/icons-material/EmojiTransportationTwoTone";
 import AirportShuttleTwoToneIcon from "@mui/icons-material/AirportShuttleTwoTone";
 import DriveEtaTwoToneIcon from "@mui/icons-material/DriveEtaTwoTone";
+import HolidayVillageTwoToneIcon from '@mui/icons-material/HolidayVillageTwoTone';
+import EventTwoToneIcon from '@mui/icons-material/EventTwoTone';
 import {TransportList} from "pages/transports";
 
 import {
@@ -59,6 +61,11 @@ import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {CasbinObjectsList} from "pages/casbinobjects";
 import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
 import {AdminPanelSettingsTwoTone} from "@mui/icons-material";
+import {
+    Registration_appointmentCreate,
+    Registration_appointmentEdit,
+    Registration_appointmentList, Registration_appointmentShow
+} from "./pages/registration_appointments";
 
 
 
@@ -166,6 +173,22 @@ function App() {
                                     },
 
                                 }, {
+                                    name: "action_registration",
+                                    meta: {
+                                        icon: <HolidayVillageTwoToneIcon/>,
+                                    },
+                                }, {
+                                    name: "registration_appointment",
+                                    list: "/action_registration/registration_appointment",
+                                    create: "/action_registration/registration_appointment/create",
+                                    edit: "/action_registration/registration_appointment/edit/:id",
+                                    show: "/action_registration/registration_appointment/show/:id",
+
+                                    meta: {
+                                        icon: < EventTwoToneIcon/>,
+                                        parent: "action_registration",
+                                    },
+                                }, {
                                     name: "reference",
                                     meta: {
                                         icon: <ClassTwoToneIcon/>,
@@ -229,6 +252,12 @@ function App() {
                                         icon: <DnsTwoToneIcon/>,
                                         parent: "settings",
                                     },
+                                }, {
+                                    name: "registration_appointment",
+                                    list: "/registration_appointment",
+                                    create: "/registration_appointment/create",
+                                    edit: "/registration_appointment/edit/:id",
+                                    show: "/registration_appointment/show/:id"
                                 }]}
                             >
                                 <Routes>
@@ -309,6 +338,17 @@ function App() {
                                             <Route path="transports">
                                                 <Route index element={<TransportList/>}/>
                                             </Route>
+                                        </Route>
+
+                                        <Route path="action_registration">
+                                            <Route path="registration_appointment">
+                                                <Route index element={<Registration_appointmentList/>}/>
+                                                <Route path="create" element={<Registration_appointmentCreate/>}/>
+                                                <Route path="edit/:id" element={<Registration_appointmentEdit/>}/>
+                                                <Route path="show/:id" element={<Registration_appointmentShow/>}/>
+
+                                            </Route>
+
                                         </Route>
 
                                     </Route>

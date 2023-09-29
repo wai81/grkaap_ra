@@ -156,7 +156,9 @@
   "booking-transport": {
     "booking-transport":"Бронь транспорта"
   },
-
+  "action_registration": {
+    "action_registration":"Служба Регистрации"
+  },
   "users": {
     "users": "Пользователи",
     "fields": {
@@ -417,5 +419,8 @@
       "list": "Управление Ресурсами",
       "show": "Просмотр Ресурса"
     }
+  },
+  "registration_appointment": {
+    "registration_appointment": "Запись на регистрацию"
   }
 }
