@@ -8,7 +8,7 @@ import {
 import {CssBaseline, GlobalStyles} from "@mui/material";
 import {dataProvider} from "./providers/data-provider/";
 import routerBindings, {
-    CatchAllNavigate,
+    //CatchAllNavigate,
     NavigateToResource,
     UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
@@ -57,14 +57,14 @@ import {Header, Layout, Sider, Title} from "components/layout";
 import {AuthPage} from "pages/auth";
 import {DashboardBookingTransport} from "./pages/booking_transports/dasboard";
 import { RoleList } from "pages/roles";
-import { MuiInferencer } from "@refinedev/inferencer/mui";
+//import { MuiInferencer } from "@refinedev/inferencer/mui";
 import {CasbinObjectsList} from "pages/casbinobjects";
-import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
+//import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
 import {AdminPanelSettingsTwoTone} from "@mui/icons-material";
 import {
-    Registration_appointmentCreate,
-    Registration_appointmentEdit,
-    Registration_appointmentList, Registration_appointmentShow
+    RegistrationAppointmentCreate,
+    RegistrationAppointmentEdit,
+    RegistrationAppointmentList, RegistrationAppointmentShow
 } from "./pages/registration_appointments";
 
 
@@ -252,12 +252,6 @@ function App() {
                                         icon: <DnsTwoToneIcon/>,
                                         parent: "settings",
                                     },
-                                }, {
-                                    name: "registration_appointment",
-                                    list: "/registration_appointment",
-                                    create: "/registration_appointment/create",
-                                    edit: "/registration_appointment/edit/:id",
-                                    show: "/registration_appointment/show/:id"
                                 }]}
                             >
                                 <Routes>
@@ -342,10 +336,10 @@ function App() {
 
                                         <Route path="action_registration">
                                             <Route path="registration_appointment">
-                                                <Route index element={<Registration_appointmentList/>}/>
-                                                <Route path="create" element={<Registration_appointmentCreate/>}/>
-                                                <Route path="edit/:id" element={<Registration_appointmentEdit/>}/>
-                                                <Route path="show/:id" element={<Registration_appointmentShow/>}/>
+                                                <Route index element={<RegistrationAppointmentList/>}/>
+                                                <Route path="create" element={<RegistrationAppointmentCreate/>}/>
+                                                <Route path="edit/:id" element={<RegistrationAppointmentEdit/>}/>
+                                                <Route path="show/:id" element={<RegistrationAppointmentShow/>}/>
 
                                             </Route>
 
