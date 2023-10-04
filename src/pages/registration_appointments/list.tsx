@@ -4,9 +4,25 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 //import 'moment/locale/ru';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import {Card, CardContent, CardHeader} from "@mui/material";
+import {Card, CardContent, CardHeader, Grid} from "@mui/material";
 import React, { useState } from "react";
-import { IBookingTransport } from "interfaces/IBookingTransport";
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import momentPlugin from '@fullcalendar/moment'
+import ru from "@fullcalendar/core/locales/ru";
+import {EventInput} from "@fullcalendar/core";
+import {
+    ICreateRegistrationAppointment,
+    IRegistrationAppointment,
+    IUpdateRegistrationAppointment
+} from "../../interfaces/IRegistrationAppointment";
+import {useModalForm} from "@refinedev/react-hook-form";
+
+import {CreateRegistrationAppointmentsDrawer} from "../../components/registration_appointments";
+import {EditRegistrationAppointmentsDrawer} from "../../components/registration_appointments/edit";
+import {CreateButton, List} from "@refinedev/mui";
 
 const localizer = momentLocalizer(moment)
 
@@ -14,15 +30,15 @@ export const RegistrationAppointmentList: React.FC = () => {
     const t = useTranslate();
     const totalDays = 365;
     const [today, setToday] = useState(moment())
-    
+
     const startDay = today.clone().startOf('year').startOf('week');
     const startDayQuery = startDay.clone().format('YYYY-MM-DD hh:mm:ss');
     const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(100);
 
-    const { data, isLoading, isError } = useList<IBookingTransport, HttpError>({
-        resource: "booking_transport",
+    const { data, isLoading, isError } = useList<IRegistrationAppointment, HttpError>({
+        resource: "registration_appointment",
         pagination: {
             current,
             pageSize,
@@ -40,10 +56,8 @@ export const RegistrationAppointmentList: React.FC = () => {
             }
         ]
     });
-    
+
     const eventBooking = data?.data ?? [];
-    
-    //console.log(eventBooking)
 
     const messages = {
         allDay: "Весь день",
@@ -59,15 +73,42 @@ export const RegistrationAppointmentList: React.FC = () => {
         time: "Время",
         event: "Событие",
         showMore: (total: number) => `+ ${total} подробнее`,
+        noEventsInRange:"В этом диапазоне нет событий."
     };
 
     const myEvents = eventBooking.map((event)=>({
-
+        id: event.id,
         start: event.startDate,
         end: event.endDate,
-        allDay: event.allDay,
-        title: `${event.title} ${event.subunit.name} ${event.transport==null? '': event.transport.title}`
+        allDay: false,
+        title: `${event.executor} ${event.subunit?.name}`
     }));
+
+    const createDrawerFormProps = useModalForm<ICreateRegistrationAppointment, HttpError>({
+        refineCoreProps: {action: "create"},
+        modalProps: {
+            autoResetForm: true,
+        }
+    });
+    const {
+        modal: {show: showCreateDrawer},
+    } = createDrawerFormProps;
+
+    const editDrawerFormProps = useModalForm<IUpdateRegistrationAppointment, HttpError>({
+        refineCoreProps: {action: "edit"},
+    });
+    const {
+        modal: {show: showEditDrawer},
+    } = editDrawerFormProps;
+
+    // const INITIAL_EVENTS: EventInput[] = eventBooking.map((event) =>({
+    //     id: event.id,
+    //     start: event.startDate,
+    //     end: event.endDate,
+    //
+    //     allDay: event.allDay,
+    //     title: `${event.title} ${event.subunit.name} ${event.transport==null? '': event.transport.title}`
+    // }))
     // const myEvents = [{
     //     start: '2023-10-02T08:00:00',
     //     end: '2023-10-02T09:00:00',
@@ -101,14 +142,22 @@ export const RegistrationAppointmentList: React.FC = () => {
         return <div>Something went wrong!</div>;
     }
     return(
-        <Card sx={{ paddingX: { xs: 2, md: 0 } }}>
-            <CardHeader title={t("filter.title")} />
-            <CardContent sx={{ pt: 0}}>
+        <List
+            headerButtons={() =>(
+                <>
+                    <CreateButton hidden={true}/>
+                </>
+            )}
+        >
+            <CreateRegistrationAppointmentsDrawer {...createDrawerFormProps} />
+            <EditRegistrationAppointmentsDrawer {...editDrawerFormProps} />
             <Calendar
                 messages={messages}
-                //className="calendar"
+                className="calendar"
                 localizer={localizer}
                 events={myEvents}
+                onSelectEvent={(event)=>showEditDrawer(event.id)}
+                onSelectSlot={()=>showCreateDrawer()}
                 startAccessor={(event: any) => {
                     return moment(event.start).toDate();
                 }}
@@ -124,10 +173,10 @@ export const RegistrationAppointmentList: React.FC = () => {
                 min={moment().startOf('day').toDate()}
                 max={moment().endOf('day').toDate()}
                 defaultDate={moment().toDate()}
-                style={{ height: "700px"}}
+                //popup
+                selectable
+                style={{ height: "800px"}}
             />
-
-            </CardContent>
-        </Card>
+        </List>
     )
 };

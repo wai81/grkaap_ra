@@ -173,20 +173,20 @@ function App() {
                                     },
 
                                 }, {
-                                    name: "action_registration",
+                                    name: "registration",
                                     meta: {
                                         icon: <HolidayVillageTwoToneIcon/>,
                                     },
                                 }, {
                                     name: "registration_appointment",
-                                    list: "/action_registration/registration_appointment",
-                                    create: "/action_registration/registration_appointment/create",
-                                    edit: "/action_registration/registration_appointment/edit/:id",
-                                    show: "/action_registration/registration_appointment/show/:id",
+                                    list: "/registration/appointment",
+                                    create: "/registration/appointment/create",
+                                    edit: "/registration/appointment/edit/:id",
+                                    show: "/registration/appointment/show/:id",
 
                                     meta: {
                                         icon: < EventTwoToneIcon/>,
-                                        parent: "action_registration",
+                                        parent: "registration",
                                     },
                                 }, {
                                     name: "reference",
@@ -334,8 +334,8 @@ function App() {
                                             </Route>
                                         </Route>
 
-                                        <Route path="action_registration">
-                                            <Route path="registration_appointment">
+                                        <Route path="registration">
+                                            <Route path="appointment">
                                                 <Route index element={<RegistrationAppointmentList/>}/>
                                                 <Route path="create" element={<RegistrationAppointmentCreate/>}/>
                                                 <Route path="edit/:id" element={<RegistrationAppointmentEdit/>}/>

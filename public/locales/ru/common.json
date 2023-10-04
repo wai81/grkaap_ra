@@ -156,8 +156,8 @@
   "booking-transport": {
     "booking-transport":"Бронь транспорта"
   },
-  "action_registration": {
-    "action_registration":"Служба Регистрации"
+  "registration": {
+    "registration":"Служба Регистрации"
   },
   "users": {
     "users": "Пользователи",
@@ -421,6 +421,35 @@
     }
   },
   "registration_appointment": {
-    "registration_appointment": "Запись на регистрацию"
+    "registration_appointment": "Запись на регистрацию",
+    "fields": {
+      "typeRegistration": "Вид регистрации",
+      "addressObject": "Адрес объекта",
+      "costumerName": "ФИО клиента",
+      "startDate": "Дата записи на регистрацию",
+      "startTime": "Время",
+      "costumerContactPhone": "Телефон клиента:",
+      "executor": "Регистратор",
+      "duration": "Продолжительность (ч.)",
+      "endDate": "Возвращение",
+      "organization": "Организация",
+      "subunit": "Подразделение",
+      "statusAppointmentLabel": "Статус события",
+
+      "creator": "Создал",
+      "statusAppointment": {
+        "new": "Новое событие",
+        "appointed": "Событие состоялось",
+        "cancelled": "Событие отменено клиентом"
+      },
+      "description": "Примечание",
+      "created_at": "Cоздан"
+    },
+    "titles": {
+      "create": "Новое Событие",
+      "edit": "Изменить Событие",
+      "list": "Запись на регистрацию",
+      "show": "Просмотр Ресурса"
+    }
   }
 }
