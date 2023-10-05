@@ -135,10 +135,10 @@ export const EditRegistrationAppointmentsDrawer: React.FC<
                                         <MenuItem value="NEW">
                                             {t("registration_appointment.fields.statusAppointment.new")}
                                         </MenuItem>
-                                        <MenuItem value="APPOINTED">
+                                        <MenuItem value="APPOINTED" sx={{color:'green'}}>
                                             {t("registration_appointment.fields.statusAppointment.appointed")}
                                         </MenuItem>
-                                        <MenuItem value="CANCELLED" color={warning}>
+                                        <MenuItem value="CANCELLED" sx={{color:'red'}}>
                                             {t("registration_appointment.fields.statusAppointment.cancelled")}
                                         </MenuItem>
                                     </Select>
