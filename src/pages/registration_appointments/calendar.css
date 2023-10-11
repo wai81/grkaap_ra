@@ -1,0 +1,48 @@
+.rbc-header {
+    background: #6384f1;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.rbc-event {
+    padding: 0px !important;
+    /*border-radius: 0px !important;*/
+    /*border: none !important;*/
+    /*background-color: transparent !important;*/
+    background-color: rgba(122, 190, 245, 0.73);
+    z-index: 2;
+    position: relative;
+}
+
+/*.rbc-background-event {*/
+/*    padding: 0px !important;*/
+/*    border-radius: 0px !important;*/
+/*    border: none !important;*/
+/*    background-color: transparent !important;*/
+/*}*/
+
+/*.rbc-event-label {*/
+/*    display: none !important;*/
+/*}*/
+
+/*.rbc-events-container {*/
+/*    width: 100% !important;*/
+/*}*/
+
+/*.rbc-timeslot-group {*/
+/*    min-height: 120px !important;*/
+/*}*/
+
+/*.rbc-day-slot .rbc-time-slot:after {*/
+/*    content: "";*/
+/*    width: 100%;*/
+/*    border-top: 1px solid lightblue;*/
+/*    display: block;*/
+/*}*/
+
+
+/*.rbc-addons-dnd-resizable {*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*}*/

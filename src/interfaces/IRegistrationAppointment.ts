@@ -6,11 +6,19 @@ import {IUser} from "./IUser";
 //
 // }
 
-enum statusRegistrationAppointment {
+export enum statusRegistrationAppointment {
     new = "NEW",
     appointed =  "APPOINTED",
     cancelled = "CANCELLED"
 }
+
+export const EVENT_STATUS_COLORS = {
+    NEW: "#3ca6f6",
+    APPOINTED: "#7cea82",
+    CANCELLED: "#ea7c7c",
+};
+
+
 
 export interface IRegistrationAppointment {
     id: string;
@@ -23,13 +31,21 @@ export interface IRegistrationAppointment {
     costumerContactPhone:string;
     description?: string;
     executor: string;
-    statusAppointment: statusRegistrationAppointment ;
+    statusAppointment: string;//"NEW" | "APPOINTED" | "CANCELLED" ;
     subunit?: ISubunit;
     organization?: IOrganization;
     created_at: string;
     creator?: IUser;
     // is_active: boolean;
 }
+
+export interface EventItem {
+    id: string;
+    start: Date;
+    end: Date;
+    data?: { appointment?: IRegistrationAppointment };
+    //isDraggable?: boolean;
+};
 
 export interface ICreateRegistrationAppointment {
     startDate: string;

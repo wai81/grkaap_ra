@@ -428,7 +428,7 @@
       "costumerName": "ФИО клиента",
       "startDate": "Дата записи на регистрацию",
       "startTime": "Время",
-      "costumerContactPhone": "Телефон клиента:",
+      "costumerContactPhone": "Телефон клиента",
       "executor": "Регистратор",
       "duration": "Продолжительность (ч.)",
       "endDate": "Возвращение",

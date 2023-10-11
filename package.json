@@ -40,20 +40,20 @@
     "moment": "^2.29.4",
     "mui-daterange-picker": "^1.0.5",
     "react": "^18.2.0",
+    "react-big-calendar": "^0.35.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.30.0",
     "react-i18next": "^11.8.11",
     "react-multi-date-picker": "^3.3.4",
     "react-scripts": "^5.0.0",
     "styled-components": "^5.3.6",
-    "react-big-calendar": "^0.35.0",
     "web-vitals": "^1.1.1"
   },
   "devDependencies": {
     "@types/node": "^12.20.10",
     "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
     "@types/react-big-calendar": "^0.33.2",
+    "@types/react-dom": "^18.0.6",
     "casbin": "^5.26.1",
     "typescript": "^4.7.4"
   },
