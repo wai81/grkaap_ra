@@ -132,10 +132,11 @@ export const RegistrationAppointmentList: React.FC = () => {
         const event = data.event?.data.event;
         const statusAppointment = event?.statusAppointment;
 
-        const date = new Date(event.created_at);
-        const cratedAt = moment(date,'DD-MM-YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
+        const created_at = new Date(event.created_at);
+        const cratedAt = moment(created_at,'DD-MM-YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
         //console.log(cratedAt);
-        const startEvent = moment(event.startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm');
+        const startDate = new Date(event.startDate);
+        const startEvent = moment(startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm');
         //console.log(event)
         return (
             <div
