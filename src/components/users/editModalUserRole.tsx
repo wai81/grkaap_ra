@@ -1,6 +1,6 @@
-import {IUser, IUserRole, IUserRoleUpdate} from "../../interfaces/IUser";
+import {IUser, IUserRole} from "../../interfaces/IUser";
 import React, {useEffect, useState} from "react";
-import {HttpError, useApiUrl, useOne, useTranslate, useUpdate} from "@refinedev/core";
+import {HttpError, useOne, useTranslate, useUpdate} from "@refinedev/core";
 import {
     Button, Checkbox,
     Dialog,
@@ -12,8 +12,7 @@ import {
     Grid,
     Typography
 } from "@mui/material";
-import {TOKEN_KEY} from "../../constants";
-import axios from "axios";
+
 
 interface FormData {
     options: Array<string>;
@@ -34,7 +33,6 @@ export const EditModalUserRole: React.FC<UserProps> = ({
     const t =useTranslate();
     const {mutate: updateUserRole} = useUpdate();
 
-    const apiUrl = useApiUrl();
 
     const { data } = useOne<IUserRole ,HttpError>({
         resource: 'users/get_user_role',

@@ -1,5 +1,5 @@
 import {IRole, IRolePermissions} from "../../interfaces/IRole";
-import {HttpError, useApiUrl, useOne, useTranslate, useUpdate} from "@refinedev/core";
+import {HttpError, useOne, useTranslate, useUpdate} from "@refinedev/core";
 import {
     Button,
     Checkbox,
@@ -29,8 +29,6 @@ export const EditModalPermissions: React.FC<RoleProps> = ({
     visible: modalVisible
                                                      }) =>{
     const t =useTranslate();
-
-    const apiUrl = useApiUrl();
 
     const {mutate: updatePermissions} = useUpdate();
 

@@ -15,34 +15,12 @@
     position: relative;
 }
 
-/*.rbc-background-event {*/
-/*    padding: 0px !important;*/
-/*    border-radius: 0px !important;*/
-/*    border: none !important;*/
-/*    background-color: transparent !important;*/
-/*}*/
 
-/*.rbc-event-label {*/
-/*    display: none !important;*/
-/*}*/
-
-/*.rbc-events-container {*/
-/*    width: 100% !important;*/
-/*}*/
-
-/*.rbc-timeslot-group {*/
-/*    min-height: 120px !important;*/
-/*}*/
-
-/*.rbc-day-slot .rbc-time-slot:after {*/
-/*    content: "";*/
-/*    width: 100%;*/
-/*    border-top: 1px solid lightblue;*/
-/*    display: block;*/
-/*}*/
-
-
-/*.rbc-addons-dnd-resizable {*/
-/*    height: 100%;*/
-/*    width: 100%;*/
-/*}*/
+.rbc-current-time-indicator {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #fd0101;
+    pointer-events: none; }

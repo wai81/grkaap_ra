@@ -5,19 +5,10 @@ import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {Box, Card, CardContent, CardHeader, Grid, Stack, Typography} from "@mui/material";
 import React, {useMemo, useState} from "react";
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import momentPlugin from '@fullcalendar/moment'
-import ru from "@fullcalendar/core/locales/ru";
-import {EventInput} from "@fullcalendar/core";
 import {
-    EVENT_STATUS_COLORS,
-    EventItem,
     ICreateRegistrationAppointment,
     IRegistrationAppointment,
-    IUpdateRegistrationAppointment, statusRegistrationAppointment
+    IUpdateRegistrationAppointment
 } from "../../interfaces/IRegistrationAppointment";
 import {useModalForm} from "@refinedev/react-hook-form";
 
@@ -90,9 +81,6 @@ export const RegistrationAppointmentList: React.FC = () => {
         id: event.id,
         start: moment(event.startDate).toDate(),
         end: moment(event.endDate).toDate(),
-        //allDay: false,
-        //title: `${event.executor} ${event.subunit?.name}`,
-        //status: event.statusAppointment
         data: { event },
     }));
 
@@ -128,16 +116,12 @@ export const RegistrationAppointmentList: React.FC = () => {
 
 
     const CustomEvent = (data:any)=>{
-        //console.log(data.event.data)
         const event = data.event?.data.event;
         const statusAppointment = event?.statusAppointment;
-
         const created_at = new Date(event.created_at);
         const cratedAt = moment(created_at,'DD-MM-YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
-        //console.log(cratedAt);
         const startDate = new Date(event.startDate);
         const startEvent = moment(startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm');
-        //console.log(event)
         return (
             <div
                 style={{ background:
@@ -147,7 +131,7 @@ export const RegistrationAppointmentList: React.FC = () => {
                 borderRadius:'5px', color:'black'
             }}
             >
-                <CustomTooltip arrow placement="bottom-start"
+                <CustomTooltip arrow //placement="bottom-start"
                                title={<Stack sx={{padding: "2px"}}>
                                    <table width={"100%"}>
                                        <thead>
