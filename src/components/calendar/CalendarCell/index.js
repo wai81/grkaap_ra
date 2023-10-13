@@ -55,8 +55,11 @@ const CalendarCell = ({dayItem, today, events, setDisplayMode}) => {
                     {/*текущий день*/}
 
                     <ShowDayWrapper>
-                        <DayWrapper onDoubleClick={(e) => showCreateDrawer(dayItem)}>
+                        <DayWrapper onDoubleClick={(e) => {
+                            showCreateDrawer(dayItem)
+                        }}>
                             {
+
                                 isCurrentDay(dayItem) ? (
                                     <CurrentDay>{dayItem.format('D')}</CurrentDay>
                                 ) : dayItem.format('D')

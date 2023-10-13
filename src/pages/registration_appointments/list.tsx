@@ -4,7 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {Box, Card, CardContent, CardHeader, Grid, Stack, Typography} from "@mui/material";
-import React, {useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {
     ICreateRegistrationAppointment,
     IRegistrationAppointment,
@@ -29,14 +29,13 @@ const localizer = momentLocalizer(moment)
 
 export const RegistrationAppointmentList: React.FC = () => {
     const t = useTranslate();
-    const totalDays = 365;
     const [today, setToday] = useState(moment())
 
-    const startDay = today.clone().startOf('year').startOf('hour');
-    const startDayQuery = startDay.clone().format('YYYY-MM-DD hh:mm:ss');
-    const endDayQuery = startDay.clone().add(totalDays, 'day').format('YYYY-MM-DD hh:mm:ss')
+    const startDayQuery = today.clone().startOf('month').startOf('isoWeek').format('YYYY-MM-DD hh:mm:ss');
+    const endDayQuery = today.clone().endOf('month').endOf('isoWeek').format('YYYY-MM-DD hh:mm:ss')
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(100);
+    const onNavigate = useCallback((newDate:any) => setToday(moment(newDate)), [setToday])
 
     const { data, isLoading, isError } = useList<IRegistrationAppointment, HttpError>({
         resource: "registration_appointment",
@@ -44,6 +43,7 @@ export const RegistrationAppointmentList: React.FC = () => {
             current,
             pageSize,
         },
+
         filters: [
             {
                 field: 'startDate',
@@ -51,7 +51,7 @@ export const RegistrationAppointmentList: React.FC = () => {
                 value: startDayQuery
             },
             {
-                field: 'endDate',
+                field: 'startDate',
                 operator: 'lte',
                 value: endDayQuery
             }
@@ -84,13 +84,20 @@ export const RegistrationAppointmentList: React.FC = () => {
         data: { event },
     }));
 
+
+    const onCreateNewEvent = useCallback((slot:any) => {
+        showCreateDrawer()
+    }, [])
+
     const createDrawerFormProps = useModalForm<ICreateRegistrationAppointment, HttpError>({
+
         refineCoreProps: {action: "create"},
+        syncWithLocation: true,
         modalProps: {
             autoResetForm: true,
         },
-        // defaultValues:{
-        //     startDate: ,
+        //  defaultValues:{
+        //      startDate: startDayQuery,
         // }
     });
     const {
@@ -99,6 +106,7 @@ export const RegistrationAppointmentList: React.FC = () => {
 
     const editDrawerFormProps = useModalForm<IUpdateRegistrationAppointment, HttpError>({
         refineCoreProps: {action: "edit"},
+        syncWithLocation: true,
     });
     const {
         modal: {show: showEditDrawer},
@@ -112,7 +120,6 @@ export const RegistrationAppointmentList: React.FC = () => {
     if (isError) {
         return <div>Something went wrong!</div>;
     }
-
 
 
     const CustomEvent = (data:any)=>{
@@ -177,11 +184,12 @@ export const RegistrationAppointmentList: React.FC = () => {
         )
     }
 
+
     return(
         <List
             headerButtons={() =>(
                 <>
-                    <CreateButton onClick={()=>showCreateDrawer()}/>
+                    <CreateButton onClick={()=>onCreateNewEvent}/>
                 </>
             )}
         >
@@ -195,7 +203,8 @@ export const RegistrationAppointmentList: React.FC = () => {
                 components={{
                     event: CustomEvent}}
                 onSelectEvent={(event)=>showEditDrawer(event.id)}
-                onSelectSlot={()=>showCreateDrawer()}
+                onSelectSlot={onCreateNewEvent}
+                onNavigate = {onNavigate}
                 startAccessor={(event: any) => {
                     return moment(event.start).toDate();
                 }}
