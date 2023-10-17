@@ -79,3 +79,14 @@ export interface IUpdateRegistrationAppointment {
     organization_id: IOrganization["id"];
     // is_active: boolean;
 }
+
+export interface IRegistrationAppointmentFilterVariables {
+    q?: string;
+    organization?: string;
+    subunit?: string;
+    // transport?: string;
+    // startDate?: [string,string];
+    // endDate?: string;
+    // allDay?: boolean | string;
+    // is_active?: boolean | string;
+}
