@@ -453,7 +453,16 @@
       "executor": {
         "label": "Регистратор",
         "placeholder": "Введите строку для поиска"
-      }
+      },
+      "organization":{
+        "label": "Организация",
+        "placeholder": "Выберите организацию"
+      },
+      "subunit":{
+        "label": "Подразделение",
+        "placeholder": "Выберите подразделение"
+      },
+      "submit": "Поиск"
     },
     "titles": {
       "create": "Новое Событие",

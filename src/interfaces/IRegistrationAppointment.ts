@@ -82,6 +82,9 @@ export interface IUpdateRegistrationAppointment {
 
 export interface IRegistrationAppointmentFilterVariables {
     q?: string;
+    startDayQuery?: string,
+    endDayQuery?: string,
+    executor?: string;
     organization?: string;
     subunit?: string;
     // transport?: string;
