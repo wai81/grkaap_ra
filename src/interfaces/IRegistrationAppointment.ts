@@ -85,7 +85,7 @@ export interface IRegistrationAppointmentFilterVariables {
     startDayQuery?: string,
     endDayQuery?: string,
     executor?: string;
-    organization?: string;
+    organization?: string|number;
     subunit?: string;
     // transport?: string;
     // startDate?: [string,string];

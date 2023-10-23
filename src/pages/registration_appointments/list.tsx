@@ -4,7 +4,7 @@ import {
     getDefaultFilter,
     HttpError,
     useGetIdentity,
-    useList,
+    useList, useTable,
     useTranslate
 } from "@refinedev/core";
 import {Calendar, momentLocalizer, Event  } from "react-big-calendar";
@@ -17,8 +17,8 @@ import {
     Button,
     Card,
     CardContent,
-    CardHeader,
-    Grid,
+    CardHeader, CircularProgress,
+    Grid, IconButton, InputBase, Paper,
     Stack,
     TextField,
     Typography
@@ -42,11 +42,13 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import SearchIcon from "@mui/icons-material/Search";
 import {IUser, IUserFilterVariables} from "../../interfaces/IUser";
 import {IBookingTransport, IBookingTransportFilterVariables} from "../../interfaces/IBookingTransport";
 import {Controller} from "react-hook-form";
 
 const localizer = momentLocalizer(moment)
+
 
 
 export const RegistrationAppointmentList: React.FC = () => {
@@ -62,135 +64,59 @@ export const RegistrationAppointmentList: React.FC = () => {
     //const [current, setCurrent] = useState(1);
     //const [pageSize, setPageSize] = useState(100);
 
+    // const { data, isLoading, isError} = useList<
+    //     IRegistrationAppointmentFilterVariables,
+    //     HttpError,
+    //     IRegistrationAppointment
+    //     >({
+    //     resource: "registration_appointment",
+    //     pagination: {
+    //         pageSize: 200,
+    //     },
+    //
+    //     filters:
+    //         [
+    //             {
+    //                 field: 'startDate',
+    //                 operator: 'gte',
+    //                 value: startDayQuery
+    //             },
+    //             {
+    //                 field: 'startDate',
+    //                 operator: 'lte',
+    //                 value: endDayQuery
+    //             },
+    //             {
+    //                 field: 'organization__id__in',
+    //                 operator: 'eq',
+    //                 value: user?.organization.id//organization,
+    //             },
+    //         ]
+    // });
+    //const eventBooking = data?.data? ?? [];
 
-
-    const {dataGridProps, search, filters,} = useDataGrid<
-        IRegistrationAppointment,
-        HttpError,
-        IRegistrationAppointmentFilterVariables
-        >({
-        resource: "registration_appointment",
-        onSearch: (params) => {
-            const filters: CrudFilters = [];
-            const {
-                q,
-                startDayQuery,
-                endDayQuery,
-                executor,
-                organization,
-                subunit,
-            } = params;
-
-            filters.push({
-                field: "q",
-                operator: "eq",
-                value: q !== "" ? q : undefined,
-            });
-
-            filters.push({
-                field: 'startDate',
-                operator: 'gte',
-                value: startDayQuery
-            });
-            filters.push({
-                field: 'startDate',
-                operator: 'lte',
-                value: endDayQuery
-            })
-            filters.push({
-                field: "executor_like",
-                operator: "eq",
-                value: executor !== "" ? executor : undefined,
-            });
-
-            filters.push({
-                field: "organization__id__in",
-                operator: "eq",
-                value: (organization ?? [].length) > 0 ? organization : undefined,
-            });
-
-            filters.push({
-                field: "subunit__id__in",
-                operator: "eq",
-                value: subunit,//(subunit ?? [].length) > 0 ? subunit : undefined,
-            });
-            console.log(filters)
-            return filters;
-        },
-        pagination: {
-            pageSize: 100,
-        },
-        filters: {
-            initial: [
-                {
-                    field: 'startDate',
-                    operator: 'gte',
-                    value: startDayQuery
-                },
-                {
-                    field: 'startDate',
-                    operator: 'lte',
-                    value: endDayQuery
-                },
-                {
-                    field: 'organization__id__in',
-                    operator: 'eq',
-                    value: user?.organization.id//organization,
-                },
-            ]
-        },
-    });
-
-    console.log(dataGridProps.rows)
-
-
-    const { data, isLoading, isError} = useList<
-        IRegistrationAppointmentFilterVariables,
-        HttpError,
-        IRegistrationAppointment
-        >({
+    const { tableQueryResult: data, setFilters, filters } = useTable<IRegistrationAppointment,HttpError>({
         resource: "registration_appointment",
         pagination: {
-            pageSize: 100,
+            pageSize: 200,
         },
-        // filters: filters,
-        //     // {
-        //     //     filters.push({
-        //     //         field: "startDate",
-        //     //         operator: "eq",
-        //     //         value: startDayQuery
-        //     //     }),
-        //     //     filters.push({
-        //     //
-        //     //     })
-        //     // }
-        filters: filters
-            // [
-            //     {
-            //         field: 'startDate',
-            //         operator: 'gte',
-            //         value: startDayQuery
-            //     },
-            //     {
-            //         field: 'startDate',
-            //         operator: 'lte',
-            //         value: endDayQuery
-            //     },
-            //     {
-            //         field: 'organization__id__in',
-            //         operator: 'eq',
-            //         value: user?.organization.id//organization,
-            //     },
-            //     // {
-            //     //     field: 'subunit__id__in',
-            //     //     operator: 'eq',
-            //     //     value: subunit
-            //     // }
-            // ],
-    });
+        filters:{
+            initial:[
+                        {
+                            field: 'startDate',
+                            operator: 'gte',
+                            value: startDayQuery
+                         },
+                        {
+                            field: 'startDate',
+                            operator: 'lte',
+                            value: endDayQuery
+                        },
+                ]
+        }
+    })
 
-
-    const eventBooking = data?.data ?? [];
+    const eventBooking = data?.data?.data ?? [];
 
     const messages = {
         allDay: "Весь день",
@@ -209,7 +135,7 @@ export const RegistrationAppointmentList: React.FC = () => {
         noEventsInRange:"В этом диапазоне нет событий."
     };
 
-    const myEvents = eventBooking.map((event)=>({
+    const myEvents = eventBooking.map((event:IRegistrationAppointment)=>({
         id: event.id,
         start: moment(event.startDate).toDate(),
         end: moment(event.endDate).toDate(),
@@ -244,65 +170,38 @@ export const RegistrationAppointmentList: React.FC = () => {
         modal: {show: showEditDrawer},
     } = editDrawerFormProps;
 
-    const {register, handleSubmit, control,} = useForm<BaseRecord,
-        HttpError,
-        IRegistrationAppointmentFilterVariables>({
-        defaultValues: {
-            q: getDefaultFilter("q", filters, "eq"),
-            executor: getDefaultFilter("executor", filters, "eq"),
-            organization: getDefaultFilter("organization.id", filters, "eq"),
-            subunit: getDefaultFilter("subunit.id", filters, "eq"),
-            //startDayQuery:
-        },
-    });
 
     const onNavigate = useCallback((newDate:any) => {
-        setToday(moment(newDate))
-        handleSubmit(search)
-    } , [setToday]);
+        //console.log(newDate)
+        setToday(moment(newDate));
+        const startDateNavigate = moment(newDate).clone().startOf('month').startOf('isoWeek').format('YYYY-MM-DD hh:mm:ss')
+        const endDateNavigate = moment(newDate).endOf('month').endOf('isoWeek').format('YYYY-MM-DD hh:mm:ss')
+        setFilters([
+                {
+                    field: 'startDate',
+                    operator: 'gte',
+                    value: startDateNavigate
+                },
+                {
+                    field: 'startDate',
+                    operator: 'lte',
+                    value: endDateNavigate
+                },
+            ]);
+
+    } , [setToday,setFilters]);
 
 
-    const {autocompleteProps: organizationAutocompleteProps} = useAutocomplete({
-        resource: "organizations",
-        defaultValue: getDefaultFilter("organization.id", filters, "eq"),
-
-        onSearch: (value) => {
-            const filters: CrudFilters = [];
-            filters.push({
-                field: "q",
-                operator: "eq",
-                value: value.length > 0 ? value : undefined,
-            });
-            return filters;
-        },
-
-        sorters: [{field: "id", order: "asc"}]
-    });
-
-    const {autocompleteProps: subunitAutocompleteProps} = useAutocomplete({
-        resource: "subunits",
-        defaultValue: getDefaultFilter("subunit.id", filters, "eq"),
-
-        onSearch: (value) => {
-            const filters: CrudFilters = [];
-            filters.push({
-                field: "q",
-                operator: "eq",
-                value: value.length > 0 ? value : undefined,
-            });
-            return filters;
-        },
-
-        sorters: [{field: "organization_id", order: "asc"}]
-    });
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (isError) {
-        return <div>Something went wrong!</div>;
-    }
+    // if (isLoading) {
+    //     return <div><CircularProgress sx={{align: 'center'
+    //     }}
+    //                                   size={100}
+    //     />{t('loading')}</div>;
+    // }
+    //
+    // if (isError) {
+    //     return <div>{t('error')}</div>;
+    // }
 
     const CustomEvent = (data:any)=>{
         const event = data.event?.data.event;
@@ -366,165 +265,158 @@ export const RegistrationAppointmentList: React.FC = () => {
         )
     }
 
+    const {autocompleteProps: organizationAutocompleteProps} = useAutocomplete({
+        resource: "organizations",
+        defaultValue: getDefaultFilter("organization.id", filters, "eq"),
+
+        onSearch: (value) => {
+            const filters: CrudFilters = [];
+            filters.push({
+                field: "q",
+                operator: "eq",
+                value: value.length > 0 ? value : undefined,
+            });
+            return filters;
+        },
+
+        sorters: [{field: "id", order: "asc"}]
+    });
+
     return(
-        <Grid container spacing={2}>
-            <Grid item xs={12} lg={2}>
-                <Card sx={{paddingX: {xs: 2, md: 0}}}>
-                    <CardHeader title={t("filter.title")}/>
-                    <CardContent sx={{pt: 0}}>
-                        <Box
-                            component="form"
-                            sx={{display: "flex", flexDirection: "column"}}
-                            autoComplete="off"
-                            onSubmit={handleSubmit(search)}
-                        >
-                            <TextField
-                                {...register("q")}
-                                label={t("registration_appointment.filter.q.label")}
-                                placeholder={t("registration_appointment.filter.q.placeholder")}
-                                margin="dense"
-                                fullWidth
-                                autoFocus
-                                size="small"
-                            />
-
-                            <TextField
-                                {...register("executor")}
-                                label={t("registration_appointment.filter.executor.label")}
-                                placeholder={t("registration_appointment.filter.executor.placeholder")}
-                                margin="dense"
-                                fullWidth
-                                autoFocus
-                                size="small"
-                            />
-                            <Controller
-                                control={control}
-                                name="organization"
-                                //defaultValue={null}
-                                render={({field}) => (
-                                    <Autocomplete
-                                        {...organizationAutocompleteProps}
-                                        {...field}
-                                        onChange={(_, value) => {
-                                            field.onChange(value?.id ?? value);
-                                        }}
-                                        getOptionLabel={(item) => {
-                                            return (
-                                                organizationAutocompleteProps?.options?.find(
-                                                    (p) => p.id.toString() === item.id.toString()
-                                                )?.title ?? ""
-                                            );
-                                        }}
-                                        isOptionEqualToValue={(option, value) => {
-                                            return (
-                                                option.id.toString() === value.id?.toString() ||
-                                                option.id.toString() === value.toString()
-                                            );
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label={t("booking_transport.filter.organization.label")}
-                                                placeholder={t(
-                                                    "booking_transport.filter.organization.placeholder"
-                                                )}
-                                                margin="dense"
-                                                variant="outlined"
-                                                size="small"
-
-                                            />
-                                        )}
-                                    />
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="subunit"
-                                render={({field}) => (
-                                    <Autocomplete
-                                        {...subunitAutocompleteProps}
-                                        {...field}
-                                        onChange={(_, value) => {
-                                            field.onChange(value?.id ?? value);
-                                        }}
-                                        getOptionLabel={(item) => {
-                                            return (
-                                                subunitAutocompleteProps?.options?.find(
-                                                    (p) => p.id.toString() === item.id.toString()
-                                                )?.title ?? ""
-                                            );
-                                        }}
-                                        isOptionEqualToValue={(option, value) => {
-                                            return (
-                                                option.id.toString() === value.id?.toString() ||
-                                                option.id.toString() === value.toString()
-                                            );
-                                        }}
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label={t("booking_transport.filter.subunit.label")}
-                                                placeholder={t(
-                                                    "booking_transport.filter.subunit.placeholder"
-                                                )}
-                                                margin="dense"
-                                                variant="outlined"
-                                                size="small"
-
-                                            />
-                                        )}
-                                    />
-                                )}
-                            />
-                            <br/>
-                            <Button type="submit" variant="contained">
-                                {t("registration_appointment.filter.submit")}
-                            </Button>
-                        </Box>
-                    </CardContent>
-                </Card>
-            </Grid>
-            <Grid item xs={12} lg={10}>
-                <List
-                    headerButtons={() =>(
-                        <>
-                            <CreateButton onClick={()=>onCreateNewEvent}/>
-                        </>
-                    )}
+            <List
+                headerButtons={() =>(
+                    <>
+                        <CreateButton onClick={()=>onCreateNewEvent}/>
+                    </>
+                )}
+            >
+                <Stack
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                flexWrap="wrap"
+                padding={1}
+                direction="row"
+                gap={2}
                 >
-                    <CreateRegistrationAppointmentsDrawer {...createDrawerFormProps} />
-                    <EditRegistrationAppointmentsDrawer {...editDrawerFormProps} />
-                    <Calendar
-                        messages={messages}
-                        className="calendar"
-                        localizer={localizer}
-                        events={myEvents}
-                        components={{
-                            event: CustomEvent}}
-                        onSelectEvent={(event)=>showEditDrawer(event.id)}
-                        onSelectSlot={onCreateNewEvent}
-                        onNavigate = {onNavigate}
-                        startAccessor={(event: any) => {
-                            return moment(event.start).toDate();
+                    <Paper
+                        component="form"
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: 400,
+                            marginBottom: 1
                         }}
-                        endAccessor={(event: any) => {
-                            return moment(event.end).toDate();
+                    >
+                        <InputBase
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder={t("registration_appointment.filter.q.label")}
+                            inputProps={{
+                                "aria-label": t("registration_appointment.filter.q.label"),
+                            }}
+                            value={getDefaultFilter(
+                                "q",
+                                filters,
+                                "eq",
+                            )}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>,
+                            ) => {
+                                setFilters([
+                                    {
+                                        field: "q",
+                                        operator: "eq",
+                                        value:
+                                            e.target.value !== ""
+                                                ? e.target.value
+                                                : undefined,
+                                    },
+                                ]);
+                            }}
+                        />
+                        <IconButton
+                            type="submit"
+                            sx={{ p: "10px" }}
+                            aria-label="search"
+                        >
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
+                    <Paper
+                        component="form"
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: 300,
+                            marginBottom: 1
                         }}
-                        titleAccessor={(event: any) => {
-                            return event.title;
-                        }}
-                        allDayAccessor={(event: any) => {
-                            return event.allDay === true;
-                        }}
-                        min={moment().startOf('day').subtract(16,'hour').toDate()}
-                        max={moment().endOf('day').subtract(3,'hour').toDate()}
-                        defaultDate={moment().toDate()}
-                        //popup
-                        selectable
-                        style={{ height: "800px"}}
-                    />
-                </List>
-            </Grid>
-        </Grid>
+                    >
+                        <InputBase
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder={t("registration_appointment.filter.executor.label")}
+                            inputProps={{
+                                "aria-label": t("registration_appointment.filter.executor.label"),
+                            }}
+                            value={getDefaultFilter(
+                                "executor_like",
+                                filters,
+                                "eq",
+                            )}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>,
+                            ) => {
+                                setFilters([
+                                    {
+                                        field: "executor_like",
+                                        operator: "eq",
+                                        value:
+                                            e.target.value !== ""
+                                                ? e.target.value
+                                                : undefined,
+                                    },
+                                ]);
+                            }}
+                        />
+                        <IconButton
+                            type="submit"
+                            sx={{ p: "10px" }}
+                            aria-label="search"
+                        >
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
+                </Stack>
+                <CreateRegistrationAppointmentsDrawer {...createDrawerFormProps} />
+                <EditRegistrationAppointmentsDrawer {...editDrawerFormProps} />
+                <Calendar
+                    messages={messages}
+                    className="calendar"
+                    localizer={localizer}
+                    events={myEvents}
+                    components={{
+                        event: CustomEvent}}
+                    onSelectEvent={(event)=>showEditDrawer(event.id)}
+                    onSelectSlot={onCreateNewEvent}
+                    onNavigate = {onNavigate}
+                    startAccessor={(event: any) => {
+                        return moment(event.start).toDate();
+                    }}
+                    endAccessor={(event: any) => {
+                        return moment(event.end).toDate();
+                    }}
+                    titleAccessor={(event: any) => {
+                        return event.title;
+                    }}
+                    allDayAccessor={(event: any) => {
+                        return event.allDay === true;
+                    }}
+                    min={moment().startOf('day').subtract(16,'hour').toDate()}
+                    max={moment().endOf('day').subtract(3,'hour').toDate()}
+                    defaultDate={moment().toDate()}
+                    //popup
+                    selectable
+                    style={{ height: "800px"}}
+                />
+            </List>
     )
 };
