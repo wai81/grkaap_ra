@@ -62,9 +62,7 @@ import {CasbinObjectsList} from "pages/casbinobjects";
 //import {accessControlProvider, IAccessControlContext} from "./providers/accessControl-provider";
 import {AdminPanelSettingsTwoTone} from "@mui/icons-material";
 import {
-    RegistrationAppointmentCreate,
-    RegistrationAppointmentEdit,
-    RegistrationAppointmentList, RegistrationAppointmentShow
+    RegistrationAppointmentList,
 } from "./pages/registration_appointments";
 
 
@@ -337,10 +335,6 @@ function App() {
                                         <Route path="registration">
                                             <Route path="appointment">
                                                 <Route index element={<RegistrationAppointmentList/>}/>
-                                                <Route path="create" element={<RegistrationAppointmentCreate/>}/>
-                                                <Route path="edit/:id" element={<RegistrationAppointmentEdit/>}/>
-                                                <Route path="show/:id" element={<RegistrationAppointmentShow/>}/>
-
                                             </Route>
 
                                         </Route>
