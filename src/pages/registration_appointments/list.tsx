@@ -7,10 +7,10 @@ import {
     useList, useTable,
     useTranslate
 } from "@refinedev/core";
-import {Calendar, momentLocalizer, Event  } from "react-big-calendar";
+import {Calendar, momentLocalizer, Event, Views} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
-import 'react-big-calendar/lib/css/react-big-calendar.css'
+
 import {
     Autocomplete,
     Box,
@@ -43,19 +43,12 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from "@mui/icons-material/Search";
-import {IUser, IUserFilterVariables} from "../../interfaces/IUser";
-import {IBookingTransport, IBookingTransportFilterVariables} from "../../interfaces/IBookingTransport";
-import {Controller} from "react-hook-form";
-
+import {IUser} from "../../interfaces/IUser";
 const localizer = momentLocalizer(moment)
-
-
 
 export const RegistrationAppointmentList: React.FC = () => {
     const t = useTranslate();
-
     const { data: user } = useGetIdentity<IUser>();
-
     const [today, setToday] = useState(moment())
 
 
@@ -281,7 +274,12 @@ export const RegistrationAppointmentList: React.FC = () => {
 
         sorters: [{field: "id", order: "asc"}]
     });
-
+    const { views } = useMemo(
+        () => ({
+            views: [Views.MONTH, Views.WEEK, Views.DAY, Views.AGENDA],
+        }),
+        []
+    )
     return(
             <List
                 headerButtons={() =>(
@@ -410,6 +408,7 @@ export const RegistrationAppointmentList: React.FC = () => {
                     allDayAccessor={(event: any) => {
                         return event.allDay === true;
                     }}
+                    views={views}
                     min={moment().startOf('day').subtract(16,'hour').toDate()}
                     max={moment().endOf('day').subtract(3,'hour').toDate()}
                     defaultDate={moment().toDate()}

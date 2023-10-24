@@ -1,0 +1,26 @@
+.rbc-header {
+    background: #6384f1;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.rbc-event {
+    padding: 0px !important;
+    /*border-radius: 0px !important;*/
+    /*border: none !important;*/
+    /*background-color: transparent !important;*/
+    background-color: rgba(122, 190, 245, 0.73);
+    z-index: 2;
+    position: relative;
+}
+
+
+.rbc-current-time-indicator {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #fd0101;
+    pointer-events: none; }

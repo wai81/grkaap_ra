@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import CalendarShow from "../../components/calendar/CalendarShow";
 import {API_URL} from "../../constants";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {Controller} from "react-hook-form";
 import DatePicker from "react-multi-date-picker";
 import locale_ru from "../../components/multiDatePicer/locale_ru";
@@ -35,6 +35,17 @@ import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlin
 import {PdfLayoutListBookingTransport} from "../../components/pdf";
 import {CreateBookingTransportDrawer, EditBookingTransportDrawer} from "../../components/booking_transports";
 import {Check, Close} from "@mui/icons-material";
+import {Calendar, momentLocalizer, Views} from "react-big-calendar";
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import {CustomTooltip} from "../../components/customTooltip";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PersonIcon from "@mui/icons-material/Person";
+import FaceIcon from "@mui/icons-material/Face";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+
+const localizer = momentLocalizer(moment)
 
 export const DashboardBookingTransport: React.FC = () => {
     const {t} = useTranslation();
@@ -159,6 +170,81 @@ export const DashboardBookingTransport: React.FC = () => {
         }]
     })
     const bookingList = data?.data ?? [];
+
+    const messages = {
+        allDay: "Весь день",
+        previous: "Назад",
+        next: "Вперед",
+        today: "Сегодня",
+        month: "Месяц",
+        week: "Неделя",
+        work_week: 'Рабочая неделя',
+        day: "День",
+        agenda: "Список событий",
+        date: "Дата",
+        time: "Время",
+        event: "Событие",
+        showMore: (total: number) => `+ ${total} подробнее`,
+        noEventsInRange:"В этом диапазоне нет событий."
+    };
+
+    const myBookingList = bookingList.map((event:IBookingTransport)=>({
+        id: event.id,
+        start: moment(event.startDate).toDate(),
+        end: moment(event.endDate).toDate(),
+        title: event.title,
+        data: { event },
+    }));
+
+    const CustomEvent = (data:any)=>{
+        const event = data.event?.data.event;
+        const status = data.event?.is_active;
+        const created_at = new Date(event.created_at);
+        const cratedAt = moment(created_at,'DD-MM-YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
+        const startDate = new Date(event.startDate);
+        const startEvent = moment(startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm');
+        return (
+                <div
+                    style={{ background:
+                        status === 'false'?'#f3b0b0':'',
+                        borderRadius:'5px', color:'black'
+                }}>
+                <CustomTooltip arrow //placement="bottom-start"
+                               title={<Stack sx={{padding: "2px"}}>
+                                   <table width={"100%"}>
+                                       <thead>
+                                       <tr>
+                                           <th style={{alignContent:"center", width:"20%"}}>Время</th>
+                                           <th style={{alignContent:"center", width:"40%"}}>Заказ Адресс</th>
+                                           <th style={{alignContent:"center", width:"40%"}}>Подразделение</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
+                                       <tr key={event.id}>
+                                           <td style={{alignContent:"flex-start", width:"20%"}}>
+                                               <AccessTimeIcon sx={{ fontSize: 12 }} /> {startEvent}
+                                           </td>
+                                           <td style={{alignContent:"flex-start", width:"40%"}}>
+                                               <LocationOnIcon sx={{ fontSize:12 }}/> {event.title}
+                                           </td>
+                                           <td style={{alignContent:"flex-start", width:"40%"}}>
+                                               <PersonIcon sx={{ fontSize: 12 }} />{event.subunit.title}
+                                           </td>
+                                       </tr>
+                                       </tbody>
+                                   </table>
+                                   <Typography variant={"caption"} color="disabled" >
+                                       <CalendarTodayIcon sx={{ fontSize: 12 }} color={"disabled"}/> {cratedAt} <PersonIcon sx={{ fontSize: 12 }} color={"disabled"} /> {event.creator.username}
+                                   </Typography>
+                               </Stack>}
+                >
+                    <Typography variant="body2" display="block" gutterBottom>
+                         {event.title} {event.subunit.title}
+                    </Typography>
+                </CustomTooltip>
+                </div>
+        )
+    }
 
     const createDrawerFormProps = useModalForm<ICreateBookingTransport, HttpError>({
         refineCoreProps: {
@@ -407,13 +493,49 @@ export const DashboardBookingTransport: React.FC = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const { views } = useMemo(
+        () => ({
+            views: [Views.MONTH, Views.WORK_WEEK, Views.DAY],
+        }),
+        []
+    )
+
     return (
         <Grid container columnSpacing={{xs: 1, sm: 1, md: 1}} spacing={1}>
             <CreateBookingTransportDrawer {...createDrawerFormProps} />
             <EditBookingTransportDrawer {...editDrawerFormProps} />
             <Grid item xs={12} lg={5.5}>
-                <Card sx={{paddingX: {xs: 2, md: 0}}}>
-                    <CalendarShow url={`${API_URL}/booking_transport`}/>
+                <Card sx={{ paddingX: {xs: 2, md: 0},}}>
+                    <CardHeader title={"Календарь"}/>
+                    {/*<CalendarShow url={`${API_URL}/booking_transport`}/>*/}
+                    <CardContent sx={{pt: 0}}>
+                        <Calendar
+                            messages={messages}
+                            localizer={localizer}
+                            events={myBookingList}
+                            components={{
+                                event:CustomEvent
+                            }}
+                            onSelectEvent={(event)=>showEditDrawer(event.id)}
+                            startAccessor={(event: any) => {
+                                return moment(event.start).toDate();
+                            }}
+                            endAccessor={(event: any) => {
+                                return moment(event.end).toDate();
+                            }}
+                            titleAccessor={(event: any) => {
+                                return event.title;
+                            }}
+                            allDayAccessor={(event: any) => {
+                                return event.allDay === true;
+                            }}
+                            views={views}
+                            min={moment().startOf('day').subtract(16,'hour').toDate()}
+                            max={moment().endOf('day').subtract(3,'hour').toDate()}
+                            defaultDate={moment().toDate()}
+                            style={{ height: "700px"}}
+                        />
+                    </CardContent>
                 </Card>
             </Grid>
             <Grid item xs={12} lg={6.5}>
