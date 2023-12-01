@@ -1,39 +1,26 @@
 import {
-    BaseRecord,
     CrudFilters,
     getDefaultFilter,
     HttpError,
     useGetIdentity,
-    useList, useTable,
+    useTable,
     useTranslate
 } from "@refinedev/core";
-import {Calendar, momentLocalizer, Event, Views} from "react-big-calendar";
+import {Calendar, momentLocalizer, Views} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import moment from "moment";
-
-import {
-    Autocomplete,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader, CircularProgress,
-    Grid, IconButton, InputBase, Paper,
-    Stack,
-    TextField,
-    Typography
-} from "@mui/material";
+import {IconButton, InputBase, Paper, Stack, Typography} from "@mui/material";
 import React, {useCallback, useMemo, useState} from "react";
 import {
     ICreateRegistrationAppointment,
-    IRegistrationAppointment, IRegistrationAppointmentFilterVariables,
+    IRegistrationAppointment,
     IUpdateRegistrationAppointment
 } from "../../interfaces/IRegistrationAppointment";
-import {useForm, useModalForm} from "@refinedev/react-hook-form";
+import {useModalForm} from "@refinedev/react-hook-form";
 
 import {CreateRegistrationAppointmentsDrawer} from "../../components/registration_appointments";
 import {EditRegistrationAppointmentsDrawer} from "../../components/registration_appointments/edit";
-import {CreateButton, List, useAutocomplete, useDataGrid} from "@refinedev/mui";
+import {CreateButton, List, useAutocomplete} from "@refinedev/mui";
 import './calendar.css'
 import {CustomTooltip} from "../../components/customTooltip";
 import PersonIcon from '@mui/icons-material/Person';
@@ -44,49 +31,16 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from "@mui/icons-material/Search";
 import {IUser} from "../../interfaces/IUser";
-const localizer = momentLocalizer(moment)
+const localizer = momentLocalizer(moment);
 
 export const RegistrationAppointmentList: React.FC = () => {
     const t = useTranslate();
     const { data: user } = useGetIdentity<IUser>();
-    const [today, setToday] = useState(moment())
+    const [today, setToday] = useState(moment());
 
 
     const startDayQuery = today.clone().startOf('month').startOf('isoWeek').format('YYYY-MM-DD hh:mm:ss');
-    const endDayQuery = today.clone().endOf('month').endOf('isoWeek').format('YYYY-MM-DD hh:mm:ss')
-    //const [current, setCurrent] = useState(1);
-    //const [pageSize, setPageSize] = useState(100);
-
-    // const { data, isLoading, isError} = useList<
-    //     IRegistrationAppointmentFilterVariables,
-    //     HttpError,
-    //     IRegistrationAppointment
-    //     >({
-    //     resource: "registration_appointment",
-    //     pagination: {
-    //         pageSize: 200,
-    //     },
-    //
-    //     filters:
-    //         [
-    //             {
-    //                 field: 'startDate',
-    //                 operator: 'gte',
-    //                 value: startDayQuery
-    //             },
-    //             {
-    //                 field: 'startDate',
-    //                 operator: 'lte',
-    //                 value: endDayQuery
-    //             },
-    //             {
-    //                 field: 'organization__id__in',
-    //                 operator: 'eq',
-    //                 value: user?.organization.id//organization,
-    //             },
-    //         ]
-    // });
-    //const eventBooking = data?.data? ?? [];
+    const endDayQuery = today.clone().endOf('month').endOf('isoWeek').format('YYYY-MM-DD hh:mm:ss');
 
     const { tableQueryResult: data, setFilters, filters } = useTable<IRegistrationAppointment,HttpError>({
         resource: "registration_appointment",
@@ -137,6 +91,7 @@ export const RegistrationAppointmentList: React.FC = () => {
 
 
     const onCreateNewEvent = useCallback((slot:any) => {
+        //console.log(slot.start)
         showCreateDrawer()
     }, [])
 
@@ -151,6 +106,7 @@ export const RegistrationAppointmentList: React.FC = () => {
         //      startDate: startDayQuery,
         // }
     });
+
     const {
         modal: {show: showCreateDrawer},
     } = createDrawerFormProps;
@@ -284,7 +240,7 @@ export const RegistrationAppointmentList: React.FC = () => {
             <List
                 headerButtons={() =>(
                     <>
-                        <CreateButton onClick={()=>onCreateNewEvent}/>
+                        <CreateButton onClick={()=>showCreateDrawer()}/>
                     </>
                 )}
             >
@@ -330,8 +286,7 @@ export const RegistrationAppointmentList: React.FC = () => {
                                                 : undefined,
                                     },
                                 ]);
-                            }}
-                        />
+                            }}></InputBase>
                         <IconButton
                             type="submit"
                             sx={{ p: "10px" }}
@@ -351,9 +306,9 @@ export const RegistrationAppointmentList: React.FC = () => {
                     >
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
-                            placeholder={t("registration_appointment.filter.executor.label")}
+                            placeholder={t('registration_appointment.filter.executor.label')}
                             inputProps={{
-                                "aria-label": t("registration_appointment.filter.executor.label"),
+                                "aria-label": t('registration_appointment.filter.executor.label'),
                             }}
                             value={getDefaultFilter(
                                 "executor_like",

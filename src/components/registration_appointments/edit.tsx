@@ -36,18 +36,17 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 
 export const EditRegistrationAppointmentsDrawer: React.FC<
     UseModalFormReturnType<IUpdateRegistrationAppointment>
->=({
-    setValue,
-    register,
-    formState: { errors },
-    control,
-    refineCore: { onFinish, formLoading },
-    handleSubmit,
-    modal: { visible, close },
-    })=>{
-
+    >=(
+        {
+            setValue,
+            register,
+            formState: { errors },
+            control,
+            refineCore: { onFinish, formLoading },
+            handleSubmit,
+            modal: { visible, close },
+        }) => {
     const t = useTranslate();
-
     const {autocompleteProps: subunitAutocompleteProps} =
         useAutocomplete({
             resource: 'subunits',
@@ -64,8 +63,6 @@ export const EditRegistrationAppointmentsDrawer: React.FC<
 
             sorters: [{field: 'id', order: 'asc'}]
         });
-
-
 
     const getEndDate = (startDate:Date, duration:number)=>{
         const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
@@ -193,7 +190,6 @@ export const EditRegistrationAppointmentsDrawer: React.FC<
                                 // InputLabelProps={{shrink: true}}
                                 type="number"
                                 label={t('registration_appointment.fields.duration')}
-                                defaultValue={1}
                                 name="duration"
                                 size={'small'}
                             />

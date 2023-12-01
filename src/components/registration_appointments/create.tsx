@@ -32,15 +32,15 @@ import {ICreateRegistrationAppointment} from "../../interfaces/IRegistrationAppo
 
 export const CreateRegistrationAppointmentsDrawer: React.FC<
     UseModalFormReturnType<ICreateRegistrationAppointment>
-    > = ({
-         modal: {
+    >=(
+        {
+            register, formState: {errors},
+            control,
+            modal: {
               visible,
               close,
           },
           handleSubmit,
-          register,
-          control,
-          formState: {errors},
           refineCore:{onFinish, formLoading},
           reset,
       }) => {
@@ -64,7 +64,8 @@ export const CreateRegistrationAppointmentsDrawer: React.FC<
 
 
     const getEndDate = (startDate: Date, duration: number) => {
-        return moment(startDate, 'YYYY-MM-DD HH:mm').add(duration, 'h').toISOString()
+        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
+        return result
     }
 
    const { data: user } = useGetIdentity<IUser>();
@@ -208,7 +209,7 @@ export const CreateRegistrationAppointmentsDrawer: React.FC<
                                 //InputLabelProps={{shrink: true}}
                                 type="number"
                                 label={t('registration_appointment.fields.duration')}
-                                defaultValue={1}
+                                defaultValue={2}
                                 name="duration"
                                 size={'small'}
                             />

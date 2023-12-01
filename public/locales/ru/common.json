@@ -365,6 +365,57 @@
       "show": "Просмотр Заказа транспорта"
     }
   },
+  "registration_appointment": {
+    "registration_appointment": "Запись на регистрацию",
+    "fields": {
+      "typeRegistration": "Вид регистрации",
+      "addressObject": "Адрес объекта",
+      "costumerName": "ФИО клиента",
+      "startDate": "Дата записи на регистрацию",
+      "startTime": "Время",
+      "costumerContactPhone": "Телефон клиента",
+      "executor": "Регистратор",
+      "duration": "Продолжительность (ч.)",
+      "endDate": "Возвращение",
+      "organization": "Организация",
+      "subunit": "Подразделение",
+      "statusAppointmentLabel": "Статус события",
+
+      "creator": "Создал",
+      "statusAppointment": {
+        "new": "Новое событие",
+        "appointed": "Событие состоялось",
+        "cancelled": "Событие отменено клиентом"
+      },
+      "description": "Примечание",
+      "created_at": "Cоздан"
+    },
+    "filter": {
+      "q": {
+        "label": "ФИО клиента, Адрес объекта, Телефон клиента",
+        "placeholder": "Введите строку для поиска"
+      },
+      "executor": {
+        "label": "Регистратор",
+        "placeholder": "Введите строку для поиска"
+      },
+      "organization":{
+        "label": "Организация",
+        "placeholder": "Выберите организацию"
+      },
+      "subunit":{
+        "label": "Подразделение",
+        "placeholder": "Выберите подразделение"
+      },
+      "submit": "Поиск"
+    },
+    "titles": {
+      "create": "Новое Событие",
+      "edit": "Изменить Событие",
+      "list": "Запись на регистрацию",
+      "show": "Просмотр Ресурса"
+    }
+  },
   "admin/roles": {
     "admin/roles": "Роли",
     "fields": {
@@ -417,57 +468,6 @@
       "create": "Новый Ресурс",
       "edit": "Редактирование Ресурса",
       "list": "Управление Ресурсами",
-      "show": "Просмотр Ресурса"
-    }
-  },
-  "registration_appointment": {
-    "registration_appointment": "Запись на регистрацию",
-    "fields": {
-      "typeRegistration": "Вид регистрации",
-      "addressObject": "Адрес объекта",
-      "costumerName": "ФИО клиента",
-      "startDate": "Дата записи на регистрацию",
-      "startTime": "Время",
-      "costumerContactPhone": "Телефон клиента",
-      "executor": "Регистратор",
-      "duration": "Продолжительность (ч.)",
-      "endDate": "Возвращение",
-      "organization": "Организация",
-      "subunit": "Подразделение",
-      "statusAppointmentLabel": "Статус события",
-
-      "creator": "Создал",
-      "statusAppointment": {
-        "new": "Новое событие",
-        "appointed": "Событие состоялось",
-        "cancelled": "Событие отменено клиентом"
-      },
-      "description": "Примечание",
-      "created_at": "Cоздан"
-    },
-    "filter": {
-      "q": {
-        "label": "ФИО клиента, Адрес объекта, Телефон клиента",
-        "placeholder": "Введите строку для поиска"
-      },
-      "executor": {
-        "label": "Регистратор",
-        "placeholder": "Введите строку для поиска"
-      },
-      "organization":{
-        "label": "Организация",
-        "placeholder": "Выберите организацию"
-      },
-      "subunit":{
-        "label": "Подразделение",
-        "placeholder": "Выберите подразделение"
-      },
-      "submit": "Поиск"
-    },
-    "titles": {
-      "create": "Новое Событие",
-      "edit": "Изменить Событие",
-      "list": "Запись на регистрацию",
       "show": "Просмотр Ресурса"
     }
   }
