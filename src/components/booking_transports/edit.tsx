@@ -74,7 +74,7 @@ export const EditBookingTransportDrawer: React.FC<
         });
 
     const getEndDate = (startDate:Date, duration:number)=>{
-        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
+        const result = moment(startDate).add(duration,'h').toISOString();
         return result
     }
 

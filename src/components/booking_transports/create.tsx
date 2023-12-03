@@ -62,7 +62,7 @@ export const CreateBookingTransportDrawer: React.FC<
         });
 
     const getEndDate = (startDate: Date, duration: number) => {
-        return moment(startDate, 'YYYY-MM-DD HH:mm').add(duration, 'h').toISOString()
+        return moment(startDate).add(duration, 'h').toISOString()
     }
 
    const { data: user } = useGetIdentity<IUser>();

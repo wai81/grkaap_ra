@@ -30,6 +30,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import {IUser} from "../../interfaces/IUser";
 import {ICreateRegistrationAppointment} from "../../interfaces/IRegistrationAppointment";
 
+
 export const CreateRegistrationAppointmentsDrawer: React.FC<
     UseModalFormReturnType<ICreateRegistrationAppointment>
     >=(
@@ -64,7 +65,7 @@ export const CreateRegistrationAppointmentsDrawer: React.FC<
 
 
     const getEndDate = (startDate: Date, duration: number) => {
-        const result = moment(startDate, 'YYYY-MM-DD HH:mm').add(duration,'h').toISOString();
+        const result = moment(startDate).add(duration,'h').toISOString();
         return result
     }
 
@@ -184,11 +185,15 @@ export const CreateRegistrationAppointmentsDrawer: React.FC<
                                         renderInput={(params) =>
                                             <TextField {...params}
                                                        label={t('registration_appointment.fields.startDate')}
+                                                       type="datetime-local"
                                                        margin="normal"
                                                        fullWidth
                                                        variant="outlined"
                                                        required
                                                        size={'small'}
+                                                       InputLabelProps={{
+                                                        shrink: true,
+                                                      }}
 
                                             />}
                                     />
