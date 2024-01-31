@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import CalendarShow from "../../components/calendar/CalendarShow";
 import {API_URL} from "../../constants";
-import React, {useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {Controller} from "react-hook-form";
 import DatePicker from "react-multi-date-picker";
 import locale_ru from "../../components/multiDatePicer/locale_ru";
@@ -134,12 +134,12 @@ export const DashboardBookingTransport: React.FC = () => {
                 {
                     field: "startDate_gte",
                     operator: "eq",
-                    value: moment().startOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.format('YYYY-MM-DD hh:mm:ss'),
+                    value: moment().startOf('month').add(-1, 'hour').format('YYYY-MM-DD hh:mm:ss'),//startDay.format('YYYY-MM-DD hh:mm:ss'),
                 },
                 {
                     field: "startDate_lte",
                     operator: "eq",
-                    value: moment().endOf('month').format('YYYY-MM-DD hh:mm:ss'),//startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
+                    value: moment().endOf('month').add(2, 'hour').format('YYYY-MM-DD hh:mm:ss'),//startDay.clone().add(42, 'day').format('YYYY-MM-DD hh:mm:ss')
                 },
             ]
         },
@@ -204,10 +204,10 @@ export const DashboardBookingTransport: React.FC = () => {
         const startDate = new Date(event.startDate);
         const startEvent = moment(startDate, 'DD-MM-YYYY HH:mm:ss').format('HH:mm');
         return (
-                <div
-                    style={{ background:
+            <div
+                style={{ background:
                         status === 'false'?'#f3b0b0':'',
-                        borderRadius:'5px', color:'black'
+                    borderRadius:'5px', color:'black'
                 }}>
                 <CustomTooltip arrow //placement="bottom-start"
                                title={<Stack sx={{padding: "2px"}}>
@@ -239,10 +239,11 @@ export const DashboardBookingTransport: React.FC = () => {
                                </Stack>}
                 >
                     <Typography variant="body2" display="block" gutterBottom>
-                         {event.title} {event.subunit.title}
+                        {event.title}
+                        {/* {event.subunit.title} */}
                     </Typography>
                 </CustomTooltip>
-                </div>
+            </div>
         )
     }
 
@@ -321,17 +322,17 @@ export const DashboardBookingTransport: React.FC = () => {
                 // }
                 renderCell: function render({row}) {
                     return (<Stack>
-                                {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
-                                <Chip
-                                    variant="outlined"
-                                    sx={{
-                                        height: 'auto',
-                                        '& .MuiChip-label': {
-                                            display: 'block',
-                                            whiteSpace: 'normal',
-                                        },
-                                    }}
-                                    label={`${row.count_man} чел. ${row.subunit?.title}`}/>
+                            {!row.is_active ? <s>{row.title}</s> : <>{row.title}</>}
+                            <Chip
+                                variant="outlined"
+                                sx={{
+                                    height: 'auto',
+                                    '& .MuiChip-label': {
+                                        display: 'block',
+                                        whiteSpace: 'normal',
+                                    },
+                                }}
+                                label={`${row.count_man} чел. ${row.subunit?.title}`}/>
                             <Typography color={'textSecondary'} variant={"caption"} title={row.subunit?.title}>
                                 {row.description}
                             </Typography>
@@ -360,21 +361,21 @@ export const DashboardBookingTransport: React.FC = () => {
                 renderCell: function render({row}) {
 
                     return (row.transport !== null ?<Stack>
-                        <Chip
-                            sx={{
-                                width:130,
-                                height:64,
-                                cursor: "pointer",
-                            }}
-                            avatar={<Avatar
-                            src={`${apiUrl}/${row.transport?.image_url}`}
-                            alt={row.transport?.title}
-                        />}
-                              label={<Typography
-                                  sx={{whiteSpace:'pre-wrap'}}
-                                  variant={"caption"}>{row.transport?.title} </Typography>}
-                                                           title={row.transport?.title} />
-                          <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description}</Typography>
+                            <Chip
+                                sx={{
+                                    width:130,
+                                    height:64,
+                                    cursor: "pointer",
+                                }}
+                                avatar={<Avatar
+                                    src={`${apiUrl}/${row.transport?.image_url}`}
+                                    alt={row.transport?.title}
+                                />}
+                                label={<Typography
+                                    sx={{whiteSpace:'pre-wrap'}}
+                                    variant={"caption"}>{row.transport?.title} </Typography>}
+                                title={row.transport?.title} />
+                            <Typography variant={"caption"}>{t("booking_transport.fields.driver")}: {row.transport?.description}</Typography>
                         </Stack>
                         : '')
                         ;
@@ -489,6 +490,17 @@ export const DashboardBookingTransport: React.FC = () => {
         sorters: [{field: "title", order: "asc"}]
     });
 
+    const eventPropGetter = useCallback(
+        (event:any) => ({
+            ...(event.title && {
+                style: {
+                    width: '98px',
+                }
+            }),
+        }),
+        []
+    )
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -530,6 +542,7 @@ export const DashboardBookingTransport: React.FC = () => {
                                 return event.allDay === true;
                             }}
                             views={views}
+                            eventPropGetter={eventPropGetter}
                             min={moment().startOf('day').subtract(16,'hour').toDate()}
                             max={moment().endOf('day').subtract(3,'hour').toDate()}
                             defaultDate={moment().toDate()}
