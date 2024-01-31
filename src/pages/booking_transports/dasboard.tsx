@@ -198,7 +198,7 @@ export const DashboardBookingTransport: React.FC = () => {
 
     const CustomEvent = (data:any)=>{
         const event = data.event?.data.event;
-        const status = data.event?.is_active;
+        //const status = data.event?.is_active;
         const created_at = new Date(event.created_at);
         const cratedAt = moment(created_at,'DD-MM-YYYY HH:mm:ss').format('DD.MM.YYYY HH:mm');
         const startDate = new Date(event.startDate);
@@ -206,11 +206,18 @@ export const DashboardBookingTransport: React.FC = () => {
         return (
             <div
                 style={{ background:
-                        status === 'false'?'#f3b0b0':'',
-                    borderRadius:'5px', color:'black'
+                    data.event?.is_active === 'false'?'#f3b0b0':'',
+                    borderRadius:'5px',
+                    color:'black',
+                    // display: 'block',
+                    // overflow: 'hidden',
+                    // textOverflow: 'ellipsis',
+                    // whiteSpace: 'nowrap',
                 }}>
                 <CustomTooltip arrow //placement="bottom-start"
-                               title={<Stack sx={{padding: "2px"}}>
+                               title={<Stack sx={{
+                                   padding: "2px",
+                               }}>
                                    <table width={"100%"}>
                                        <thead>
                                        <tr>
@@ -238,7 +245,12 @@ export const DashboardBookingTransport: React.FC = () => {
                                    </Typography>
                                </Stack>}
                 >
-                    <Typography variant="body2" display="block" gutterBottom>
+                    <Typography variant="body2" display="block" sx={{
+                        display: 'block',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                    }} gutterBottom>
                         {event.title}
                         {/* {event.subunit.title} */}
                     </Typography>
@@ -516,7 +528,7 @@ export const DashboardBookingTransport: React.FC = () => {
         <Grid container columnSpacing={{xs: 1, sm: 1, md: 1}} spacing={1}>
             <CreateBookingTransportDrawer {...createDrawerFormProps} />
             <EditBookingTransportDrawer {...editDrawerFormProps} />
-            <Grid item xs={12} lg={5.5}>
+            <Grid item xs={12} md={12} sm={12} lg={5.5}>
                 <Card sx={{ paddingX: {xs: 2, md: 0},}}>
                     <CardHeader title={"Календарь"}/>
                     {/*<CalendarShow url={`${API_URL}/booking_transport`}/>*/}
@@ -551,7 +563,7 @@ export const DashboardBookingTransport: React.FC = () => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item xs={12} lg={6.5}>
+            <Grid item xs={12} md={12} sm={12} lg={6.5}>
                 <Grid container columnSpacing={{xs: 1, sm: 1, md: 1}} spacing={1}>
                     <Grid item xs={12} lg={12} paddingY={1}>
                         <Card sx={{paddingX: {xs: 2, md: 0}}}>
